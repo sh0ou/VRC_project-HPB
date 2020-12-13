@@ -1,0 +1,10 @@
+#TITLE:aaaa
+#ARTIST:aaaa
+#BPM:999
+#PLAYLEVEL:1
+#ICON:xxx.png
+#STAGEURL:xxx.com/xxx
+
+*MAIN DATA FIELD
+
+#000000:00
