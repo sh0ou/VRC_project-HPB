@@ -17,6 +17,20 @@
 [Aa]ssets/VRCSDK.meta
 [Aa]ssets/UdonSharp.meta
 
+#Personal
+[Aa]ssets/NoBackupAssets/
+[Aa]ssets/NoBackupAssets.meta
+[Aa]ssets/Gizmos/ManasparkAssets/
+[Aa]ssets/Gizmos/ManasparkAssets.meta
+[Aa]ssets/TextMesh Pro/
+[Aa]ssets/TextMesh Pro.meta
+[Aa]ssets/Textures/Extension/
+[Aa]ssets/Textures/Extension.meta
+[Aa]ssets/Sounds/Extension/
+[Aa]ssets/Sounds/Extension.meta
+[Aa]ssets/Models/Extension/
+[Aa]ssets/Models/Extension.meta
+
 # Visual Studio cache directory
 .vs/
 

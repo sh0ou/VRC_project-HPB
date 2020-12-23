@@ -1,0 +1,60 @@
+﻿using UdonSharp;
+using UnityEngine;
+using UnityEngine.UI;
+using VRC.SDKBase;
+using VRC.Udon;
+
+/// <summary>
+/// ゲーム設定,UI格納スクリプト
+/// </summary>
+public class HPB_GameManager : UdonSharpBehaviour
+{
+    #region 変数
+    [SerializeField, Tooltip("BGM音量")]
+    private int bgmVol;
+
+    [SerializeField, Tooltip("効果音音量")]
+    private int seVol;
+
+    [SerializeField, Tooltip("ノーツスピード")]
+    public int notesSpeed;
+
+    [SerializeField]
+    public bool gamePlay;
+
+    [SerializeField, Tooltip("エフェクト表示フラグ")]
+    private bool effectFlag;
+
+    [SerializeField, Tooltip("デバッグフラグ")]
+    private bool debugFlag;
+
+    #endregion
+    #region UIオブジェクト
+    [SerializeField, Tooltip("各設定スライダーUI\n0=BGM\n1=SE\n2=スピード")]
+    private Slider[] opSliders = new Slider[3];
+
+    [SerializeField, Tooltip("値更新用InputField\n0=bgm\n1=se\n2=speed")]
+    private InputField[] opValueFields = new InputField[3];
+
+    [SerializeField, Tooltip("各設定トグルUI\n0=エフェクト\n1=デバッグ")]
+    private Toggle[] opToggles = new Toggle[2];
+
+    #endregion
+    void Start()
+    {
+    }
+    private void Update()
+    {
+        //スライダーの値を反映
+        bgmVol = (int)opSliders[0].value;
+        seVol = (int)opSliders[1].value;
+        notesSpeed = (int)opSliders[2].value;
+        //スライダーの値を表示
+        opValueFields[0].text = bgmVol.ToString();
+        opValueFields[1].text = seVol.ToString();
+        opValueFields[2].text = notesSpeed.ToString();
+        //トグルを反映
+        effectFlag = opToggles[0].isOn;
+        debugFlag = opToggles[1].isOn;
+    }
+}
