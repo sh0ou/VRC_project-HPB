@@ -23,7 +23,6 @@ public class TextFileConverter : UdonSharpBehaviour
 
     void Start()
     {
-        SetTextFile(1);
         //テキスト表示
         //textUI[0].text = textDB[0][1];
         //textUI[1].text = textDB[1][1];
@@ -38,22 +37,15 @@ public class TextFileConverter : UdonSharpBehaviour
     {
         Debug.Log("譜面番号" + i + "のテキストファイル変換を開始します...");
         textStorage[0] = textFile[i][0].text;
-        Debug.Log("textStorage[0] = " + textStorage[0]);
         textStorage[1] = textFile[i][1].text;
-        Debug.Log("textStorage[1] = " + textStorage[1]);
         textStorage[2] = textFile[i][2].text;
-        Debug.Log("textStorage[2] = " + textStorage[2]);
         textStorage[3] = textFile[i][3].text;
-        Debug.Log("textStorage[3] = " + textStorage[3]);
         //格納変数を配列化
         Debug.Log("配列代入を開始します...");
         textDB[0] = textStorage[0].Split('\n');
-        Debug.Log("textDB[0] = " + (textDB[0] != null));
         textDB[1] = textStorage[1].Split('\n');
-        Debug.Log("textDB[1] = " + (textDB[1] != null));
         textDB[2] = textStorage[2].Split('\n');
-        Debug.Log("textDB[2] = " + (textDB[2] != null));
         textDB[3] = textStorage[3].Split('\n');
-        Debug.Log("textDB[3] = " + (textDB[3] != null));
+        Debug.Log("<color=green>譜面変換が完了しました</color>");
     }
 }

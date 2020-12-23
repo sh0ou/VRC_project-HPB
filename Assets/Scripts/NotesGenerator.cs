@@ -58,36 +58,62 @@ public class NotesGenerator : UdonSharpBehaviour
     /// </summary>
     public void SetNotes()
     {
-        float notesPos;
+        float notesPosz;
         Debug.Log("ノーツ位置生成を開始します...");
+        notesObjInstance = new GameObject[textFileConverter.textDB[1].Length];
+        Debug.Log("生成数;" + notesObjInstance.Length);
         //for = 条件が続く限り続行するやつ
-        for (int i = 0; i <= textFileConverter.textDB[1].Length; i++)
+        for (int i = 0; i < textFileConverter.textDB[1].Length; i++)
         {
-            Debug.Log("ノーツNo." + i);
-
+            //Debug.Log("ノーツNo." + i);
             //https://www.slideshare.net/tenonnotenonno/ss-63731377
             //ノーツ位置を計算
-            Debug.Log(int.Parse("1"));
-            Debug.Log("終点位置:" + endPosition.position.z);
-            Debug.Log("DB数値:" + int.Parse(textFileConverter.textDB[1][i])); //ここでエラる
-            Debug.Log("再生時間:" + soundManager.playTime);
-            Debug.Log("スピード:" + hpb_GM.notesSpeed);
+            //Debug.Log("終点位置:" + endPosition.position.z);
+            //Debug.Log("テスト:" + textFileConverter.textDB[1][i]);
+            //Debug.Log("DB数値:" + float.Parse(textFileConverter.textDB[1][i]));
+            //Debug.Log("再生時間:" + soundManager.playTime);
+            //Debug.Log("スピード:" + hpb_GM.notesSpeed);
 
-            notesPos = endPosition.position.z + ((int.Parse(textFileConverter.textDB[1][i]) - soundManager.playTime) * 100 * hpb_GM.notesSpeed);
-            Debug.Log("生成位置:" + notesPos);
+            notesPosz = endPosition.position.z + ((float.Parse(textFileConverter.textDB[1][i]) - soundManager.playTime) * (3 * hpb_GM.notesSpeed));
+            //Debug.Log("生成位置:" + notesPos);
 
             //ノーツ生成
             notesObjInstance.SetValue(VRCInstantiate(notesObj), i);
-            Debug.Log("ノーツObj:" + notesObjInstance[i]);
+            //Debug.Log("ノーツObj:" + notesObjInstance[i]);
 
+            int notesLane = int.Parse(textFileConverter.textDB[3][i]);
+            float notesPosx = 0;
+            switch (notesLane)
+            {
+                case 1:
+                    notesPosx = -0.75f;
+                    break;
+                case 2:
+                    notesPosx = -0.25f;
+                    break;
+                case 3:
+                    notesPosx = 0.25f;
+                    break;
+                case 4:
+                    notesPosx = 0.75f;
+                    break;
+            }
             //ノーツ位置を設定
-            notesObjInstance[i].gameObject.transform.position = new Vector3(-0.25f, 1, notesPos);
-            Debug.Log("ノーツ位置:" + notesObjInstance[i].transform.position);
+            notesObjInstance[i].gameObject.transform.position = new Vector3(notesPosx, 1, notesPosz);
+            //Debug.Log("ノーツ位置:" + notesObjInstance[i].transform.position);
 
             //ノーツ生存時間を設定
-            notesObjInstance[i].GetComponent<NotesObjScr>().lifeTime = int.Parse(textFileConverter.textDB[1][i]) + (0.1f * hpb_GM.notesSpeed);
-            Debug.Log("ノーツ生存時間:" + notesObjInstance[i].GetComponent<NotesObjScr>().lifeTime);
+            //Debug.Log("ゲームマネージャ:" + hpb_GM);
+            //Debug.Log("ノーツスピード:" + hpb_GM.notesSpeed);
+            //Debug.Log("ノーツ移動速度計算:" + 0.1f * hpb_GM.notesSpeed);
+            //Debug.Log("オブジェクトチェック:" + notesObjInstance[i]);
+            //Debug.Log("コンポーネント:" + notesObjInstance[i].GetComponent<NotesObjScr>());
+            //Debug.Log("lifetime取得チェック:" + notesObjInstance[i].GetComponent<NotesObjScr>().lifeTime);
+            //Debug.Log("Parseチェック" + float.Parse(textFileConverter.textDB[1][i]));
+
+            notesObjInstance[i].GetComponent<NotesObjScr>().lifeTime = float.Parse(textFileConverter.textDB[1][i]) + (0.1f * hpb_GM.notesSpeed);
+            //Debug.Log("ノーツ生存時間:" + notesObjInstance[i].GetComponent<NotesObjScr>().lifeTime);
         }
-        Debug.LogWarning("ノーツ生成が完了しました");
+        Debug.Log("<color=green>ノーツ生成が完了しました</color>");
     }
 }

@@ -16,11 +16,11 @@ public class Test03 : UdonSharpBehaviour
 
     void Start()
     {
-
+        
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 9)
+        if (other.gameObject.layer == 23)
         {
             //ドラム単体を再生
             audioSource.clip = soundList.seLists[1];
