@@ -6,7 +6,7 @@ using VRC.Udon;
 /// <summary>
 /// ノーツオブジェクト
 /// </summary>
-public class NotesObjScr : UdonSharpBehaviour
+public class NotesObj : UdonSharpBehaviour
 {
     [SerializeField]
     public float lifeTime;

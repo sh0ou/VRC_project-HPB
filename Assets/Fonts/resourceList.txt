@@ -1,0 +1,4 @@
+bokutachi.otf
+bokutachi SDF.asset
+bokutachi SDF Material - Drop Shadow.mat
+japanese_full.txt

@@ -111,7 +111,7 @@ public class NotesGenerator : UdonSharpBehaviour
             //Debug.Log("lifetime取得チェック:" + notesObjInstance[i].GetComponent<NotesObjScr>().lifeTime);
             //Debug.Log("Parseチェック" + float.Parse(textFileConverter.textDB[1][i]));
 
-            notesObjInstance[i].GetComponent<NotesObjScr>().lifeTime = float.Parse(textFileConverter.textDB[1][i]) + (0.1f * hpb_GM.notesSpeed);
+            notesObjInstance[i].GetComponent<NotesObj>().lifeTime = float.Parse(textFileConverter.textDB[1][i]) + (0.1f * hpb_GM.notesSpeed);
             //Debug.Log("ノーツ生存時間:" + notesObjInstance[i].GetComponent<NotesObjScr>().lifeTime);
         }
         Debug.Log("<color=green>ノーツ生成が完了しました</color>");

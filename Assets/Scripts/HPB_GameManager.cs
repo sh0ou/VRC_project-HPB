@@ -5,11 +5,19 @@ using VRC.SDKBase;
 using VRC.Udon;
 
 /// <summary>
-/// ゲーム設定,UI格納スクリプト
+/// ゲーム設定,オプションUI格納スクリプト
 /// </summary>
 public class HPB_GameManager : UdonSharpBehaviour
 {
-    #region 変数
+    #region システム変数
+    [SerializeField, Tooltip("表示されている画面番号")]
+    public int windowFlag;
+
+    [SerializeField, Tooltip("リズムゲーム進行フラグ")]
+    public bool gamePlay;
+
+    #endregion
+    #region オプション変数
     [SerializeField, Tooltip("BGM音量")]
     private int bgmVol;
 
@@ -18,9 +26,6 @@ public class HPB_GameManager : UdonSharpBehaviour
 
     [SerializeField, Tooltip("ノーツスピード")]
     public int notesSpeed;
-
-    [SerializeField]
-    public bool gamePlay;
 
     [SerializeField, Tooltip("エフェクト表示フラグ")]
     private bool effectFlag;
