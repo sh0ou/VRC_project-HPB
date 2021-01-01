@@ -12,10 +12,10 @@ public class NotesObj : UdonSharpBehaviour
     public float lifeTime;
 
     [SerializeField]
-    private HPB_GameManager test05;
+    private HPB_SettingsManager test05;
     void Start()
     {
-        test05 = GameObject.Find("GameManager").GetComponent<HPB_GameManager>();
+        test05 = GameObject.Find("GameManager").GetComponent<HPB_SettingsManager>();
     }
     private void Update()
     {

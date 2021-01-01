@@ -16,13 +16,22 @@ public class HPB_UIManager : UdonSharpBehaviour
 
     #region 共通
     [Header("共通")]
+    [SerializeField, Tooltip("ゲームマネージャ")]
+    private HPB_GameManager gameManager;
+
     [SerializeField, Tooltip("ドラムガイドUI")]
     private Image[] guideUI;
 
     #endregion
-    #region プレイ画面
+    #region ウインドウ（アニメーションに使用）
+    [SerializeField, Tooltip
+        ("ウインドウアニメーター\n0=タイトル\n1=選択1\n2=選択2\n3=プレイ1\n4=プレイ2\n5=リザルト")]
+    private Animator[] windowAnims;
+
+    #endregion
+    #region プレイ画面（値,色更新に使用）
     [Header("プレイ画面1")]
-    [SerializeField, Tooltip("値更新用UI\n0=タイトル\n1=アーティスト\n2=レベル")]
+    [SerializeField, Tooltip("値更新用UI\n0=タイトル\n1=アーティスト\n2=レベル\n3=レベル種類")]
     private InputField[] inputFields_play_1;
 
     [SerializeField, Tooltip("プレイ画面txtの色変更用UI\n0=レベル種類\n1=レベル値")]
@@ -39,7 +48,7 @@ public class HPB_UIManager : UdonSharpBehaviour
     private Animator[] fixedText_play_2;
 
     #endregion
-    #region リザルト画面
+    #region リザルト画面（値,色更新に使用）
     [Header("リザルト画面")]
     [SerializeField, Tooltip("リザルト画面ジャケット画像")]
     private Image jacketImage;
@@ -57,4 +66,31 @@ public class HPB_UIManager : UdonSharpBehaviour
     {
 
     }
+    #region アニメーション処理関数
+    /// <summary>
+    /// タイトル画面処理
+    /// </summary>
+    public void GameStart()
+    {
+        windowAnims[0].Play("close_title");
+    }
+
+
+    /// <summary>
+    /// アニメーション終了後処理
+    /// </summary>
+    public void AnimEnd(int i)
+    {
+        switch (i)
+        {
+            case 1://基本情報をセット
+                gameManager.SetMusicData();
+                gameManager.DrumActive();
+                break;
+            default://通常処理
+                gameManager.DrumActive();
+                break;
+        }
+    }
+    #endregion
 }

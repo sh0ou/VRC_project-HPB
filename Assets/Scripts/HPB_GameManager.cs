@@ -1,65 +1,96 @@
 ﻿using UdonSharp;
 using UnityEngine;
-using UnityEngine.UI;
 using VRC.SDKBase;
 using VRC.Udon;
 
 /// <summary>
-/// ゲーム設定,オプションUI格納スクリプト
+/// ゲーム処理用スクリプト
 /// </summary>
 public class HPB_GameManager : UdonSharpBehaviour
 {
-    #region システム変数
-    [SerializeField, Tooltip("表示されている画面番号")]
-    public int windowFlag;
+    #region 変数
+    [SerializeField, Tooltip("設定マネージャ")]
+    private HPB_SettingsManager settingScr;
 
-    [SerializeField, Tooltip("リズムゲーム進行フラグ")]
-    public bool gamePlay;
+    [SerializeField, Tooltip("UIマネージャ")]
+    private HPB_UIManager uiScr;
 
-    #endregion
-    #region オプション変数
-    [SerializeField, Tooltip("BGM音量")]
-    private int bgmVol;
+    [SerializeField, Tooltip("テキスト変換スクリプト")]
+    private TextFileConverter txtConverter;
 
-    [SerializeField, Tooltip("効果音音量")]
-    private int seVol;
-
-    [SerializeField, Tooltip("ノーツスピード")]
-    public int notesSpeed;
-
-    [SerializeField, Tooltip("エフェクト表示フラグ")]
-    private bool effectFlag;
-
-    [SerializeField, Tooltip("デバッグフラグ")]
-    private bool debugFlag;
-
-    #endregion
-    #region UIオブジェクト
-    [SerializeField, Tooltip("各設定スライダーUI\n0=BGM\n1=SE\n2=スピード")]
-    private Slider[] opSliders = new Slider[3];
-
-    [SerializeField, Tooltip("値更新用InputField\n0=bgm\n1=se\n2=speed")]
-    private InputField[] opValueFields = new InputField[3];
-
-    [SerializeField, Tooltip("各設定トグルUI\n0=エフェクト\n1=デバッグ")]
-    private Toggle[] opToggles = new Toggle[2];
+    [SerializeField, Tooltip("ドラム処理フラグ（falseだと判定が無視される）")]
+    private bool drumActive;
 
     #endregion
     void Start()
     {
+        drumActive = true;
     }
-    private void Update()
+
+    /// <summary>
+    /// ドラム処理
+    /// </summary>
+    /// <param name="i"></param>
+    public void DrumAction(int i)
     {
-        //スライダーの値を反映
-        bgmVol = (int)opSliders[0].value;
-        seVol = (int)opSliders[1].value;
-        notesSpeed = (int)opSliders[2].value;
-        //スライダーの値を表示
-        opValueFields[0].text = bgmVol.ToString();
-        opValueFields[1].text = seVol.ToString();
-        opValueFields[2].text = notesSpeed.ToString();
-        //トグルを反映
-        effectFlag = opToggles[0].isOn;
-        debugFlag = opToggles[1].isOn;
+        #region 処理メモ
+        /*
+        ドラム番号取得
+        ゲーム状態取得
+        タイトル画面の場合
+            タイトルアニメ再生
+        選曲画面の場合
+            曲移動処理
+        レベル選択画面の場合
+            レベル移動処理、譜面生成処理
+        プレイ画面の場合
+            判定処理
+        リザルト画面の場合
+            選曲画面遷移処理
+        */
+        #endregion
+        //処理待ち対策
+        if (drumActive)
+        {
+            switch (settingScr.windowFlag)
+            {
+                case 0:
+                    //High時のみ
+                    if (i == 0)
+                    {
+                        drumActive = false;
+                        SetMusicData();
+                        uiScr.GameStart();
+                    }
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                default:
+                    Debug.LogError("[<color=red>E100</color>]画面番号が不正です");
+                    break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// ドラム処理を可能にする
+    /// </summary>
+    public void DrumActive()
+    {
+        drumActive = true;
+    }
+
+    /// <summary>
+    /// 譜面基本情報をセット
+    /// </summary>
+    public void SetMusicData()
+    {
+        txtConverter.SetTextFile(1,1);
     }
 }

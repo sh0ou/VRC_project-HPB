@@ -130,7 +130,7 @@ MonoBehaviour:
       Data: 9|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: HPB_GameManager, Assembly-CSharp
+      Data: HPB_SettingsManager, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

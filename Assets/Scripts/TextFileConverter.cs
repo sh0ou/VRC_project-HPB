@@ -9,11 +9,8 @@ using UnityEngine.UI;
 /// </summary>
 public class TextFileConverter : UdonSharpBehaviour
 {
-    [SerializeField, Tooltip("テキストアセット\n<1列目>参照する譜面番号\n<2列目>0=基本データ\n1=時間データ\n2=ノーツデータ\n3=レーンデータ")]
-    private TextAsset[][] textFile;
-
-    //[SerializeField, Tooltip("テキストUI\n0=基本データ\n1=時間データ\n2=ノーツデータ\n3=レーンデータ")]
-    //private Text[] textUI = new Text[4];
+    [SerializeField, Tooltip("テキストアセット\n（1,2列目はparamタグを参照）\n<3列目>0=基本データ\n1=時間データ\n2=ノーツデータ\n3=レーンデータ")]
+    private TextAsset[][][] textFile;
 
     [Tooltip("テキスト格納用変数\n0=基本データ\n1=時間データ\n2=ノーツデータ\n3=レーンデータ")]
     private string[] textStorage = new string[4];
@@ -23,23 +20,19 @@ public class TextFileConverter : UdonSharpBehaviour
 
     void Start()
     {
-        //テキスト表示
-        //textUI[0].text = textDB[0][1];
-        //textUI[1].text = textDB[1][1];
-        //textUI[2].text = textDB[2][1];
-        //textUI[3].text = textDB[3][1];
+
     }
     /// <summary>
     /// 譜面ファイルを配列に変換するメソッド
     /// </summary>
-    /// <param name="参照する譜面番号"></param>
-    public void SetTextFile(int i)
+    ///<param name="i">譜面番号</param><param name="i2">レベル種</param>
+    public void SetTextFile(int i, int i2)
     {
         Debug.Log("譜面番号" + i + "のテキストファイル変換を開始します...");
-        textStorage[0] = textFile[i][0].text;
-        textStorage[1] = textFile[i][1].text;
-        textStorage[2] = textFile[i][2].text;
-        textStorage[3] = textFile[i][3].text;
+        textStorage[0] = textFile[i][i2][0].text;
+        textStorage[1] = textFile[i][i2][1].text;
+        textStorage[2] = textFile[i][i2][2].text;
+        textStorage[3] = textFile[i][i2][3].text;
         //格納変数を配列化
         Debug.Log("配列代入を開始します...");
         textDB[0] = textStorage[0].Split('\n');

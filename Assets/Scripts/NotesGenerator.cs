@@ -31,7 +31,7 @@ public class NotesGenerator : UdonSharpBehaviour
     #endregion
     #region 変数
     [SerializeField]
-    private HPB_GameManager hpb_GM;
+    private HPB_SettingsManager hpb_GM;
 
     [SerializeField]
     private SoundManager soundManager;
@@ -50,8 +50,8 @@ public class NotesGenerator : UdonSharpBehaviour
     #endregion
     void Start()
     {
-        textFileConverter.SetTextFile(1);
-        SetNotes();
+        //textFileConverter.SetTextFile(1);
+        //SetNotes();
     }
     /// <summary>
     /// ノーツを生成
