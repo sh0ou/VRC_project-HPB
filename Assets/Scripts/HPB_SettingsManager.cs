@@ -35,13 +35,20 @@ public class HPB_SettingsManager : UdonSharpBehaviour
 
     #endregion
     #region UIオブジェクト
-    [SerializeField, Tooltip("各設定スライダーUI\n0=BGM\n1=SE\n2=スピード")]
+    [SerializeField, Tooltip
+    ("UIオンオフ用Obj\n0=オン時\n1=オフ時")]
+    private GameObject[] opUIObj;
+
+    [SerializeField, Tooltip
+        ("各設定スライダーUI\n0=BGM\n1=SE\n2=スピード")]
     private Slider[] opSliders = new Slider[3];
 
-    [SerializeField, Tooltip("値更新用InputField\n0=bgm\n1=se\n2=speed")]
+    [SerializeField, Tooltip
+        ("値更新用InputField\n0=bgm\n1=se\n2=speed")]
     private InputField[] opValueFields = new InputField[3];
 
-    [SerializeField, Tooltip("各設定トグルUI\n0=エフェクト\n1=デバッグ")]
+    [SerializeField, Tooltip
+        ("各設定トグルUI\n0=エフェクト\n1=デバッグ")]
     private Toggle[] opToggles = new Toggle[2];
 
     #endregion
@@ -54,8 +61,17 @@ public class HPB_SettingsManager : UdonSharpBehaviour
         gamePlay = false;
         debugFlag = false;
         effectFlag = true;
+        SetUIActive(true);
     }
     private void Update()
+    {
+        SetOptionValue();
+    }
+
+    /// <summary>
+    /// オプション設定を反映させます
+    /// </summary>
+    public void SetOptionValue()
     {
         //スライダーの値を反映
         bgmVol = (int)opSliders[0].value;
@@ -68,5 +84,23 @@ public class HPB_SettingsManager : UdonSharpBehaviour
         //トグルを反映
         effectFlag = opToggles[0].isOn;
         debugFlag = opToggles[1].isOn;
+    }
+
+    /// <summary>
+    /// UIのアクティブ状態を切り替えます
+    /// </summary>
+    /// <param name="b"></param>
+    public void SetUIActive(bool b)
+    {
+        if (b)
+        {
+            opUIObj[0].SetActive(true);
+            opUIObj[1].SetActive(false);
+        }
+        else
+        {
+            opUIObj[0].SetActive(false);
+            opUIObj[1].SetActive(true);
+        }
     }
 }

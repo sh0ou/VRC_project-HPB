@@ -9,8 +9,8 @@ using VRC.Udon;
 public class HPB_PlayManager : UdonSharpBehaviour
 {
     /* やることリスト
-    ・ここのUI変数を追加
-    ・ドラムによるUI操作
+    ・ここのUI変数を追加@OK
+    ・ドラムによるUI操作@OK
         1,4＝もどる　2,3=難易度変更
         ドラムを叩く
         叩かれたドラムの番号メソッドを送信
@@ -26,16 +26,19 @@ public class HPB_PlayManager : UdonSharpBehaviour
         ランク演出
         アニメ終了後に表示画面変数を変更
         （もどるアクションをアクティブにする）
-    ・基本データを取得する
+    ・基本データを取得する@OK
         選曲画面ロード時
         レベル選択画面ロード時
         プレイ画面ロード時
-    ・スタート画面
+    ・スタート画面@OK
         いずれかのドラムを叩くとスタート
         選曲画面表示
         表示画面変数変更処理
      */
     #region 変数
+    [SerializeField, Tooltip("ドラムスティック（右）")]
+    public GameObject drumStick;
+
     [SerializeField, Tooltip("楽曲スコア")]
     public int score_now;
 
@@ -48,7 +51,7 @@ public class HPB_PlayManager : UdonSharpBehaviour
     [SerializeField, Tooltip("チェイン数")]
     public int chain;
 
-    [SerializeField, Tooltip("ノーツ判定数")]
+    [SerializeField, Tooltip("ノーツ判定数\n0=Happy\n1=Good\n2=Sad\n3=Miss")]
     public int[] judgedValue = new int[4];
 
     [SerializeField, Tooltip("フルチェインフラグ")]
