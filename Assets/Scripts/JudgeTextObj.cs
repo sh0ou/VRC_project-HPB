@@ -8,13 +8,12 @@ using VRC.Udon;
 /// </summary>
 public class JudgeTextObj : UdonSharpBehaviour
 {
-    [SerializeField]
-    Animator animator;
     public int judgeValue = 1;
 
     void Start()
     {
         this.transform.SetParent(GameObject.Find("UI_JudgeText").transform);
+        this.transform.localScale = new Vector3(1, 1, 1);
         //判定に応じて出現位置を変更
         float posx = 0;
         switch (judgeValue)
@@ -33,7 +32,6 @@ public class JudgeTextObj : UdonSharpBehaviour
                 break;
         }
         this.transform.localPosition = new Vector3(posx, 0, 0);
-        animator.Play("JudgeText");
     }
     public void AnimEnd()
     {

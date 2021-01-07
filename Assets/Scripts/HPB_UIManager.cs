@@ -17,7 +17,13 @@ public class HPB_UIManager : UdonSharpBehaviour
     #region 共通
     [Header("共通")]
     [SerializeField, Tooltip("ゲームマネージャ")]
-    private HPB_GameManager gameManager;
+    private HPB_GameManager gameMng;
+
+    [SerializeField, Tooltip("プレイマネージャ")]
+    private HPB_PlayManager playMng;
+
+    [SerializeField, Tooltip("設定マネージャ")]
+    private HPB_SettingsManager settingsMng;
 
     [SerializeField, Tooltip
         ("ドラムガイドUI\n0=左UI_選曲\n1=左UI_レベル\n2=右UI=選曲\n3=右UI_レベル")]
@@ -56,23 +62,33 @@ public class HPB_UIManager : UdonSharpBehaviour
     #region プレイ画面（値,色更新に使用）
     [Header("プレイ画面1")]
     [SerializeField, Tooltip
-        ("値更新用UI\n0=タイトル\n1=アーティスト\n2=レベル\n3=レベル種類")]
+        ("値更新用UI\n0=タイトル\n1=アーティスト\n2=レベル1\n3=レベル2\n4=レベル3")]
     public InputField[] inputFields_play_1;
-
-    [SerializeField, Tooltip
-        ("色変更用UI\n0=レベル種類\n1=レベル値")]
-    private Animator[] fixedText_play_1;
-
-    [Header("プレイ画面2")]
-    [SerializeField, Tooltip
-        ("値更新用UI\n0=チェイン\n1=スコア")]
-    public InputField[] inputFields_play_2;
 
     //TMP指定できないのでAnimator
     //（プリセットどれかわからないので直接指定）
+    //[SerializeField, Tooltip
+    //    ("色変更用UI\n0=レベル種類\n1=レベル値")]
+    //private Animator[] fixedText_play_1;
+
+    [SerializeField, Tooltip("UIオブジェクト\n0=レベル1\n1=レベル2\n2=レベル3")]
+    private GameObject[] uiObj_play_1;
+
+    [Header("プレイ画面2")]
     [SerializeField, Tooltip
-        ("色変更用UI\n0=チェイン値\n1=スコア値")]
-    private Animator[] fixedText_play_2;
+        ("値更新用UI\n0=スコアD\n1=スコアC\n2=スコアB\n3=スコアA\n4=スコアS\n5=チェイン\n6=チェインFC\n7=チェインAH")]
+    public InputField[] inputFields_play_2;
+
+    [SerializeField, Tooltip
+        ("値更新アニメUI")]
+    private Animator fixedText_play_2;
+
+    [SerializeField, Tooltip
+        ("UIオブジェクト\n0=RankD 1=RankC 2=RankB\n3=RankA 4=RankS\n5=chain 6=chain_FC 7=chain_AH\n8=chain_root")]
+    private GameObject[] uiObj_play_2;
+
+    [SerializeField, Tooltip("判定UIオブジェクト\n0=H判定\n1=G判定\n2=S判定")]
+    public GameObject[] uiObj_judge;
 
     #endregion
     #region リザルト画面（値,色更新に使用）
@@ -84,12 +100,16 @@ public class HPB_UIManager : UdonSharpBehaviour
     public Text text_playerName;
 
     [SerializeField, Tooltip
-        ("値更新用UI\n0=ランク\n1=スコア\n2=H判定\n3=G判定\n4=S判定\n5=M判定")]
-    public InputField[] valueFields_result;
+    ("UIオブジェクト\n0=RankD 1=RankC 2=RankB\n3=RankA 4=RankS\n5=score 6=score_FC 7=score_AH")]
+    private GameObject[] uiObj_result;
 
     [SerializeField, Tooltip
-        ("色更新用UI\n0=ランク\n1=スコア値")]
-    private Animator[] fixedText_result;
+        ("値更新用UI\n0=スコア\n1=スコア_FC\n2=スコア_AH\n3=H判定\n4=G判定\n5=S判定\n6=M判定")]
+    public InputField[] valueFields_result;
+
+    //[SerializeField, Tooltip
+    //    ("色更新用UI\n0=ランク\n1=スコア値\n2=スコアテキスト")]
+    //private Animator[] fixedText_result;
 
     #endregion
     void Start()
@@ -155,6 +175,7 @@ public class HPB_UIManager : UdonSharpBehaviour
     /// </summary>
     public void Open_select1()
     {
+        windowAnims[1].gameObject.SetActive(true);
         windowAnims[1].Play("open_select_1");
         guideUI[0].SetActive(true);
         guideUI[1].SetActive(false);
@@ -167,6 +188,7 @@ public class HPB_UIManager : UdonSharpBehaviour
     /// </summary>
     public void Open_select2()
     {
+        windowAnims[2].gameObject.SetActive(true);
         windowAnims[2].Play("open_select_2");
         guideUI[0].SetActive(false);
         guideUI[1].SetActive(true);
@@ -176,79 +198,282 @@ public class HPB_UIManager : UdonSharpBehaviour
 
     public void Open_play()
     {
+        windowAnims[3].gameObject.SetActive(true);
         windowAnims[3].Play("open_play_1");
+        windowAnims[4].gameObject.SetActive(true);
         windowAnims[4].Play("open_play_2");
     }
 
     public void Open_result()
     {
+        //Debug.Log(fixedText_result[0].GetCurrentAnimatorStateInfo(0));
+        //TMPAnim_value();
+        windowAnims[5].gameObject.SetActive(true);
         windowAnims[5].Play("open_result");
     }
     #endregion
 
     /// <summary>
-    /// TMP色変更
+    /// レベルUIのアクティブ切替
     /// </summary>
-    public void TMPAnim_lv(int i)
+    /// <param name="i">レベル</param>
+    public void UIActive_level(int i)
     {
         switch (i)
         {
             case 0:
-                fixedText_play_1[0].Play("TMPC_Level_1");
-                fixedText_play_1[1].Play("TMPC_Level_1");
+                uiObj_play_1[0].SetActive(true);
+                uiObj_play_1[1].SetActive(false);
+                uiObj_play_1[2].SetActive(false);
                 break;
             case 1:
-                fixedText_play_1[0].Play("TMPC_Level_2");
-                fixedText_play_1[1].Play("TMPC_Level_2");
+                uiObj_play_1[0].SetActive(false);
+                uiObj_play_1[1].SetActive(true);
+                uiObj_play_1[2].SetActive(false);
                 break;
             case 2:
-                fixedText_play_1[0].Play("TMPC_Level_3");
-                fixedText_play_1[1].Play("TMPC_Level_3");
+                uiObj_play_1[0].SetActive(false);
+                uiObj_play_1[1].SetActive(false);
+                uiObj_play_1[2].SetActive(true);
+                break;
+        }
+        uiObj_play_1[0].SetActive(true);
+    }
+
+    /// <summary>
+    /// ランクUIのアクティブ切替
+    /// </summary>
+    /// <param name="i">ランク</param>
+    public void UIActive_rank(int i)
+    {
+        switch (i)
+        {
+            //rankS
+            case 0:
+                uiObj_play_2[0].SetActive(false);
+                uiObj_play_2[1].SetActive(false);
+                uiObj_play_2[2].SetActive(false);
+                uiObj_play_2[3].SetActive(false);
+                uiObj_play_2[4].SetActive(true);
+                uiObj_result[0].SetActive(false);
+                uiObj_result[1].SetActive(false);
+                uiObj_result[2].SetActive(false);
+                uiObj_result[3].SetActive(false);
+                uiObj_result[4].SetActive(true);
+                break;
+            //rankA
+            case 1:
+                uiObj_play_2[0].SetActive(false);
+                uiObj_play_2[1].SetActive(false);
+                uiObj_play_2[2].SetActive(false);
+                uiObj_play_2[3].SetActive(true);
+                uiObj_play_2[4].SetActive(false);
+                uiObj_result[0].SetActive(false);
+                uiObj_result[1].SetActive(false);
+                uiObj_result[2].SetActive(false);
+                uiObj_result[3].SetActive(true);
+                uiObj_result[4].SetActive(false);
+                break;
+            //rankB
+            case 2:
+                uiObj_play_2[0].SetActive(false);
+                uiObj_play_2[1].SetActive(false);
+                uiObj_play_2[2].SetActive(true);
+                uiObj_play_2[3].SetActive(false);
+                uiObj_play_2[4].SetActive(false);
+                uiObj_result[0].SetActive(false);
+                uiObj_result[1].SetActive(false);
+                uiObj_result[2].SetActive(true);
+                uiObj_result[3].SetActive(false);
+                uiObj_result[4].SetActive(false);
+                break;
+            //rankC
+            case 3:
+                uiObj_play_2[0].SetActive(false);
+                uiObj_play_2[1].SetActive(true);
+                uiObj_play_2[2].SetActive(false);
+                uiObj_play_2[3].SetActive(false);
+                uiObj_play_2[4].SetActive(false);
+                uiObj_result[0].SetActive(false);
+                uiObj_result[1].SetActive(true);
+                uiObj_result[2].SetActive(false);
+                uiObj_result[3].SetActive(false);
+                uiObj_result[4].SetActive(false);
+                break;
+            //rankD
+            case 4:
+                uiObj_play_2[0].SetActive(true);
+                uiObj_play_2[1].SetActive(false);
+                uiObj_play_2[2].SetActive(false);
+                uiObj_play_2[3].SetActive(false);
+                uiObj_play_2[4].SetActive(false);
+                uiObj_result[0].SetActive(true);
+                uiObj_result[1].SetActive(false);
+                uiObj_result[2].SetActive(false);
+                uiObj_result[3].SetActive(false);
+                uiObj_result[4].SetActive(false);
                 break;
         }
     }
 
     /// <summary>
-    /// TMPスコア,チェイン色変更
+    /// チェインUIのアクティブ切替
     /// </summary>
-    /// <param name="i">ランク</param>
-    /// <param name="b_ah">AllHappyフラグ</param>
-    /// <param name="b_fc">FullChainフラグ</param>
-    public void TMPAnim_value(int i, bool b_ah, bool b_fc)
+    /// <param name="i">フラグ</param>
+    public void UIActive_chain(int i)
     {
-        //スコア色設定
         switch (i)
         {
+            //AH
             case 0:
-                fixedText_play_2[1].Play("TMPC_Rank_D");
+                uiObj_play_2[5].SetActive(false);
+                uiObj_play_2[6].SetActive(false);
+                uiObj_play_2[7].SetActive(true);
+                uiObj_result[5].SetActive(false);
+                uiObj_result[6].SetActive(false);
+                uiObj_result[7].SetActive(true);
                 break;
+            //FC
             case 1:
-                fixedText_play_2[1].Play("TMPC_Rank_C");
+                uiObj_play_2[5].SetActive(false);
+                uiObj_play_2[6].SetActive(true);
+                uiObj_play_2[7].SetActive(false);
+                uiObj_result[5].SetActive(false);
+                uiObj_result[6].SetActive(true);
+                uiObj_result[7].SetActive(false);
                 break;
+            //フラグなし
             case 2:
-                fixedText_play_2[1].Play("TMPC_Rank_B");
-                break;
-            case 3:
-                fixedText_play_2[1].Play("TMPC_Rank_A");
-                break;
-            case 4:
-                fixedText_play_2[1].Play("TMPC_Rank_S");
+                uiObj_play_2[5].SetActive(true);
+                uiObj_play_2[6].SetActive(false);
+                uiObj_play_2[7].SetActive(false);
+                uiObj_result[5].SetActive(true);
+                uiObj_result[6].SetActive(false);
+                uiObj_result[7].SetActive(false);
                 break;
         }
-        //チェイン色設定
-        if (b_ah)
+    }
+
+    /// <summary>
+    /// 値加算,リセット処理
+    /// </summary>
+    /// <param name="b">フラグ</param>
+    public void UIAnim_value(bool b)
+    {
+        if (b)
         {
-            fixedText_play_2[0].Play("TMPC_Rank_S");
-        }
-        else if (b_fc)
-        {
-            fixedText_play_2[0].Play("TMPC_FC");
+            uiObj_play_2[8].SetActive(true);
+            fixedText_play_2.Play("addvalue", 0, 0);
         }
         else
         {
-            fixedText_play_2[0].Play("TMPC_clear");
+            uiObj_play_2[8].SetActive(false);
         }
     }
+
+    ///// <summary>
+    ///// TMP色変更
+    ///// </summary>
+    //public void TMPAnim_lv(int i)
+    //{
+    //    switch (i)
+    //    {
+    //        case 0:
+    //            fixedText_play_1[0].Play("TMPC_Level_1");
+    //            fixedText_play_1[1].Play("TMPC_Level_1");
+    //            break;
+    //        case 1:
+    //            fixedText_play_1[0].Play("TMPC_Level_2");
+    //            fixedText_play_1[1].Play("TMPC_Level_2");
+    //            break;
+    //        case 2:
+    //            fixedText_play_1[0].Play("TMPC_Level_3");
+    //            fixedText_play_1[1].Play("TMPC_Level_3");
+    //            break;
+    //    }
+    //}
+
+    ///// <summary>
+    ///// TMPスコア,チェイン色変更
+    ///// </summary>
+    ///// <param name="i">ランク</param>
+    ///// <param name="b_ah">AllHappyフラグ</param>
+    ///// <param name="b_fc">FullChainフラグ</param>
+    //public void TMPAnim_value()
+    //{
+    //    if(settingsMng.windowFlag == 3)
+    //    {
+    //        switch (playMng.clearRank)
+    //        {
+    //            case 0:
+    //                fixedText_play_2[1].Play("TMPC_Rank_D");
+    //                break;
+    //            case 1:
+    //                fixedText_play_2[1].Play("TMPC_Rank_C");
+    //                break;
+    //            case 2:
+    //                fixedText_play_2[1].Play("TMPC_Rank_B");
+    //                break;
+    //            case 3:
+    //                fixedText_play_2[1].Play("TMPC_Rank_A");
+    //                break;
+    //            case 4:
+    //                fixedText_play_2[1].Play("TMPC_Rank_S");
+    //                break;
+    //        }
+    //        if (playMng.ahFlag)
+    //        {
+    //            fixedText_play_2[0].Play("TMPC_AH");
+    //        }
+    //        else if (playMng.fcFlag)
+    //        {
+    //            fixedText_play_2[0].Play("TMPC_FC");
+    //        }
+    //        else
+    //        {
+    //            fixedText_play_2[0].Play("TMPC_clear");
+    //        }
+    //    }
+    //    else
+    //    {
+    //        switch (playMng.clearRank)
+    //        {
+    //            case 0:
+    //                fixedText_result[0].Play("TMPC_Rank_D");
+    //                break;
+    //            case 1:
+    //                fixedText_result[0].Play("TMPC_Rank_C");
+    //                break;
+    //            case 2:
+    //                fixedText_result[0].Play("TMPC_Rank_B");
+    //                break;
+    //            case 3:
+    //                fixedText_result[0].Play("TMPC_Rank_A");
+    //                break;
+    //            case 4:
+    //                fixedText_result[0].Play("TMPC_Rank_S");
+    //                break;
+    //        }
+    //        if (playMng.ahFlag)
+    //        {
+    //            FCObject[0].SetActive(true);
+    //            FCObject[1].SetActive(false);
+    //            fixedText_result[1].Play("TMPC_AH");
+    //        }
+    //        else if (playMng.fcFlag)
+    //        {
+    //            FCObject[0].SetActive(false);
+    //            FCObject[1].SetActive(true);
+    //            fixedText_result[1].Play("TMPC_FC");
+    //        }
+    //        else
+    //        {
+    //            FCObject[0].SetActive(false);
+    //            FCObject[1].SetActive(false);
+    //            fixedText_result[1].Play("TMPC_clear");
+    //        }
+    //    }
+    //}
 
     /// <summary>
     /// アニメーション終了後処理
@@ -258,7 +483,7 @@ public class HPB_UIManager : UdonSharpBehaviour
         switch (i)
         {
             case 0://アクティブ状態切替
-                gameManager.DrumActive();
+                gameMng.DrumActive();
                 break;
             case 1://選曲画面オープン
                 Open_select1();
@@ -270,10 +495,13 @@ public class HPB_UIManager : UdonSharpBehaviour
                 Open_play();
                 break;
             case 4://リザルト画面オープン
-                Open_result();
+                if (settingsMng.windowFlag == 4)
+                {
+                    Open_result();
+                }
                 break;
             default:
-                Debug.LogError("[<color=red>E103</color>]アニメ後処理値が不正です");
+                Debug.LogError("[<color=red>E104</color>]アニメ後処理値が不正です");
                 break;
         }
     }

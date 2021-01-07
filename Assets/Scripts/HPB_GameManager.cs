@@ -13,13 +13,16 @@ public class HPB_GameManager : UdonSharpBehaviour
     private HPB_PlayManager playMng;
 
     [SerializeField, Tooltip("設定マネージャ")]
-    private HPB_SettingsManager settingMng;
+    private HPB_SettingsManager settingsMng;
 
     [SerializeField, Tooltip("UIマネージャ")]
     private HPB_UIManager uiMng;
 
     [SerializeField, Tooltip("テキスト変換スクリプト")]
     private TextFileConverter txtConverter;
+
+    [SerializeField, Tooltip("ノーツジェネレータ")]
+    private NotesGenerator notesGen;
 
     [SerializeField, Tooltip("ドラム処理フラグ（falseだと判定が無視される）")]
     private bool drumActive;
@@ -36,6 +39,22 @@ public class HPB_GameManager : UdonSharpBehaviour
         drumActive = true;
         selectMusicNum = 0;
         selectLevelNum = 0;
+        txtConverter.SetTextFile(0, 0);
+        notesGen.SetNotes();
+        SetUIData();
+    }
+
+    private void Update()
+    {
+        if (settingsMng.gamePlay)
+        {
+            playMng.playTime += Time.deltaTime;
+            //楽曲時間がプレイ時間を超えると終了
+            if (playMng.playTime >= float.Parse(txtConverter.textDB[0][4]))
+            {
+                EndMusic();
+            }
+        }
     }
 
     /// <summary>
@@ -65,13 +84,14 @@ public class HPB_GameManager : UdonSharpBehaviour
         //処理待ち対策
         if (drumActive)
         {
-            switch (settingMng.windowFlag)
+            switch (settingsMng.windowFlag)
             {
                 case 0:
                     //ゲーム開始
                     if (i == 0)
                     {
                         drumActive = false;
+                        settingsMng.windowFlag = 1;
                         SetUIData();
                         uiMng.Close_title();
                     }
@@ -94,12 +114,14 @@ public class HPB_GameManager : UdonSharpBehaviour
                     else if (i == 0)
                     {
                         drumActive = false;
+                        settingsMng.windowFlag = 2;
                         SetUIData();
                         uiMng.Close_select1();
                     }
                     break;
                 #endregion
                 case 2:
+                    #region 処理
                     //楽曲選択に戻る
                     if (i == 1 || i == 4)
                     {
@@ -128,15 +150,21 @@ public class HPB_GameManager : UdonSharpBehaviour
                     //プレイ開始
                     else if (i == 0)
                     {
+                        drumActive = false;
+                        settingsMng.windowFlag = 3;
+                        SetUIData();
                         uiMng.Close_select2();
                     }
                     break;
+                #endregion
                 case 3:
                     //判定処理
+                    JudgeNotes(i);
                     break;
                 case 4:
                     //楽曲選択に戻る
                     drumActive = false;
+                    settingsMng.windowFlag = 1;
                     SetUIData();
                     uiMng.Close_result();
                     break;
@@ -161,8 +189,9 @@ public class HPB_GameManager : UdonSharpBehaviour
     public void SetUIData()
     {
         txtConverter.SetTextFile(selectMusicNum, selectLevelNum);
+        Debug.Log("窓処理:" + settingsMng.windowFlag);
         //開いてる窓によって処理を変更
-        switch (settingMng.windowFlag)
+        switch (settingsMng.windowFlag)
         {
             case 1:
                 #region 選曲画面処理
@@ -217,38 +246,54 @@ public class HPB_GameManager : UdonSharpBehaviour
                 uiMng.inputFields_play_1[0].text = txtConverter.textDB[0][0];
                 uiMng.inputFields_play_1[1].text = txtConverter.textDB[0][1];
                 uiMng.inputFields_play_1[2].text = txtConverter.textDB[0][3];
+                uiMng.inputFields_play_1[3].text = txtConverter.textDB[0][3];
+                uiMng.inputFields_play_1[4].text = txtConverter.textDB[0][3];
+                uiMng.inputFields_play_2[0].text = playMng.score_now.ToString();
+                uiMng.inputFields_play_2[1].text = playMng.score_now.ToString();
+                uiMng.inputFields_play_2[2].text = playMng.score_now.ToString();
+                uiMng.inputFields_play_2[3].text = playMng.score_now.ToString();
+                uiMng.inputFields_play_2[4].text = playMng.score_now.ToString();
+                uiMng.inputFields_play_2[5].text = playMng.chain.ToString();
+                uiMng.inputFields_play_2[6].text = playMng.chain.ToString();
+                uiMng.inputFields_play_2[7].text = playMng.chain.ToString();
                 //レベル種類のセット
-                switch (selectLevelNum)
-                {
-                    case 0:
-                        uiMng.inputFields_play_1[3].text = "Normal";
-                        uiMng.TMPAnim_lv(0);
-                        break;
-                    case 1:
-                        uiMng.inputFields_play_1[3].text = "Hard";
-                        uiMng.TMPAnim_lv(1);
-                        break;
-                    case 2:
-                        uiMng.inputFields_play_1[3].text = "Party";
-                        uiMng.TMPAnim_lv(2);
-                        break;
-                }
+                SetUI_level();
+                SetUI_score();
+                SetUI_chainFlag();
+                //switch (selectLevelNum)
+                //{
+                //    case 0:
+                //        SetUI_level();
+                //        //uiMng.inputFields_play_1[3].text = "Normal";
+                //        //uiMng.TMPAnim_lv(0);
+                //        break;
+                //    case 1:
+                //        //uiMng.inputFields_play_1[3].text = "Hard";
+                //        //uiMng.TMPAnim_lv(1);
+                //        break;
+                //    case 2:
+                //        //uiMng.inputFields_play_1[3].text = "Party";
+                //        //uiMng.TMPAnim_lv(2);
+                //        break;
+                //}
                 #endregion
                 break;
             case 4:
                 #region リザルト画面処理
                 //値をセット
-                uiMng.valueFields_result[0].text = GetClearRank();
+                SetUI_score();
+                SetUI_chainFlag();
+                //uiMng.valueFields_result[0].text = GetClearRank();
+                uiMng.valueFields_result[0].text = playMng.score_now.ToString();
                 uiMng.valueFields_result[1].text = playMng.score_now.ToString();
-                uiMng.valueFields_result[2].text = playMng.judgedValue[0].ToString();
-                uiMng.valueFields_result[3].text = playMng.judgedValue[1].ToString();
-                uiMng.valueFields_result[4].text = playMng.judgedValue[2].ToString();
-                uiMng.valueFields_result[5].text = playMng.judgedValue[3].ToString();
+                uiMng.valueFields_result[2].text = playMng.score_now.ToString();
+                uiMng.valueFields_result[3].text = playMng.judgedValue[0].ToString();
+                uiMng.valueFields_result[4].text = playMng.judgedValue[1].ToString();
+                uiMng.valueFields_result[5].text = playMng.judgedValue[2].ToString();
+                uiMng.valueFields_result[6].text = playMng.judgedValue[3].ToString();
                 uiMng.jacketImage_result.GetComponent<Renderer>().material =
                     uiMng.jacketList[selectMusicNum][selectLevelNum];
-                uiMng.text_playerName.text = Networking.GetOwner(playMng.drumStick).displayName;
-                //色変更
-                uiMng.TMPAnim_value(playMng.clearRank, playMng.ahFlag, playMng.fcFlag);
+                //uiMng.text_playerName.text = Networking.GetOwner(playMng.drumStick).displayName;
                 #endregion
                 break;
             default:
@@ -257,42 +302,129 @@ public class HPB_GameManager : UdonSharpBehaviour
         }
     }
 
+    ///// <summary>
+    ///// クリアランクをテキストに変換
+    ///// </summary>
+    ///// <returns></returns>
+    //private string GetClearRank()
+    //{
+    //    string s = "?";
+    //    switch (playMng.clearRank)
+    //    {
+    //        case 0:
+    //            s = "D";
+    //            break;
+    //        case 1:
+    //            s = "C";
+    //            break;
+    //        case 2:
+    //            s = "B";
+    //            break;
+    //        case 3:
+    //            s = "A";
+    //            break;
+    //        case 4:
+    //            s = "S";
+    //            break;
+    //        default:
+    //            Debug.LogError("[<color=red>E102</color>]クリアランク値が不正です");
+    //            break;
+    //    }
+    //    return s;
+    //}
+
+    ///// <summary>
+    ///// クリアランクを表示
+    ///// </summary>
+    //private void SetClearRank()
+    //{
+    //    switch (playMng.clearRank)
+    //    {
+    //        case 0:
+    //            uiMng.UIActive_rank
+    //            break;
+    //        case 1:
+    //            break;
+    //        case 2:
+    //            break;
+    //        case 3:
+    //            break;
+    //        case 4:
+    //            break;
+    //        default:
+    //            Debug.LogError("[<color=red>E102</color>]クリアランク値が不正です");
+    //            break;
+    //    }
+    //}
+
     /// <summary>
-    /// クリアランクをテキストに変換
+    /// レベルUIをセット
     /// </summary>
-    /// <returns></returns>
-    private string GetClearRank()
+    private void SetUI_level()
     {
-        string s = "?";
-        switch (playMng.clearRank)
+        uiMng.UIActive_level(selectLevelNum);
+    }
+
+    /// <summary>
+    /// ランク,スコアUIをセット
+    /// </summary>
+    private void SetUI_score()
+    {
+        //rankS
+        if (playMng.score_now >= 95000)
         {
-            case 0:
-                s = "D";
-                break;
-            case 1:
-                s = "C";
-                break;
-            case 2:
-                s = "B";
-                break;
-            case 3:
-                s = "A";
-                break;
-            case 4:
-                s = "S";
-                break;
-            default:
-                Debug.LogError("[<color=red>E102</color>]クリアランク値が不正です");
-                break;
+            uiMng.UIActive_rank(0);
         }
-        return s;
+        //rankA
+        else if (playMng.score_now >= 90000)
+        {
+            uiMng.UIActive_rank(1);
+        }
+        //rankB
+        else if (playMng.score_now >= 80000)
+        {
+            uiMng.UIActive_rank(2);
+        }
+        //rankC
+        else if (playMng.score_now >= 70000)
+        {
+            uiMng.UIActive_rank(3);
+        }
+        //rankD
+        else
+        {
+            uiMng.UIActive_rank(4);
+        }
+    }
+
+    /// <summary>
+    /// AH,FCフラグをセット
+    /// </summary>
+    private void SetUI_chainFlag()
+    {
+        //5チェイン以上のみ表示
+        if (playMng.chain >= 5)
+        {
+            if (playMng.ahFlag)
+            {
+                uiMng.UIActive_chain(0);
+            }
+            else if (playMng.fcFlag)
+            {
+                uiMng.UIActive_chain(1);
+            }
+            else
+            {
+                uiMng.UIActive_chain(2);
+            }
+        }
     }
 
     /// <summary>
     /// ノーツ判定処理
     /// </summary>
     /// <param name="i">レーン</param>
-    private void JudgeNotes(int i)
+    public void JudgeNotes(int i)
     {
         /*
         範囲外は無視
@@ -305,5 +437,29 @@ public class HPB_GameManager : UdonSharpBehaviour
 
         レーン内のノーツを探して差を計算？
          */
+        playMng.score_now += 5000;
+        playMng.chain += 1;
+        SetUIData();
+        SetUI_score();
+        SetUI_chainFlag();
+        uiMng.UIAnim_value(true);
+        GameObject g = VRCInstantiate(uiMng.uiObj_judge[Random.Range(0,2)]);
+        g.GetComponent<JudgeTextObj>().judgeValue = 2;
+    }
+
+    /// <summary>
+    /// 楽曲終了時処理
+    /// </summary>
+    public void EndMusic()
+    {
+        //SoundManagerで再生されている楽曲が終了すると発火
+        settingsMng.gamePlay = false;
+        settingsMng.windowFlag = 4;
+        playMng.playTime = 0;
+        SetUIData();
+        //uiMng.TMPAnim_value();
+        SetUI_score();
+        SetUI_chainFlag();
+        uiMng.Close_play();
     }
 }

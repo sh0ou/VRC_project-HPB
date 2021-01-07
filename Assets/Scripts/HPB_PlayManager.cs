@@ -39,6 +39,9 @@ public class HPB_PlayManager : UdonSharpBehaviour
     [SerializeField, Tooltip("ドラムスティック（右）")]
     public GameObject drumStick;
 
+    [SerializeField]
+    public float playTime;
+
     [SerializeField, Tooltip("楽曲スコア")]
     public int score_now;
 
@@ -63,6 +66,6 @@ public class HPB_PlayManager : UdonSharpBehaviour
 
     void Start()
     {
-
+        playTime = 0;
     }
 }

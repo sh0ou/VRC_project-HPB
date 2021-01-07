@@ -8,9 +8,6 @@ using VRC.Udon;
 /// </summary>
 public class SoundManager : UdonSharpBehaviour
 {
-    [SerializeField]
-    public float playTime;
-
     [SerializeField, Tooltip("BGMリスト\n0=通常BGM 1...=楽曲BGM")]
     public AudioClip[] bgmLists;
 

@@ -25,7 +25,7 @@ public class DrumsObj : UdonSharpBehaviour
         //ドラムエフェクト
         if (settingsMng.effectFlag)
         {
-            VRCInstantiate(hitParticle);
+            //VRCInstantiate(hitParticle);
         }
         //ドラム処理
         gameMng.DrumAction(drumNum);

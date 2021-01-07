@@ -8,22 +8,26 @@ using VRC.Udon;
 /// </summary>
 public class NotesObj : UdonSharpBehaviour
 {
-    [SerializeField]
+    [SerializeField,Tooltip("ノーツの生存時間")]
     public float lifeTime;
 
+    [SerializeField,Tooltip("判定時間")]
+    public float judgeTime;
+
     [SerializeField]
-    private HPB_SettingsManager test05;
+    private HPB_SettingsManager settingsMng;
     void Start()
     {
-        test05 = GameObject.Find("GameManager").GetComponent<HPB_SettingsManager>();
+        judgeTime = lifeTime;
+        settingsMng = GameObject.Find("GameManager").GetComponent<HPB_SettingsManager>();
     }
     private void Update()
     {
-        transform.position += transform.forward * 3f * test05.notesSpeed * Time.deltaTime;
         //ゲーム中のみ動かす
-        if (test05.gamePlay)
+        if (settingsMng.gamePlay)
         {
-            transform.position += transform.forward * 1f * Time.deltaTime;
+            transform.position += transform.forward * 3.04f * settingsMng.notesSpeed * Time.deltaTime;
+            //transform.position += transform.forward * 1f * Time.deltaTime;
             lifeTime -= Time.deltaTime;
             if (lifeTime <= 0.0f)
             {

@@ -28,10 +28,12 @@ public class AnimRepeater : UdonSharpBehaviour
     public void SetEvent_1()
     {
         uiMng.AnimEnd(1);
+        gameObject.SetActive(false);
     }
 
     public void SetEvent()
     {
         uiMng.AnimEnd(taskValue);
+        gameObject.SetActive(false);
     }
 }

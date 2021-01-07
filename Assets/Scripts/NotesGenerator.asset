@@ -25,7 +25,7 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 11500000, guid: f9757b6eb4a5be94db75a27245667c17, type: 3}
-    - {fileID: 11500000, guid: 063be6397847c8546b95dbe44d89f4c2, type: 3}
+    - {fileID: 11500000, guid: efe5e8c1319283246ae0f99521c4e1a3, type: 3}
     - {fileID: 11500000, guid: cf5f2fdb392d58a40a91a7a1c02b1029, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
@@ -120,7 +120,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: soundManager
+      Data: playMng
     - Name: $v
       Entry: 7
       Data: 7|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
@@ -132,7 +132,7 @@ MonoBehaviour:
       Data: 9|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: SoundManager, Assembly-CSharp
+      Data: HPB_PlayManager, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
@@ -147,10 +147,10 @@ MonoBehaviour:
       Data: VRCUdonUdonBehaviour
     - Name: symbolOriginalName
       Entry: 1
-      Data: soundManager
+      Data: playMng
     - Name: symbolUniqueName
       Entry: 1
-      Data: soundManager
+      Data: playMng
     - Name: symbolDefaultValue
       Entry: 6
       Data: 

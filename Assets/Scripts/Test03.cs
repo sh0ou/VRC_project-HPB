@@ -14,6 +14,9 @@ public class Test03 : UdonSharpBehaviour
     [SerializeField, Tooltip("音声DB")]
     private SoundManager soundList;
 
+    [SerializeField]
+    private HPB_GameManager gameMng;
+
     void Start()
     {
         
@@ -23,8 +26,8 @@ public class Test03 : UdonSharpBehaviour
         if (other.gameObject.layer == 23)
         {
             //ドラム単体を再生
-            audioSource.clip = soundList.seLists[1];
-            audioSource.Play();
+            audioSource.PlayOneShot(soundList.seLists[1]);
+            gameMng.JudgeNotes(1);
         }
     }
 }

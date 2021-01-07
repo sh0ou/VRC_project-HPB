@@ -34,7 +34,7 @@ public class NotesGenerator : UdonSharpBehaviour
     private HPB_SettingsManager hpb_GM;
 
     [SerializeField]
-    private SoundManager soundManager;
+    private HPB_PlayManager playMng;
 
     [SerializeField]
     private TextFileConverter textFileConverter;
@@ -65,20 +65,22 @@ public class NotesGenerator : UdonSharpBehaviour
         //for = 条件が続く限り続行するやつ
         for (int i = 0; i < textFileConverter.textDB[1].Length; i++)
         {
-            //Debug.Log("ノーツNo." + i);
-            //https://www.slideshare.net/tenonnotenonno/ss-63731377
-            //ノーツ位置を計算
             #region デバッグ用
+            //Debug.Log("ノーツNo." + i);
             //Debug.Log("終点位置:" + endPosition.position.z);
             //Debug.Log("テスト:" + textFileConverter.textDB[1][i]);
             //Debug.Log("DB数値:" + float.Parse(textFileConverter.textDB[1][i]));
             //Debug.Log("再生時間:" + soundManager.playTime);
             //Debug.Log("スピード:" + hpb_GM.notesSpeed);
+            //https://www.slideshare.net/tenonnotenonno/ss-63731377
+            //ノーツ位置を計算
             #endregion
-            notesPosz = endPosition.position.z + 
-                ((float.Parse(textFileConverter.textDB[1][i]) - soundManager.playTime) * 
-                (3 * hpb_GM.notesSpeed));
-            //Debug.Log("生成位置:" + notesPos);
+            notesPosz = endPosition.position.z +
+                ((float.Parse(textFileConverter.textDB[1][i]) - playMng.playTime) *
+                (3.04f * hpb_GM.notesSpeed));
+            //2行目の数字は微調整用
+            //↑明らかにずれてる（スタート時ノーツとエンド時ノーツがずれてる）
+            //Debug.Log("生成位置:" + notesPosz);
 
             //ノーツ生成
             notesObjInstance.SetValue(VRCInstantiate(notesObj), i);
@@ -115,7 +117,7 @@ public class NotesGenerator : UdonSharpBehaviour
             //Debug.Log("lifetime取得チェック:" + notesObjInstance[i].GetComponent<NotesObjScr>().lifeTime);
             //Debug.Log("Parseチェック" + float.Parse(textFileConverter.textDB[1][i]));
             #endregion
-            notesObjInstance[i].GetComponent<NotesObj>().lifeTime = 
+            notesObjInstance[i].GetComponent<NotesObj>().lifeTime =
                 float.Parse(textFileConverter.textDB[1][i]) + (0.1f * hpb_GM.notesSpeed);
             //Debug.Log("ノーツ生存時間:" + notesObjInstance[i].GetComponent<NotesObjScr>().lifeTime);
         }
