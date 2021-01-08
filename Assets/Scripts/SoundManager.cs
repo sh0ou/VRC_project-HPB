@@ -14,8 +14,6 @@ public class SoundManager : UdonSharpBehaviour
     [SerializeField, Tooltip("効果音リスト\n0=決定音")]
     public AudioClip[] seLists;
 
-    void Start()
-    {
-
-    }
+    [SerializeField, Tooltip("出力オブジェクト")]
+    public AudioSource[] audioSources;
 }

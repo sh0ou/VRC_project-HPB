@@ -99,6 +99,7 @@ public class NotesGenerator : UdonSharpBehaviour
                 float.Parse(textFileConverter.textDB[1][i]) + (0.1f * hpb_GM.notesSpeed);
             //Debug.Log("ノーツ生存時間:" + notesObjInstance[i].GetComponent<NotesObjScr>().lifeTime);
         }
+        playMng.notesValue = notesObjInstance.Length;
         Debug.Log("<color=green>ノーツ生成が完了しました</color>");
     }
 }

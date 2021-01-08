@@ -10,6 +10,9 @@ using VRC.Udon;
 public class HPB_SettingsManager : UdonSharpBehaviour
 {
     #region システム変数
+    [SerializeField, Tooltip("サウンドマネージャ")]
+    private SoundManager soundMng;
+
     [SerializeField, Tooltip("表示されている画面番号\n0=タイトル\n1=選曲\n2=レベル選択\n3=プレイ\n4=リザルト")]
     public int windowFlag;
 
@@ -77,6 +80,8 @@ public class HPB_SettingsManager : UdonSharpBehaviour
         bgmVol = (int)opSliders[0].value;
         seVol = (int)opSliders[1].value;
         notesSpeed = (int)opSliders[2].value;
+        soundMng.audioSources[0].volume = bgmVol;
+        soundMng.audioSources[1].volume = seVol;
         //スライダーの値を表示
         opValueFields[0].text = bgmVol.ToString();
         opValueFields[1].text = seVol.ToString();

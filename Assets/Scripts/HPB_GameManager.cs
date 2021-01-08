@@ -40,11 +40,6 @@ public class HPB_GameManager : UdonSharpBehaviour
     void Start()
     {
         drumActive = true;
-        selectMusicNum = 0;
-        selectLevelNum = 0;
-        txtConverter.SetTextFile(0, 0);
-        notesGen.SetNotes();
-        SetUIData();
     }
 
     private void Update()
@@ -154,8 +149,12 @@ public class HPB_GameManager : UdonSharpBehaviour
                     else if (i == 0)
                     {
                         drumActive = false;
+                        playMng.fcFlag = true;
+                        playMng.ahFlag = true;
                         settingsMng.windowFlag = 3;
                         SetUIData();
+                        notesGen.SetNotes();
+                        SetCalcValue();
                         uiMng.Close_select2();
                     }
                     break;
@@ -186,10 +185,14 @@ public class HPB_GameManager : UdonSharpBehaviour
         drumActive = true;
     }
 
+    /// <summary>
+    /// 楽曲再生処理
+    /// </summary>
     public void PlayMusic()
     {
-        soundMng.GetComponent<AudioSource>().clip = soundMng.bgmLists[0];
-        soundMng.GetComponent<AudioSource>().Play();
+        soundMng.audioSources[0].clip = soundMng.bgmLists[0];
+        soundMng.audioSources[0].Play();
+        settingsMng.gamePlay = true;
     }
 
     /// <summary>
@@ -359,6 +362,15 @@ public class HPB_GameManager : UdonSharpBehaviour
     }
 
     /// <summary>
+    /// スコア計算用値をセット
+    /// </summary>
+    private void SetCalcValue()
+    {
+        playMng.scoreCalcValue[0] = playMng.notesValue * 3;
+        playMng.scoreCalcValue[1] = (100000 * 1) / playMng.scoreCalcValue[0];
+    }
+
+    /// <summary>
     /// ノーツ判定処理
     /// </summary>
     /// <param name="i">レーン</param>
@@ -367,22 +379,70 @@ public class HPB_GameManager : UdonSharpBehaviour
         /*
         範囲外は無視
         判定時間より極端に早い場合は無視
-            （スピード調整による誤動作防止）
+        （スピード調整による誤動作防止）
         Sad判定の場合はフラグ全オフ
-           とChainリセット
+            とChainリセット
         Good判定の場合はAHフラグをオフ
         Happy,Good判定の場合はChain加算
 
         レーン内のノーツを探して差を計算？
-         */
-        playMng.score_now += 5000;
-        playMng.chain += 1;
+        */
+        if (i == -1)
+        {
+            //M判定
+            playMng.judgedValue[3] += 1;
+            playMng.chain = 0;
+            playMng.ahFlag = false;
+            playMng.fcFlag = false;
+            uiMng.UIAnim_value(false);
+        }
+        else
+        {
+            //H判定
+            if (Mathf.Abs(playMng.playTime - 0) <= 1f)
+            {
+                playMng.judgedValue[0] += 1;
+                playMng.chain += 1;
+                //理論値処理
+                if (playMng.score_now < (100000 - playMng.scoreCalcValue[1]))
+                {
+                    playMng.score_now += playMng.scoreCalcValue[1];
+                }
+                else
+                {
+                    playMng.score_now = 100000;
+                }
+                uiMng.UIAnim_value(true);
+                GameObject g = VRCInstantiate(uiMng.uiObj_judge[0]);
+                g.GetComponent<JudgeTextObj>().judgeValue = i;
+            }
+            //G判定
+            else if (Mathf.Abs(playMng.playTime - 0) <= 1f)
+            {
+                playMng.judgedValue[1] += 1;
+                playMng.chain += 1;
+                playMng.score_now += Mathf.RoundToInt(playMng.scoreCalcValue[1] * 0.6f);
+                playMng.ahFlag = false;
+                uiMng.UIAnim_value(true);
+                GameObject g = VRCInstantiate(uiMng.uiObj_judge[1]);
+                g.GetComponent<JudgeTextObj>().judgeValue = i;
+            }
+            //S判定
+            else
+            {
+                playMng.judgedValue[2] += 1;
+                playMng.chain = 0;
+                playMng.score_now += Mathf.RoundToInt(playMng.scoreCalcValue[1] * 0.2f);
+                playMng.ahFlag = false;
+                playMng.fcFlag = false;
+                uiMng.UIAnim_value(false);
+                GameObject g = VRCInstantiate(uiMng.uiObj_judge[2]);
+                g.GetComponent<JudgeTextObj>().judgeValue = i;
+            }
+        }
         SetUIData();
         SetUI_score();
         SetUI_chainFlag();
-        uiMng.UIAnim_value(true);
-        GameObject g = VRCInstantiate(uiMng.uiObj_judge[Random.Range(0, 2)]);
-        g.GetComponent<JudgeTextObj>().judgeValue = 2;
     }
 
     /// <summary>
@@ -392,6 +452,7 @@ public class HPB_GameManager : UdonSharpBehaviour
     {
         //SoundManagerで再生されている楽曲が終了すると発火
         settingsMng.gamePlay = false;
+        soundMng.audioSources[0].Stop();
         settingsMng.windowFlag = 4;
         playMng.playTime = 0;
         SetUIData();

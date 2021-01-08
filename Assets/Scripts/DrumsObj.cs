@@ -14,6 +14,9 @@ public class DrumsObj : UdonSharpBehaviour
     [SerializeField, Tooltip("設定マネージャ")]
     private HPB_SettingsManager settingsMng;
 
+    [SerializeField, Tooltip("サウンドマネージャ")]
+    private SoundManager soundMng;
+
     [SerializeField, Tooltip("ドラム番号（手動指定）")]
     private int drumNum;
 
@@ -22,12 +25,19 @@ public class DrumsObj : UdonSharpBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //ドラムエフェクト
-        if (settingsMng.effectFlag)
+        if (other.gameObject.layer == 23)
         {
-            //VRCInstantiate(hitParticle);
+            //ドラムエフェクト
+            if (settingsMng.effectFlag)
+            {
+                //VRCInstantiate(hitParticle);
+            }
+            //ドラム処理
+            gameMng.DrumAction(drumNum);
+            if(settingsMng.windowFlag == 3)
+            {
+                soundMng.audioSources[1].PlayOneShot(soundMng.seLists[1]);
+            }
         }
-        //ドラム処理
-        gameMng.DrumAction(drumNum);
     }
 }

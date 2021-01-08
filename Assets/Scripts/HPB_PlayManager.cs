@@ -45,8 +45,8 @@ public class HPB_PlayManager : UdonSharpBehaviour
     [SerializeField, Tooltip("楽曲スコア")]
     public int score_now;
 
-    [SerializeField, Tooltip("1ノーツあたりのスコア")]
-    public int score_Once;
+    [SerializeField, Tooltip("総ノーツ数")]
+    public int notesValue;
 
     [SerializeField, Tooltip("クリアランク\n0=D 1=C 2=B\n3=A 4=S")]
     public int clearRank;
@@ -54,8 +54,13 @@ public class HPB_PlayManager : UdonSharpBehaviour
     [SerializeField, Tooltip("チェイン数")]
     public int chain;
 
-    [SerializeField, Tooltip("ノーツ判定数\n0=Happy\n1=Good\n2=Sad\n3=Miss")]
+    [SerializeField, Tooltip
+        ("ノーツ判定数\n0=Happy\n1=Good\n2=Sad\n3=Miss")]
     public int[] judgedValue = new int[4];
+
+    [SerializeField, Tooltip
+        ("スコア計算用値\n0=理論スコア\n1=1ノーツあたりのスコア")]
+    public int[] scoreCalcValue = new int[2];
 
     [SerializeField, Tooltip("フルチェインフラグ")]
     public bool fcFlag;
