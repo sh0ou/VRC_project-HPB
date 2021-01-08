@@ -8,27 +8,6 @@ using VRC.Udon;
 /// </summary>
 public class NotesGenerator : UdonSharpBehaviour
 {
-    #region 引用:https://www.youtube.com/watch?v=5fQhqfdc5eg
-    ////ノーツのLifeはノーツを射出する時間を格納すればOKだと思う
-    //static float fMoveValue = 0.01f;　//ハイスピ
-    //public int nLifeNote = 300; //ノーツの命
-    //private void Update()
-    //{
-    //    //ハイスピの変更
-
-    //    transform.position = new Vector3(0, nLifeNote * fMoveValue, 0);
-    //    //ノーツの命がなくなったら削除
-    //    if (nLifeNote < 0)
-    //    {
-    //        Destroy(this.gameObject);
-    //        return;
-    //    }
-    //    else
-    //    {
-    //        --nLifeNote;
-    //    }
-    //}
-    #endregion
     #region 変数
     [SerializeField]
     private HPB_SettingsManager hpb_GM;
@@ -72,7 +51,6 @@ public class NotesGenerator : UdonSharpBehaviour
             //Debug.Log("DB数値:" + float.Parse(textFileConverter.textDB[1][i]));
             //Debug.Log("再生時間:" + soundManager.playTime);
             //Debug.Log("スピード:" + hpb_GM.notesSpeed);
-            //https://www.slideshare.net/tenonnotenonno/ss-63731377
             //ノーツ位置を計算
             #endregion
             notesPosz = endPosition.position.z +

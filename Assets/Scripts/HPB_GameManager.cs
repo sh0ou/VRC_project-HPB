@@ -24,6 +24,9 @@ public class HPB_GameManager : UdonSharpBehaviour
     [SerializeField, Tooltip("ノーツジェネレータ")]
     private NotesGenerator notesGen;
 
+    [SerializeField, Tooltip("サウンドマネージャ")]
+    private SoundManager soundMng;
+
     [SerializeField, Tooltip("ドラム処理フラグ（falseだと判定が無視される）")]
     private bool drumActive;
 
@@ -183,6 +186,12 @@ public class HPB_GameManager : UdonSharpBehaviour
         drumActive = true;
     }
 
+    public void PlayMusic()
+    {
+        soundMng.GetComponent<AudioSource>().clip = soundMng.bgmLists[0];
+        soundMng.GetComponent<AudioSource>().Play();
+    }
+
     /// <summary>
     /// UI情報をセット
     /// </summary>
@@ -193,6 +202,8 @@ public class HPB_GameManager : UdonSharpBehaviour
         //開いてる窓によって処理を変更
         switch (settingsMng.windowFlag)
         {
+            case 0:
+                break;
             case 1:
                 #region 選曲画面処理
                 //値をセット
@@ -260,22 +271,6 @@ public class HPB_GameManager : UdonSharpBehaviour
                 SetUI_level();
                 SetUI_score();
                 SetUI_chainFlag();
-                //switch (selectLevelNum)
-                //{
-                //    case 0:
-                //        SetUI_level();
-                //        //uiMng.inputFields_play_1[3].text = "Normal";
-                //        //uiMng.TMPAnim_lv(0);
-                //        break;
-                //    case 1:
-                //        //uiMng.inputFields_play_1[3].text = "Hard";
-                //        //uiMng.TMPAnim_lv(1);
-                //        break;
-                //    case 2:
-                //        //uiMng.inputFields_play_1[3].text = "Party";
-                //        //uiMng.TMPAnim_lv(2);
-                //        break;
-                //}
                 #endregion
                 break;
             case 4:
@@ -283,7 +278,6 @@ public class HPB_GameManager : UdonSharpBehaviour
                 //値をセット
                 SetUI_score();
                 SetUI_chainFlag();
-                //uiMng.valueFields_result[0].text = GetClearRank();
                 uiMng.valueFields_result[0].text = playMng.score_now.ToString();
                 uiMng.valueFields_result[1].text = playMng.score_now.ToString();
                 uiMng.valueFields_result[2].text = playMng.score_now.ToString();
@@ -293,7 +287,6 @@ public class HPB_GameManager : UdonSharpBehaviour
                 uiMng.valueFields_result[6].text = playMng.judgedValue[3].ToString();
                 uiMng.jacketImage_result.GetComponent<Renderer>().material =
                     uiMng.jacketList[selectMusicNum][selectLevelNum];
-                //uiMng.text_playerName.text = Networking.GetOwner(playMng.drumStick).displayName;
                 #endregion
                 break;
             default:
@@ -301,61 +294,6 @@ public class HPB_GameManager : UdonSharpBehaviour
                 break;
         }
     }
-
-    ///// <summary>
-    ///// クリアランクをテキストに変換
-    ///// </summary>
-    ///// <returns></returns>
-    //private string GetClearRank()
-    //{
-    //    string s = "?";
-    //    switch (playMng.clearRank)
-    //    {
-    //        case 0:
-    //            s = "D";
-    //            break;
-    //        case 1:
-    //            s = "C";
-    //            break;
-    //        case 2:
-    //            s = "B";
-    //            break;
-    //        case 3:
-    //            s = "A";
-    //            break;
-    //        case 4:
-    //            s = "S";
-    //            break;
-    //        default:
-    //            Debug.LogError("[<color=red>E102</color>]クリアランク値が不正です");
-    //            break;
-    //    }
-    //    return s;
-    //}
-
-    ///// <summary>
-    ///// クリアランクを表示
-    ///// </summary>
-    //private void SetClearRank()
-    //{
-    //    switch (playMng.clearRank)
-    //    {
-    //        case 0:
-    //            uiMng.UIActive_rank
-    //            break;
-    //        case 1:
-    //            break;
-    //        case 2:
-    //            break;
-    //        case 3:
-    //            break;
-    //        case 4:
-    //            break;
-    //        default:
-    //            Debug.LogError("[<color=red>E102</color>]クリアランク値が不正です");
-    //            break;
-    //    }
-    //}
 
     /// <summary>
     /// レベルUIをセット
@@ -443,7 +381,7 @@ public class HPB_GameManager : UdonSharpBehaviour
         SetUI_score();
         SetUI_chainFlag();
         uiMng.UIAnim_value(true);
-        GameObject g = VRCInstantiate(uiMng.uiObj_judge[Random.Range(0,2)]);
+        GameObject g = VRCInstantiate(uiMng.uiObj_judge[Random.Range(0, 2)]);
         g.GetComponent<JudgeTextObj>().judgeValue = 2;
     }
 
@@ -457,7 +395,6 @@ public class HPB_GameManager : UdonSharpBehaviour
         settingsMng.windowFlag = 4;
         playMng.playTime = 0;
         SetUIData();
-        //uiMng.TMPAnim_value();
         SetUI_score();
         SetUI_chainFlag();
         uiMng.Close_play();

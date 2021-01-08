@@ -65,12 +65,6 @@ public class HPB_UIManager : UdonSharpBehaviour
         ("値更新用UI\n0=タイトル\n1=アーティスト\n2=レベル1\n3=レベル2\n4=レベル3")]
     public InputField[] inputFields_play_1;
 
-    //TMP指定できないのでAnimator
-    //（プリセットどれかわからないので直接指定）
-    //[SerializeField, Tooltip
-    //    ("色変更用UI\n0=レベル種類\n1=レベル値")]
-    //private Animator[] fixedText_play_1;
-
     [SerializeField, Tooltip("UIオブジェクト\n0=レベル1\n1=レベル2\n2=レベル3")]
     private GameObject[] uiObj_play_1;
 
@@ -206,8 +200,6 @@ public class HPB_UIManager : UdonSharpBehaviour
 
     public void Open_result()
     {
-        //Debug.Log(fixedText_result[0].GetCurrentAnimatorStateInfo(0));
-        //TMPAnim_value();
         windowAnims[5].gameObject.SetActive(true);
         windowAnims[5].Play("open_result");
     }
@@ -371,110 +363,6 @@ public class HPB_UIManager : UdonSharpBehaviour
         }
     }
 
-    ///// <summary>
-    ///// TMP色変更
-    ///// </summary>
-    //public void TMPAnim_lv(int i)
-    //{
-    //    switch (i)
-    //    {
-    //        case 0:
-    //            fixedText_play_1[0].Play("TMPC_Level_1");
-    //            fixedText_play_1[1].Play("TMPC_Level_1");
-    //            break;
-    //        case 1:
-    //            fixedText_play_1[0].Play("TMPC_Level_2");
-    //            fixedText_play_1[1].Play("TMPC_Level_2");
-    //            break;
-    //        case 2:
-    //            fixedText_play_1[0].Play("TMPC_Level_3");
-    //            fixedText_play_1[1].Play("TMPC_Level_3");
-    //            break;
-    //    }
-    //}
-
-    ///// <summary>
-    ///// TMPスコア,チェイン色変更
-    ///// </summary>
-    ///// <param name="i">ランク</param>
-    ///// <param name="b_ah">AllHappyフラグ</param>
-    ///// <param name="b_fc">FullChainフラグ</param>
-    //public void TMPAnim_value()
-    //{
-    //    if(settingsMng.windowFlag == 3)
-    //    {
-    //        switch (playMng.clearRank)
-    //        {
-    //            case 0:
-    //                fixedText_play_2[1].Play("TMPC_Rank_D");
-    //                break;
-    //            case 1:
-    //                fixedText_play_2[1].Play("TMPC_Rank_C");
-    //                break;
-    //            case 2:
-    //                fixedText_play_2[1].Play("TMPC_Rank_B");
-    //                break;
-    //            case 3:
-    //                fixedText_play_2[1].Play("TMPC_Rank_A");
-    //                break;
-    //            case 4:
-    //                fixedText_play_2[1].Play("TMPC_Rank_S");
-    //                break;
-    //        }
-    //        if (playMng.ahFlag)
-    //        {
-    //            fixedText_play_2[0].Play("TMPC_AH");
-    //        }
-    //        else if (playMng.fcFlag)
-    //        {
-    //            fixedText_play_2[0].Play("TMPC_FC");
-    //        }
-    //        else
-    //        {
-    //            fixedText_play_2[0].Play("TMPC_clear");
-    //        }
-    //    }
-    //    else
-    //    {
-    //        switch (playMng.clearRank)
-    //        {
-    //            case 0:
-    //                fixedText_result[0].Play("TMPC_Rank_D");
-    //                break;
-    //            case 1:
-    //                fixedText_result[0].Play("TMPC_Rank_C");
-    //                break;
-    //            case 2:
-    //                fixedText_result[0].Play("TMPC_Rank_B");
-    //                break;
-    //            case 3:
-    //                fixedText_result[0].Play("TMPC_Rank_A");
-    //                break;
-    //            case 4:
-    //                fixedText_result[0].Play("TMPC_Rank_S");
-    //                break;
-    //        }
-    //        if (playMng.ahFlag)
-    //        {
-    //            FCObject[0].SetActive(true);
-    //            FCObject[1].SetActive(false);
-    //            fixedText_result[1].Play("TMPC_AH");
-    //        }
-    //        else if (playMng.fcFlag)
-    //        {
-    //            FCObject[0].SetActive(false);
-    //            FCObject[1].SetActive(true);
-    //            fixedText_result[1].Play("TMPC_FC");
-    //        }
-    //        else
-    //        {
-    //            FCObject[0].SetActive(false);
-    //            FCObject[1].SetActive(false);
-    //            fixedText_result[1].Play("TMPC_clear");
-    //        }
-    //    }
-    //}
-
     /// <summary>
     /// アニメーション終了後処理
     /// </summary>
@@ -499,6 +387,10 @@ public class HPB_UIManager : UdonSharpBehaviour
                 {
                     Open_result();
                 }
+                break;
+            case 5://プレイ開始処理
+                gameMng.DrumActive();
+                gameMng.PlayMusic();
                 break;
             default:
                 Debug.LogError("[<color=red>E104</color>]アニメ後処理値が不正です");

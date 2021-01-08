@@ -798,7 +798,7 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 2.5
+  - time: 2.6666667
     functionName: SendCustomEvent
     data: SetEvent_0
     objectReferenceParameter: {fileID: 0}
