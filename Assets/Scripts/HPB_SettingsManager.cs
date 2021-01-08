@@ -97,6 +97,7 @@ public class HPB_SettingsManager : UdonSharpBehaviour
     /// <param name="b"></param>
     public void SetUIActive(bool b)
     {
+        Debug.Log("アクティブ:SetUIActive");
         if (b)
         {
             opUIObj[0].SetActive(true);

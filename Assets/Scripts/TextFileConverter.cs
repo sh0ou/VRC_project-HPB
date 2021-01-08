@@ -20,7 +20,7 @@ public class TextFileConverter : UdonSharpBehaviour
 
     void Start()
     {
-        SetTextFile(0,0);
+
     }
     /// <summary>
     /// 譜面ファイルを配列に変換するメソッド（譜面番号,レベル）
@@ -28,13 +28,13 @@ public class TextFileConverter : UdonSharpBehaviour
     ///<param name="i">譜面番号</param><param name="i2">レベル種</param>
     public void SetTextFile(int i, int i2)
     {
-        Debug.Log("譜面番号" + i + "のテキストファイル変換を開始します...");
+        //Debug.Log("譜面番号" + i + "のテキストファイル変換を開始します...");
         textStorage[0] = textFile[i][i2][0].text;
         textStorage[1] = textFile[i][i2][1].text;
         textStorage[2] = textFile[i][i2][2].text;
         textStorage[3] = textFile[i][i2][3].text;
         //格納変数を配列化
-        Debug.Log("配列代入を開始します...");
+        //Debug.Log("配列代入を開始します...");
         textDB[0] = textStorage[0].Split('\n');
         textDB[1] = textStorage[1].Split('\n');
         textDB[2] = textStorage[2].Split('\n');
@@ -49,6 +49,6 @@ public class TextFileConverter : UdonSharpBehaviour
     public int SendMusicLength()
     {
         Debug.Log("曲数:" + textFile.Length);
-        return textFile.Length;
+        return textFile.Length - 1;
     }
 }

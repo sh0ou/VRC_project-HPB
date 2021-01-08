@@ -54,6 +54,9 @@ public class HPB_PlayManager : UdonSharpBehaviour
     [SerializeField, Tooltip("チェイン数")]
     public int chain;
 
+    [SerializeField, Tooltip("終了時間")]
+    public float endTime;
+
     [SerializeField, Tooltip
         ("ノーツ判定数\n0=Happy\n1=Good\n2=Sad\n3=Miss")]
     public int[] judgedValue = new int[4];

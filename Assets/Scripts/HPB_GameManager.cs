@@ -44,12 +44,34 @@ public class HPB_GameManager : UdonSharpBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            DrumAction(1);
+        }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            DrumAction(2);
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            DrumAction(3);
+        }
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            DrumAction(4);
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            DrumAction(0);
+        }
+
         if (settingsMng.gamePlay)
         {
             playMng.playTime += Time.deltaTime;
             //楽曲時間がプレイ時間を超えると終了
-            if (playMng.playTime >= float.Parse(txtConverter.textDB[0][4]))
+            if (playMng.playTime >= playMng.endTime)
             {
+                drumActive = false;
                 EndMusic();
             }
         }
@@ -82,6 +104,10 @@ public class HPB_GameManager : UdonSharpBehaviour
         //処理待ち対策
         if (drumActive)
         {
+            if (settingsMng.windowFlag != 3)
+            {
+                Debug.Log("アクティブ:DrumAction");
+            }
             switch (settingsMng.windowFlag)
             {
                 case 0:
@@ -90,7 +116,6 @@ public class HPB_GameManager : UdonSharpBehaviour
                     {
                         drumActive = false;
                         settingsMng.windowFlag = 1;
-                        SetUIData();
                         uiMng.Close_title();
                     }
                     break;
@@ -99,13 +124,27 @@ public class HPB_GameManager : UdonSharpBehaviour
                     //左に移動
                     if (i == 1 || i == 2)
                     {
-                        selectMusicNum -= 1;
+                        if (selectMusicNum == 0)
+                        {
+                            selectMusicNum = txtConverter.SendMusicLength();
+                        }
+                        else
+                        {
+                            selectMusicNum -= 1;
+                        }
                         SetUIData();
                     }
                     //右に移動
                     else if (i == 3 || i == 4)
                     {
-                        selectMusicNum += 1;
+                        if (selectMusicNum == txtConverter.SendMusicLength())
+                        {
+                            selectMusicNum = 0;
+                        }
+                        else
+                        {
+                            selectMusicNum += 1;
+                        }
                         SetUIData();
                     }
                     //楽曲決定
@@ -113,7 +152,6 @@ public class HPB_GameManager : UdonSharpBehaviour
                     {
                         drumActive = false;
                         settingsMng.windowFlag = 2;
-                        SetUIData();
                         uiMng.Close_select1();
                     }
                     break;
@@ -124,7 +162,7 @@ public class HPB_GameManager : UdonSharpBehaviour
                     if (i == 1 || i == 4)
                     {
                         drumActive = false;
-                        SetUIData();
+                        settingsMng.windowFlag = 1;
                         uiMng.Close_select2_return();
                     }
                     //レベルを下げる
@@ -152,9 +190,6 @@ public class HPB_GameManager : UdonSharpBehaviour
                         playMng.fcFlag = true;
                         playMng.ahFlag = true;
                         settingsMng.windowFlag = 3;
-                        SetUIData();
-                        notesGen.SetNotes();
-                        SetCalcValue();
                         uiMng.Close_select2();
                     }
                     break;
@@ -167,11 +202,10 @@ public class HPB_GameManager : UdonSharpBehaviour
                     //楽曲選択に戻る
                     drumActive = false;
                     settingsMng.windowFlag = 1;
-                    SetUIData();
                     uiMng.Close_result();
                     break;
                 default:
-                    Debug.LogError("[<color=red>E100</color>]画面番号が不正です");
+                    Debug.LogError("[<color=red>HPB_GameManager</color>]画面番号が不正です");
                     break;
             }
         }
@@ -182,7 +216,20 @@ public class HPB_GameManager : UdonSharpBehaviour
     /// </summary>
     public void DrumActive()
     {
+        Debug.Log("アクティブ:DrumActive");
         drumActive = true;
+    }
+
+    /// <summary>
+    /// ノーツ生成処理
+    /// </summary>
+    public void GenerateNotes()
+    {
+        Debug.Log("アクティブ:GenerateNotes");
+        SetUI_level();
+        SetUIData();
+        notesGen.SetNotes();
+        SetCalcValue();
     }
 
     /// <summary>
@@ -190,8 +237,10 @@ public class HPB_GameManager : UdonSharpBehaviour
     /// </summary>
     public void PlayMusic()
     {
+        Debug.Log("アクティブ:PlayMusic");
         soundMng.audioSources[0].clip = soundMng.bgmLists[0];
         soundMng.audioSources[0].Play();
+        playMng.endTime = float.Parse(txtConverter.textDB[0][4]);
         settingsMng.gamePlay = true;
     }
 
@@ -200,6 +249,10 @@ public class HPB_GameManager : UdonSharpBehaviour
     /// </summary>
     public void SetUIData()
     {
+        if (settingsMng.windowFlag != 3)
+        {
+            Debug.Log("アクティブ:SetUIData");
+        }
         txtConverter.SetTextFile(selectMusicNum, selectLevelNum);
         Debug.Log("窓処理:" + settingsMng.windowFlag);
         //開いてる窓によって処理を変更
@@ -212,10 +265,14 @@ public class HPB_GameManager : UdonSharpBehaviour
                 //値をセット
                 uiMng.inputFields_select_1[0].text = txtConverter.textDB[0][0];
                 uiMng.inputFields_select_1[1].text = txtConverter.textDB[0][1];
+
+                //中央画像セット
                 uiMng.jacketImage_select_1[0].GetComponent<Renderer>().material =
                     uiMng.jacketList[selectMusicNum][0];
-                //曲番号が-1になる場合の対処
-                if (selectMusicNum <= 0)
+
+                //左画像セット
+
+                if ((selectMusicNum - 1) == -1)
                 {
                     uiMng.jacketImage_select_1[1].GetComponent<Renderer>().material =
                         uiMng.jacketList[txtConverter.SendMusicLength()][0];
@@ -223,10 +280,12 @@ public class HPB_GameManager : UdonSharpBehaviour
                 else
                 {
                     uiMng.jacketImage_select_1[1].GetComponent<Renderer>().material =
-                        uiMng.jacketList[selectMusicNum][0];
+                        uiMng.jacketList[selectMusicNum - 1][0];
                 }
-                //曲番号が上限を超える場合の対処
-                if (selectMusicNum > txtConverter.SendMusicLength())
+
+                //右画像セット
+
+                if (selectMusicNum == txtConverter.SendMusicLength())
                 {
                     uiMng.jacketImage_select_1[2].GetComponent<Renderer>().material =
                         uiMng.jacketList[0][0];
@@ -234,8 +293,10 @@ public class HPB_GameManager : UdonSharpBehaviour
                 else
                 {
                     uiMng.jacketImage_select_1[2].GetComponent<Renderer>().material =
-                        uiMng.jacketList[selectMusicNum][0];
+                        uiMng.jacketList[selectMusicNum + 1][0];
                 }
+
+
                 #endregion
                 break;
             case 2:
@@ -271,7 +332,6 @@ public class HPB_GameManager : UdonSharpBehaviour
                 uiMng.inputFields_play_2[6].text = playMng.chain.ToString();
                 uiMng.inputFields_play_2[7].text = playMng.chain.ToString();
                 //レベル種類のセット
-                SetUI_level();
                 SetUI_score();
                 SetUI_chainFlag();
                 #endregion
@@ -281,6 +341,9 @@ public class HPB_GameManager : UdonSharpBehaviour
                 //値をセット
                 SetUI_score();
                 SetUI_chainFlag();
+                Debug.LogError("[<color=red>HPB_GameManager</color>]DisplayNameがコメントアウトされてます\nアップロード時は解除してください");
+                //uiMng.text_playerName.text = Networking.GetOwner(playMng.drumStick).displayName;
+                uiMng.text_playerName.text = "testUser";
                 uiMng.valueFields_result[0].text = playMng.score_now.ToString();
                 uiMng.valueFields_result[1].text = playMng.score_now.ToString();
                 uiMng.valueFields_result[2].text = playMng.score_now.ToString();
@@ -293,7 +356,7 @@ public class HPB_GameManager : UdonSharpBehaviour
                 #endregion
                 break;
             default:
-                Debug.Log("[<color=red>E101</color>]窓番号が不正です");
+                Debug.LogError("[<color=red>HPB_GameManager</color>]窓番号が不正です");
                 break;
         }
     }
@@ -303,6 +366,7 @@ public class HPB_GameManager : UdonSharpBehaviour
     /// </summary>
     private void SetUI_level()
     {
+        Debug.Log("アクティブ:SetUI_level");
         uiMng.UIActive_level(selectLevelNum);
     }
 
@@ -311,6 +375,10 @@ public class HPB_GameManager : UdonSharpBehaviour
     /// </summary>
     private void SetUI_score()
     {
+        if (settingsMng.windowFlag != 3)
+        {
+            Debug.Log("アクティブ:SetUI_score");
+        }
         //rankS
         if (playMng.score_now >= 95000)
         {
@@ -343,6 +411,10 @@ public class HPB_GameManager : UdonSharpBehaviour
     /// </summary>
     private void SetUI_chainFlag()
     {
+        if (settingsMng.windowFlag != 3)
+        {
+            Debug.Log("アクティブ:SetUI_chainFlag");
+        }
         //5チェイン以上のみ表示
         if (playMng.chain >= 5)
         {
@@ -366,6 +438,15 @@ public class HPB_GameManager : UdonSharpBehaviour
     /// </summary>
     private void SetCalcValue()
     {
+        Debug.Log("アクティブ:SetCalcValue");
+        playMng.score_now = 0;
+        playMng.playTime = 0;
+        playMng.clearRank = 0;
+        playMng.chain = 0;
+        playMng.judgedValue[0] = 0;
+        playMng.judgedValue[1] = 0;
+        playMng.judgedValue[2] = 0;
+        playMng.judgedValue[3] = 0;
         playMng.scoreCalcValue[0] = playMng.notesValue * 3;
         playMng.scoreCalcValue[1] = (100000 * 1) / playMng.scoreCalcValue[0];
     }
@@ -376,6 +457,10 @@ public class HPB_GameManager : UdonSharpBehaviour
     /// <param name="i">レーン</param>
     public void JudgeNotes(int i)
     {
+        if (settingsMng.windowFlag != 3)
+        {
+            Debug.Log("アクティブ:JudgeNotes");
+        }
         /*
         範囲外は無視
         判定時間より極端に早い場合は無視
@@ -450,6 +535,7 @@ public class HPB_GameManager : UdonSharpBehaviour
     /// </summary>
     public void EndMusic()
     {
+        Debug.Log("アクティブ:EndMusic");
         //SoundManagerで再生されている楽曲が終了すると発火
         settingsMng.gamePlay = false;
         soundMng.audioSources[0].Stop();

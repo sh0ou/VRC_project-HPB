@@ -19,6 +19,7 @@ public class AnimRepeater : UdonSharpBehaviour
     /// </summary>
     public void SetEvent_0()
     {
+        Debug.Log("アクティブ:SetEvent_0");
         uiMng.AnimEnd(0);
     }
 
@@ -27,13 +28,26 @@ public class AnimRepeater : UdonSharpBehaviour
     /// </summary>
     public void SetEvent_1()
     {
+        Debug.Log("アクティブ:SetEvent_1");
         uiMng.AnimEnd(1);
         gameObject.SetActive(false);
     }
 
     public void SetEvent()
     {
+        Debug.Log("アクティブ:SetEvent");
         uiMng.AnimEnd(taskValue);
-        gameObject.SetActive(false);
+        if(gameObject.name == "Window_Play_2"/* && GameObject.Find("GameManager").GetComponent<HPB_SettingsManager>().windowFlag == 3*/)
+        {
+            Debug.Log("非アクティブ処理がスキップされました");
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+    }
+    private void OnDisable()
+    {
+        Debug.LogWarning("無効化されました:" + gameObject.name);
     }
 }

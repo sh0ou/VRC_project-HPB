@@ -108,7 +108,12 @@ public class HPB_UIManager : UdonSharpBehaviour
     #endregion
     void Start()
     {
-
+        windowAnims[0].gameObject.SetActive(true);
+        windowAnims[1].gameObject.SetActive(false);
+        windowAnims[2].gameObject.SetActive(false);
+        windowAnims[3].gameObject.SetActive(false);
+        windowAnims[4].gameObject.SetActive(false);
+        windowAnims[5].gameObject.SetActive(false);
     }
     #region アニメーション処理関数
     /// <summary>
@@ -116,6 +121,7 @@ public class HPB_UIManager : UdonSharpBehaviour
     /// </summary>
     public void Close_title()
     {
+        Debug.Log("アクティブ:Close_title");
         windowAnims[0].Play("close_title");
     }
 
@@ -124,6 +130,7 @@ public class HPB_UIManager : UdonSharpBehaviour
     /// </summary>
     public void Close_select1()
     {
+        Debug.Log("アクティブ:Close_select1");
         windowAnims[1].Play("close_select_1");
     }
 
@@ -132,6 +139,7 @@ public class HPB_UIManager : UdonSharpBehaviour
     /// </summary>
     public void Close_select2()
     {
+        Debug.Log("アクティブ:Close_select2");
         windowAnims[2].Play("close_select_2");
         guideUI[0].SetActive(false);
         guideUI[1].SetActive(false);
@@ -144,6 +152,7 @@ public class HPB_UIManager : UdonSharpBehaviour
     /// </summary>
     public void Close_select2_return()
     {
+        Debug.Log("アクティブ:Close_select2_return");
         windowAnims[2].Play("close_select_2r");
     }
 
@@ -152,6 +161,7 @@ public class HPB_UIManager : UdonSharpBehaviour
     /// </summary>
     public void Close_play()
     {
+        Debug.Log("アクティブ:Close_play");
         windowAnims[3].Play("close_play_1");
         windowAnims[4].Play("close_play_2");
     }
@@ -161,6 +171,7 @@ public class HPB_UIManager : UdonSharpBehaviour
     /// </summary>
     public void Close_result()
     {
+        Debug.Log("アクティブ:Close_result");
         windowAnims[5].Play("close_result");
     }
 
@@ -169,6 +180,7 @@ public class HPB_UIManager : UdonSharpBehaviour
     /// </summary>
     public void Open_select1()
     {
+        Debug.Log("アクティブ:Open_select1");
         windowAnims[1].gameObject.SetActive(true);
         windowAnims[1].Play("open_select_1");
         guideUI[0].SetActive(true);
@@ -182,6 +194,7 @@ public class HPB_UIManager : UdonSharpBehaviour
     /// </summary>
     public void Open_select2()
     {
+        Debug.Log("アクティブ:Open_select2");
         windowAnims[2].gameObject.SetActive(true);
         windowAnims[2].Play("open_select_2");
         guideUI[0].SetActive(false);
@@ -192,15 +205,30 @@ public class HPB_UIManager : UdonSharpBehaviour
 
     public void Open_play()
     {
+        Debug.Log("アクティブ:Open_play");
         windowAnims[3].gameObject.SetActive(true);
         windowAnims[3].Play("open_play_1");
         windowAnims[4].gameObject.SetActive(true);
+        gameMng.SetUIData();
         windowAnims[4].Play("open_play_2");
     }
 
     public void Open_result()
     {
+        Debug.Log("アクティブ:Open_result");
         windowAnims[5].gameObject.SetActive(true);
+        if (playMng.ahFlag)
+        {
+            UIActive_chain(0);
+        }
+        else if (playMng.fcFlag)
+        {
+            UIActive_chain(1);
+        }
+        else
+        {
+            UIActive_chain(2);
+        }
         windowAnims[5].Play("open_result");
     }
     #endregion
@@ -211,6 +239,7 @@ public class HPB_UIManager : UdonSharpBehaviour
     /// <param name="i">レベル</param>
     public void UIActive_level(int i)
     {
+        Debug.Log("アクティブ:UIActive_level");
         switch (i)
         {
             case 0:
@@ -238,6 +267,10 @@ public class HPB_UIManager : UdonSharpBehaviour
     /// <param name="i">ランク</param>
     public void UIActive_rank(int i)
     {
+        if (settingsMng.windowFlag != 3)
+        {
+            Debug.Log("アクティブ:UIActive_rank");
+        }
         switch (i)
         {
             //rankS
@@ -314,6 +347,7 @@ public class HPB_UIManager : UdonSharpBehaviour
     /// <param name="i">フラグ</param>
     public void UIActive_chain(int i)
     {
+        Debug.Log("アクティブ:UIActive_chain");
         switch (i)
         {
             //AH
@@ -323,6 +357,7 @@ public class HPB_UIManager : UdonSharpBehaviour
                 uiObj_play_2[7].SetActive(true);
                 uiObj_result[5].SetActive(false);
                 uiObj_result[6].SetActive(false);
+                Debug.Log("AH");
                 uiObj_result[7].SetActive(true);
                 break;
             //FC
@@ -332,6 +367,7 @@ public class HPB_UIManager : UdonSharpBehaviour
                 uiObj_play_2[7].SetActive(false);
                 uiObj_result[5].SetActive(false);
                 uiObj_result[6].SetActive(true);
+                Debug.Log("FC");
                 uiObj_result[7].SetActive(false);
                 break;
             //フラグなし
@@ -341,6 +377,7 @@ public class HPB_UIManager : UdonSharpBehaviour
                 uiObj_play_2[7].SetActive(false);
                 uiObj_result[5].SetActive(true);
                 uiObj_result[6].SetActive(false);
+                Debug.Log("none");
                 uiObj_result[7].SetActive(false);
                 break;
         }
@@ -352,6 +389,10 @@ public class HPB_UIManager : UdonSharpBehaviour
     /// <param name="b">フラグ</param>
     public void UIAnim_value(bool b)
     {
+        if (settingsMng.windowFlag != 3)
+        {
+            Debug.Log("アクティブ:UIAnim_value");
+        }
         if (b)
         {
             uiObj_play_2[8].SetActive(true);
@@ -371,26 +412,37 @@ public class HPB_UIManager : UdonSharpBehaviour
         switch (i)
         {
             case 0://アクティブ状態切替
+                Debug.Log("アニメーション0");
                 gameMng.DrumActive();
                 break;
             case 1://選曲画面オープン
+                Debug.Log("アニメーション1");
+                gameMng.SetUIData();
                 Open_select1();
                 break;
             case 2://レベル画面オープン
+                Debug.Log("アニメーション2");
+                gameMng.SetUIData();
                 Open_select2();
                 break;
             case 3://プレイ画面オープン
+                Debug.Log("アニメーション3");
+                gameMng.SetUIData();
+                gameMng.GenerateNotes();
                 Open_play();
                 break;
-            case 4://リザルト画面オープン
+            case 4://リザルト画面オープン,又はゲームスタート処理
                 if (settingsMng.windowFlag == 4)
                 {
+                    Debug.Log("アニメーション4en");
                     Open_result();
                 }
-                break;
-            case 5://プレイ開始処理
-                gameMng.DrumActive();
-                gameMng.PlayMusic();
+                else
+                {
+                    Debug.Log("アニメーション4st");
+                    gameMng.DrumActive();
+                    gameMng.PlayMusic();
+                }
                 break;
             default:
                 Debug.LogError("[<color=red>E104</color>]アニメ後処理値が不正です");

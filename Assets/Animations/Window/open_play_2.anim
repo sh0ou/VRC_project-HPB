@@ -800,7 +800,7 @@ AnimationClip:
   m_Events:
   - time: 2.6666667
     functionName: SendCustomEvent
-    data: SetEvent_0
+    data: SetEvent
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
