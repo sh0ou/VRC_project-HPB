@@ -102,4 +102,49 @@ public class NotesGenerator : UdonSharpBehaviour
         playMng.notesValue = notesObjInstance.Length;
         Debug.Log("<color=green>ノーツ生成が完了しました</color>");
     }
+
+    public GameObject SendNotesObj(int i)
+    {
+        return notesObjInstance[i];
+    }
+
+    /// <summary>
+    /// ノーツ数を返す
+    /// </summary>
+    /// <returns></returns>
+    public int SendNotesValue()
+    {
+        return notesObjInstance.Length;
+    }
+
+    /// <summary>
+    /// ノーツのレーンを返す
+    /// </summary>
+    /// <param name="i">対象要素番号</param>
+    /// <returns></returns>
+    public int SendNotesLaneNum(int i)
+    {
+        int i_r = -1;
+        switch (notesObjInstance[i].transform.position.x)
+        {
+            case -0.75f:
+                i_r = 1;
+                break;
+            case -0.25f:
+                i_r = 2;
+                break;
+            case 0.25f:
+                i_r = 3;
+                break;
+            case 0.75f:
+                i_r = 4;
+                break;
+                //Highノーツ用処理をここに
+        }
+        if (i_r == -1)
+        {
+            Debug.LogError("[<color=red>NotesJudger</color>]判定結果値が不正です");
+        }
+        return i_r;
+    }
 }

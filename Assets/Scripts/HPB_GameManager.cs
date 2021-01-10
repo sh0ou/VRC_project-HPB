@@ -24,6 +24,10 @@ public class HPB_GameManager : UdonSharpBehaviour
     [SerializeField, Tooltip("ノーツジェネレータ")]
     private NotesGenerator notesGen;
 
+    [SerializeField, Tooltip
+        ("ノーツ判定スクリプト\n0=中央\n1=左の左\n2=左の右\n3=右の左\n4=右の右")]
+    private NotesJudger[] notesJudgers;
+
     [SerializeField, Tooltip("サウンドマネージャ")]
     private SoundManager soundMng;
 
@@ -229,6 +233,11 @@ public class HPB_GameManager : UdonSharpBehaviour
         SetUI_level();
         SetUIData();
         notesGen.SetNotes();
+        //notesJudgers[0].SetNotesObjs(0);
+        notesJudgers[1].SetNotesObjs(1);
+        notesJudgers[2].SetNotesObjs(2);
+        notesJudgers[3].SetNotesObjs(3);
+        notesJudgers[4].SetNotesObjs(4);
         SetCalcValue();
     }
 
@@ -483,8 +492,9 @@ public class HPB_GameManager : UdonSharpBehaviour
         }
         else
         {
+            int judgeValue = notesJudgers[i].Judge(i);
             //H判定
-            if (Mathf.Abs(playMng.playTime - 0) <= 1f)
+            if (judgeValue == 0)
             {
                 playMng.judgedValue[0] += 1;
                 playMng.chain += 1;
@@ -502,7 +512,7 @@ public class HPB_GameManager : UdonSharpBehaviour
                 g.GetComponent<JudgeTextObj>().judgeValue = i;
             }
             //G判定
-            else if (Mathf.Abs(playMng.playTime - 0) <= 1f)
+            else if (judgeValue == 1)
             {
                 playMng.judgedValue[1] += 1;
                 playMng.chain += 1;
@@ -513,7 +523,7 @@ public class HPB_GameManager : UdonSharpBehaviour
                 g.GetComponent<JudgeTextObj>().judgeValue = i;
             }
             //S判定
-            else
+            else if(judgeValue == 2)
             {
                 playMng.judgedValue[2] += 1;
                 playMng.chain = 0;
@@ -524,6 +534,48 @@ public class HPB_GameManager : UdonSharpBehaviour
                 GameObject g = VRCInstantiate(uiMng.uiObj_judge[2]);
                 g.GetComponent<JudgeTextObj>().judgeValue = i;
             }
+
+            //H判定
+            //if (Mathf.Abs(playMng.playTime - 0) <= 1f)
+            //{
+            //    playMng.judgedValue[0] += 1;
+            //    playMng.chain += 1;
+            //    //理論値処理
+            //    if (playMng.score_now < (100000 - playMng.scoreCalcValue[1]))
+            //    {
+            //        playMng.score_now += playMng.scoreCalcValue[1];
+            //    }
+            //    else
+            //    {
+            //        playMng.score_now = 100000;
+            //    }
+            //    uiMng.UIAnim_value(true);
+            //    GameObject g = VRCInstantiate(uiMng.uiObj_judge[0]);
+            //    g.GetComponent<JudgeTextObj>().judgeValue = i;
+            //}
+            //G判定
+            //else if (Mathf.Abs(playMng.playTime - 0) <= 1f)
+            //{
+            //    playMng.judgedValue[1] += 1;
+            //    playMng.chain += 1;
+            //    playMng.score_now += Mathf.RoundToInt(playMng.scoreCalcValue[1] * 0.6f);
+            //    playMng.ahFlag = false;
+            //    uiMng.UIAnim_value(true);
+            //    GameObject g = VRCInstantiate(uiMng.uiObj_judge[1]);
+            //    g.GetComponent<JudgeTextObj>().judgeValue = i;
+            //}
+            ////S判定
+            //else
+            //{
+            //    playMng.judgedValue[2] += 1;
+            //    playMng.chain = 0;
+            //    playMng.score_now += Mathf.RoundToInt(playMng.scoreCalcValue[1] * 0.2f);
+            //    playMng.ahFlag = false;
+            //    playMng.fcFlag = false;
+            //    uiMng.UIAnim_value(false);
+            //    GameObject g = VRCInstantiate(uiMng.uiObj_judge[2]);
+            //    g.GetComponent<JudgeTextObj>().judgeValue = i;
+            //}
         }
         SetUIData();
         SetUI_score();
