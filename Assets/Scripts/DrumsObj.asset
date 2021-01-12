@@ -26,7 +26,7 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 11500000, guid: d5c219ba48532084991af9a54da37655, type: 3}
     - {fileID: 11500000, guid: f9757b6eb4a5be94db75a27245667c17, type: 3}
-    - {fileID: 11500000, guid: 063be6397847c8546b95dbe44d89f4c2, type: 3}
+    - {fileID: 11500000, guid: 5f2b893447e5a574ba5cb1eb16040775, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -63,7 +63,7 @@ MonoBehaviour:
       Data: 4|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: HPB_GameManager, Assembly-CSharp
+      Data: HPB.GameManager, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
@@ -141,7 +141,7 @@ MonoBehaviour:
       Data: 10|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: HPB_SettingsManager, Assembly-CSharp
+      Data: HPB.SettingsManager, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
@@ -219,7 +219,7 @@ MonoBehaviour:
       Data: 16|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: SoundManager, Assembly-CSharp
+      Data: HPB.SoundManager, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

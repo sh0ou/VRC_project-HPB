@@ -2,127 +2,142 @@
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
-using System.Linq;
 
-/// <summary>
-/// ノーツ判定用スクリプト
-/// </summary>
-public class NotesJudger : UdonSharpBehaviour
+namespace HPB
 {
-    [SerializeField, Tooltip("ノーツジェネレータ")]
-    private NotesGenerator notesGen;
 
-    [SerializeField, Tooltip("各ノーツスクリプト")]
-    private GameObject[] notesObjs;
-
-    [SerializeField, Tooltip("判定対象オブジェクト格納用")]
-    private NotesObj targetNotes;
-
-    //[SerializeField, Tooltip("時間格納用配列")]
-    //private float[] timeValues;
-
-    [SerializeField, Tooltip("最小時間格納用")]
-    private float timeValue_min;
-
-    void Start()
+    public class NotesJudger : UdonSharpBehaviour
     {
+        [SerializeField]
+        private TextFileConverter textFileConverter;
 
-    }
+        [SerializeField]
+        private PlayManager playManager;
 
-    /// <summary>
-    /// 判定対象ノーツをセット
-    /// </summary>
-    /// <param name="i">レーン番号</param>
-    public void SetNotesObjs(int i)
-    {
-        Debug.Log("[<color=yellow>NotesJudger</color>]レーン" + i + "のノーツセット処理を開始します...");
-        notesObjs = new GameObject[notesGen.SendNotesValue()];
-        for (int n = 0; n < notesGen.SendNotesValue(); n++)
+        [SerializeField, Tooltip("レーン,Time")]
+        public float[][] judgeTimings;
+
+        [SerializeField, Tooltip("レーン,フラグ")]
+        public int[][] judgeFlag;
+
+        void Start()
         {
-            Debug.Log("Round:" + n);
-            Debug.Log("レーン番号チェック:" + notesGen.SendNotesLaneNum(n));
-            if (notesGen.SendNotesLaneNum(n) == i)
+
+        }
+
+        public void Setup()
+        {
+            for (int lane = 0; lane < 3; lane++)
             {
-                Debug.Log("コンポーネント取得チェック:" + notesGen.SendNotesObj(n).GetComponent<NotesObj>());
-                notesObjs[n] = notesGen.SendNotesObj(n);
+                //要素数カウント用
+                int value = 0;
+                for (int i = 0; i < textFileConverter.textDB[1].Length; i++)
+                {
+                    //レーンが一致した場合
+                    if (int.Parse(textFileConverter.textDB[3][i]) == lane)
+                    {
+                        //判定時間を代入
+                        judgeTimings[lane][value] =
+                            int.Parse(textFileConverter.textDB[1][i]);
+                        value++;
+                    }
+                }
+                //フラグ初期化
+                for (int i = 0; i < judgeTimings[lane].Length; i++)
+                {
+                    judgeFlag[lane][i] = 1;
+                }
             }
+            #region Archive
+            //for (int i = 0; i < textFileConverter.textDB[1].Length; i++)
+            //{
+            //    if (textFileConverter.textDB[1][i] == "-" || textFileConverter.textDB[1][i] == "0")
+            //    {
+
+            //    }
+            //    else
+            //    {
+
+            //    }
+            //}
+            #endregion
         }
-    }
 
-    /// <summary>
-    /// ノーツ判定開始
-    /// </summary>
-    /// <param name="f">ドラム判定時間</param>
-    /// <returns></returns>
-    public int Judge(float f)
-    {
-        targetNotes = null;
-        timeValue_min = 9999;
-        //位置格納処理
-        //for (int i = 0; i <= notesObjs.Length; i++)
-        //{
-        //    Debug.Log("Obj" + i + "位置:" + notesObjs[i].gameObject.transform.position.z);
-        //    Debug.Log("ローカル位置:" + notesObjs[i].gameObject.transform.localPosition.z);
-        //    timeValues[i] = notesObjs[i].gameObject.transform.position.z;
-        //}
-        //timeValue_min = Mathf.Min(timeValues);
-
-        //時間格納処理
-        for (int i = 0; i < notesObjs.Length; i++)
+        //public (int, bool) Judge(int lane)
+        public int Judge(int lane)
         {
-            Debug.Log("格納処理:" + i);
-            if (notesObjs[i] == null)
+            for (int i = 0; i < judgeFlag[lane].Length; i++)
             {
-                Debug.LogWarning("nullチェックに失敗しました。スキップします");
-                return 3;
+                bool b = false;
+                //判定済フラグチェック
+                if (judgeFlag[lane][i] == 0)
+                {
+                    //判定時間チェック
+                    float calcTime = Mathf.Abs(judgeTimings[lane][i] - playManager.playTime);
+                    if (calcTime < 0.04f / 2)
+                    {
+                        Debug.Log("Happy");
+                        //if (EndCheck())
+                        //{
+                        //    return (0, true);
+                        //}
+                        //else
+                        //{
+                        //    return (0, false);
+                        //}
+                        return 0;
+                    }
+                    else if (calcTime <= 0.1f / 2)
+                    {
+                        Debug.Log("Good");
+                        //if (EndCheck())
+                        //{
+                        //    return (1, true);
+                        //}
+                        //else
+                        //{
+                        //    return (1, false);
+                        //}
+                        return 1;
+                    }
+                    else if (calcTime <= 0.15f / 2)
+                    {
+                        Debug.Log("Sad");
+                        //if (EndCheck())
+                        //{
+                        //    return (2, true);
+                        //}
+                        //else
+                        //{
+                        //    return (2, false);
+                        //}
+                        return 2;
+                    }
+                    else
+                    {
+                        Debug.Log("?");
+                        break;
+                    }
+                }
             }
-            else /*(notesObjs[i] != null)*/
+            Debug.Log("判定対象外");
+            //return (-1, false);
+            return -1;
+        }
+
+        private bool EndCheck()
+        {
+            for (int lane = 0; lane < 3; lane++)
             {
-                Debug.Log("NullCheck:OK");
-                Debug.Log("ジャッジタイム:" + notesObjs[i].GetComponent<NotesObj>().judgeTime);
-                //if (notesObjs[i].judgeTime < timeValue_min)
-                //{
-                //Debug.Log("最小値Obj:" + notesObjs[i].gameObject.name + "/" + notesObjs[i].judgeTime);
-                timeValue_min = notesObjs[i].GetComponent<NotesObj>().judgeTime;
-                targetNotes = notesObjs[i].GetComponent<NotesObj>();
-                i = notesObjs.Length;
-                //}
+                for (int i = 0; i < judgeFlag[lane].Length; i++)
+                {
+                    if (judgeFlag[lane][i] == 1)
+                    {
+                        return false;
+                    }
+                }
             }
+            return true;
         }
-
-        //判定処理
-        int i_r = -1;
-        Debug.Log("時間差:" + Mathf.Abs(targetNotes.judgeTime - f));
-        //H判定
-        if (Mathf.Abs(targetNotes.judgeTime - f) <= 0.04f / 2)
-        {
-            Debug.Log("Happy!");
-            i_r = 0;
-        }
-        //G判定
-        else if (Mathf.Abs(targetNotes.judgeTime - f) <= 0.1f / 2)
-        {
-            Debug.Log("Good");
-            i_r = 1;
-        }
-        //S判定
-        else if (Mathf.Abs(targetNotes.judgeTime - f) <= 0.2f / 2)
-        {
-            Debug.Log("Sad...");
-            i_r = 2;
-        }
-        else
-        {
-            Debug.LogWarning("判定範囲外です。スキップします");
-            return 3;
-        }
-
-        //オブジェクト削除処理
-        Destroy(targetNotes.gameObject);
-        if (i_r == -1)
-        {
-            Debug.LogError("[<color=red>NotesJudger</color>]判定結果値が不正です");
-        }
-        return i_r;
     }
 }

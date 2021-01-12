@@ -3,40 +3,45 @@ using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 
-/// <summary>
-/// ドラムオブジェクト
-/// </summary>
-public class DrumsObj : UdonSharpBehaviour
+namespace HPB
 {
-    [SerializeField, Tooltip("ゲームマネージャ")]
-    private HPB_GameManager gameMng;
-
-    [SerializeField, Tooltip("設定マネージャ")]
-    private HPB_SettingsManager settingsMng;
-
-    [SerializeField, Tooltip("サウンドマネージャ")]
-    private SoundManager soundMng;
-
-    [SerializeField, Tooltip("ドラム番号（手動指定）")]
-    private int drumNum;
-
-    [SerializeField, Tooltip("ドラムヒット時パーティクル")]
-    private GameObject hitParticle;
-
-    private void OnTriggerEnter(Collider other)
+    /// <summary>
+    /// ドラムオブジェクト
+    /// </summary>
+    public class DrumsObj : UdonSharpBehaviour
     {
-        if (other.gameObject.layer == 23)
+        [SerializeField, Tooltip("ゲームマネージャ")]
+        private GameManager gameMng;
+
+        [SerializeField, Tooltip("設定マネージャ")]
+        private SettingsManager settingsMng;
+
+        [SerializeField, Tooltip("サウンドマネージャ")]
+        private SoundManager soundMng;
+
+        [SerializeField, Tooltip("ドラム番号（手動指定）")]
+        private int drumNum;
+
+        [SerializeField, Tooltip("ドラムヒット時パーティクル")]
+        private GameObject hitParticle;
+
+        private void OnTriggerEnter(Collider other)
         {
-            //ドラムエフェクト
-            if (settingsMng.effectFlag)
+            Debug.Log("[<color=yellow>DrumsObj</color>]レイヤー番号:" + other.gameObject.layer);
+            if (other.gameObject.layer == 23)
             {
-                //VRCInstantiate(hitParticle);
-            }
-            //ドラム処理
-            gameMng.DrumAction(drumNum);
-            if(settingsMng.windowFlag == 3)
-            {
-                soundMng.audioSources[1].PlayOneShot(soundMng.seLists[1]);
+                //ドラムエフェクト
+                if (settingsMng.effectFlag)
+                {
+                    //VRCInstantiate(hitParticle);
+                }
+                //ドラム処理
+                Debug.Log("[<color=yellow>DrumsObj</color>]ドラム判定:" + drumNum);
+                gameMng.DrumAction(drumNum);
+                if (settingsMng.windowFlag == 3)
+                {
+                    soundMng.audioSources[1].PlayOneShot(soundMng.seLists[1]);
+                }
             }
         }
     }
