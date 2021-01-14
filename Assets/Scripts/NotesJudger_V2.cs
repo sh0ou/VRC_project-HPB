@@ -92,9 +92,9 @@ namespace HPB
 		        // None は念のため各条件式に当てはまらないように NaN を設定しておきます。
 		        float.NaN,
                 //絶対値を参照するため2で割る
-                0.04f/2,
-                0.1f/2,
-                0.15f/2,
+                0.04f,
+                0.1f,
+                0.15f,
             };
 
             noteTimeList = new float[LaneCount][];
@@ -161,8 +161,8 @@ namespace HPB
         public int Judge(int laneIndex)
         {
             // すでに全てのノートが判定済みであれば、None にします。
-            Debug.Log("[<color=yellow>NotesJudger_V2</color>]レーン" + laneIndex);
-            Debug.Log("[<color=yellow>NotesJudger_V2</color>]判定済みノーツ:" + judgedNotesCountPerLaneList[laneIndex]);
+            //Debug.Log("[<color=yellow>NotesJudger_V2</color>]レーン" + laneIndex);
+            //Debug.Log("[<color=yellow>NotesJudger_V2</color>]判定済みノーツ:" + judgedNotesCountPerLaneList[laneIndex]);
             var judgedNotesCount = judgedNotesCountPerLaneList[laneIndex];
             if (judgedNotesCount >= totalNotesPerLaneList[laneIndex])
             {
@@ -172,18 +172,18 @@ namespace HPB
             // 現在時刻と Happy 判定時刻から、時間の差を求めます。
             var currentTime = playManager.playTime;
             var noteTime = noteTimeList[laneIndex][judgedNotesCount];
-            Debug.Log("[<color=yellow>NotesJudger_V2</color>]現在時刻:" + currentTime + " / 判定時刻:" + noteTime);
+            //Debug.Log("[<color=yellow>NotesJudger_V2</color>]現在時刻:" + currentTime + " / 判定時刻:" + noteTime);
             var distance = noteTime > currentTime ? noteTime - currentTime : currentTime - noteTime;
-            Debug.Log("[<color=yellow>NotesJudger_V2</color>]時間差:" + distance);
+            //Debug.Log("[<color=yellow>NotesJudger_V2</color>]時間差:" + distance);
 
             // 各判定に対して、判定幅が小さい順に試行します。
             // NoteJudge.None を 0 番にしているので、judgeKindIndex は 1 から始めます。
             var judgeResult = NoteJudge[0];
             for (var judgeKindIndex = 1; judgeKindIndex < NoteJudgeKindCount; judgeKindIndex++)
             {
-                Debug.Log("[<color=yellow>NotesJudger_V2</color>]判定番号:" + judgeKindIndex);
+                //Debug.Log("[<color=yellow>NotesJudger_V2</color>]判定番号:" + judgeKindIndex);
                 var span = noteJudgeTimeSpanList[judgeKindIndex];
-                Debug.Log("[<color=yellow>NotesJudger_V2</color>]しきい値:" + span);
+                //Debug.Log("[<color=yellow>NotesJudger_V2</color>]しきい値:" + span);
                 if (distance <= span)
                 {
                     judgeResult = NoteJudge[judgeKindIndex];
@@ -215,7 +215,7 @@ namespace HPB
         /// </summary>
         public void Judge_miss(int laneIndex, int noteNum)
         {
-            Debug.Log("[<color=yellow>NotesJudger_V2</color>]Miss判定(レーン" + laneIndex + " / No." + noteNum);
+            //Debug.Log("[<color=yellow>NotesJudger_V2</color>]Miss判定(レーン" + laneIndex + " / No." + noteNum);
             noteJudgeResultsList[laneIndex][noteNum] = 3;
             judgedNotesCountPerLaneList[laneIndex]++;
             judgesCountList[3]++;

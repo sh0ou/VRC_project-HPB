@@ -111,10 +111,10 @@ namespace HPB
             //処理待ち対策
             if (drumActive)
             {
-                if (settingsMng.windowFlag != 3)
-                {
-                    Debug.Log("アクティブ:DrumAction");
-                }
+                //if (settingsMng.windowFlag != 3)
+                //{
+                //    Debug.Log("アクティブ:DrumAction");
+                //}
                 switch (settingsMng.windowFlag)
                 {
                     case 0:
@@ -223,7 +223,7 @@ namespace HPB
         /// </summary>
         public void DrumActive()
         {
-            Debug.Log("アクティブ:DrumActive");
+            //Debug.Log("アクティブ:DrumActive");
             drumActive = true;
         }
 
@@ -232,7 +232,7 @@ namespace HPB
         /// </summary>
         public void GenerateNotes()
         {
-            Debug.Log("アクティブ:GenerateNotes");
+            //Debug.Log("アクティブ:GenerateNotes");
             SetUI_level();
             SetUIData();
             notesJudger.Setup();
@@ -246,9 +246,10 @@ namespace HPB
         /// </summary>
         public void PlayMusic()
         {
-            Debug.Log("アクティブ:PlayMusic");
+            //Debug.Log("アクティブ:PlayMusic");
             soundMng.audioSources[0].clip = soundMng.bgmLists[0];
             soundMng.audioSources[0].Play();
+            //uiMng.SetBPMGuide(int.Parse(txtConverter.textDB[0][2]));
             playMng.endTime = float.Parse(txtConverter.textDB[0][4]);
             settingsMng.gamePlay = true;
         }
@@ -258,10 +259,10 @@ namespace HPB
         /// </summary>
         public void SetUIData()
         {
-            if (settingsMng.windowFlag != 3)
-            {
-                Debug.Log("アクティブ:SetUIData");
-            }
+            //if (settingsMng.windowFlag != 3)
+            //{
+            //    Debug.Log("アクティブ:SetUIData");
+            //}
             txtConverter.SetTextFile(selectMusicNum, selectLevelNum);
             Debug.Log("窓処理:" + settingsMng.windowFlag);
             //開いてる窓によって処理を変更
@@ -351,8 +352,8 @@ namespace HPB
                     SetUI_score();
                     SetUI_chainFlag();
                     //Debug.LogError("[<color=red>HPB_GameManager</color>]DisplayNameがコメントアウトされてます\nアップロード時は解除してください");
-                    uiMng.text_playerName.text = Networking.GetOwner(playMng.drumStick).displayName;
-                    uiMng.text_playerName.text = "testUser";
+                    //uiMng.text_playerName.text = Networking.GetOwner(playMng.drumStick).displayName;
+                    uiMng.text_playerName.text = "ななしの楽団員";
                     uiMng.valueFields_result[0].text = playMng.score_now.ToString();
                     uiMng.valueFields_result[1].text = playMng.score_now.ToString();
                     uiMng.valueFields_result[2].text = playMng.score_now.ToString();
@@ -375,7 +376,7 @@ namespace HPB
         /// </summary>
         private void SetUI_level()
         {
-            Debug.Log("アクティブ:SetUI_level");
+            //Debug.Log("アクティブ:SetUI_level");
             uiMng.UIActive_level(selectLevelNum);
         }
 
@@ -386,7 +387,7 @@ namespace HPB
         {
             if (settingsMng.windowFlag != 3)
             {
-                Debug.Log("アクティブ:SetUI_score");
+                //Debug.Log("アクティブ:SetUI_score");
             }
             //rankS
             if (playMng.score_now >= 95000)
@@ -420,10 +421,10 @@ namespace HPB
         /// </summary>
         private void SetUI_chainFlag()
         {
-            if (settingsMng.windowFlag != 3)
-            {
-                Debug.Log("アクティブ:SetUI_chainFlag");
-            }
+            //if (settingsMng.windowFlag != 3)
+            //{
+            //    Debug.Log("アクティブ:SetUI_chainFlag");
+            //}
             //5チェイン以上のみ表示
             if (playMng.chain >= 5)
             {
@@ -462,7 +463,7 @@ namespace HPB
         /// <param name="i">レーン</param>
         public void JudgeNotes(int i)
         {
-            Debug.Log("[<color=yellow>GameManager</color>]レーン" + i);
+            //Debug.Log("[<color=yellow>GameManager</color>]レーン" + i);
             int judge_v = notesJudger.Judge(i);
             //int judge_i = judge_v;
             //bool judge_b = judge_v.Item2;
@@ -470,7 +471,7 @@ namespace HPB
             //{
             //    drumActive = false;
             //}
-            Debug.Log("[<color=yellow>GameManager</color>]判定結果:" + judge_v);
+            //Debug.Log("[<color=yellow>GameManager</color>]判定結果:" + judge_v);
             if (notesJudger.IsAllNotesJudged())
             {
                 drumActive = false;
@@ -491,6 +492,14 @@ namespace HPB
                 uiMng.UIAnim_value(true);
                 GameObject g = VRCInstantiate(uiMng.uiObj_judge[0]);
                 g.GetComponent<JudgeTextObj>().judgeValue = i;
+                if (i == 0)
+                {
+                    soundMng.audioSources[1].PlayOneShot(soundMng.seLists[1]);
+                }
+                else
+                {
+                    soundMng.audioSources[1].PlayOneShot(soundMng.seLists[0]);
+                }
             }
             else if (judge_v == 2)
             {
@@ -501,6 +510,14 @@ namespace HPB
                 uiMng.UIAnim_value(true);
                 GameObject g = VRCInstantiate(uiMng.uiObj_judge[1]);
                 g.GetComponent<JudgeTextObj>().judgeValue = i;
+                if (i == 0)
+                {
+                    soundMng.audioSources[1].PlayOneShot(soundMng.seLists[1]);
+                }
+                else
+                {
+                    soundMng.audioSources[1].PlayOneShot(soundMng.seLists[0]);
+                }
             }
             else if (judge_v == 3)
             {
@@ -664,7 +681,7 @@ namespace HPB
             settingsMng.windowFlag = 4;
             playMng.playTime = 0;
             //全ミス状態の場合フラグを外す
-            if(playMng.score_now == 0)
+            if (playMng.score_now == 0)
             {
                 playMng.ahFlag = false;
                 playMng.fcFlag = false;

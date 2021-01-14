@@ -24,7 +24,7 @@ namespace HPB
         private NotesJudger_V2 notesJudger;
 
         [SerializeField, Tooltip("ノーツオブジェクト")]
-        private GameObject notesObj;
+        private GameObject[] notesObj;
 
         [SerializeField, Tooltip("終点の位置")]
         private Transform endPosition;
@@ -54,6 +54,7 @@ namespace HPB
             {
                 int notesLane = int.Parse(textFileConverter.textDB[3][i]);
                 float notesPosx = 0;
+                float notesPosy = 1.5f;
 
                 #region デバッグ用
                 //Debug.Log("ノーツNo." + i);
@@ -74,12 +75,23 @@ namespace HPB
 
 
                 //ノーツ生成
-                notesObjInstance.SetValue(VRCInstantiate(notesObj), i);
+                if (notesLane == 0)
+                {
+                    notesObjInstance.SetValue(VRCInstantiate(notesObj[1]), i);
+                    notesPosy = 2;
+                }
+                else
+                {
+                    notesObjInstance.SetValue(VRCInstantiate(notesObj[0]), i);
+                    notesPosy = 0.5f;
+                }
+
                 //Debug.Log("ノーツObj:" + notesObjInstance[i]);
-
-
                 switch (notesLane)
                 {
+                    case 0:
+                        notesPosx = 0;
+                        break;
                     case 1:
                         notesPosx = -0.75f;
                         break;
@@ -93,8 +105,9 @@ namespace HPB
                         notesPosx = 0.75f;
                         break;
                 }
+
                 //ノーツ位置を設定
-                notesObjInstance[i].gameObject.transform.position = new Vector3(notesPosx, 1, notesPosz);
+                notesObjInstance[i].gameObject.transform.position = new Vector3(notesPosx, notesPosy, notesPosz);
                 //Debug.Log("ノーツ位置:" + notesObjInstance[i].transform.position);
 
                 //ノーツ設定を変更

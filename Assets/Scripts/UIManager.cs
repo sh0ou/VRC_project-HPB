@@ -31,6 +31,9 @@ namespace HPB
             ("ドラムガイドUI\n0=左UI_選曲\n1=左UI_レベル\n2=右UI=選曲\n3=右UI_レベル")]
         private GameObject[] guideUI;
 
+        [SerializeField, Tooltip("オプションUI")]
+        private GameObject[] optionUI;
+
         [SerializeField, Tooltip
             ("ジャケット格納変数\n1列目=曲番号\n2列目=レベル番号")]
         public Material[][] jacketList;
@@ -79,6 +82,12 @@ namespace HPB
             ("値更新アニメUI")]
         private Animator fixedText_play_2;
 
+        [SerializeField, Tooltip("ノーツラインUI")]
+        private GameObject notesLineUI;
+
+        //[SerializeField, Tooltip("BPMガイドUI")]
+        //private Animator[] bpmGuideUI;
+
         [SerializeField, Tooltip
             ("UIオブジェクト\n0=RankD 1=RankC 2=RankB\n3=RankA 4=RankS\n5=chain 6=chain_FC 7=chain_AH\n8=chain_root")]
         private GameObject[] uiObj_play_2;
@@ -110,6 +119,9 @@ namespace HPB
         #endregion
         void Start()
         {
+            optionUI[0].SetActive(true);
+            optionUI[1].SetActive(false);
+            notesLineUI.SetActive(false);
             windowAnims[0].gameObject.SetActive(true);
             windowAnims[1].gameObject.SetActive(false);
             windowAnims[2].gameObject.SetActive(false);
@@ -260,7 +272,6 @@ namespace HPB
                     uiObj_play_1[2].SetActive(true);
                     break;
             }
-            uiObj_play_1[0].SetActive(true);
         }
 
         /// <summary>
@@ -406,6 +417,14 @@ namespace HPB
             }
         }
 
+        //public void SetBPMGuide(int bpm)
+        //{
+        //    bpmGuideUI[0].speed = bpm / 60;
+        //    bpmGuideUI[1].speed = bpm / 60;
+        //    bpmGuideUI[0].Play("bpmGuide", 0, 0);
+        //    bpmGuideUI[1].Play("bpmGuide", 0, 0);
+        //}
+
         /// <summary>
         /// アニメーション終了後処理
         /// </summary>
@@ -429,6 +448,9 @@ namespace HPB
                     break;
                 case 3://プレイ画面オープン
                     Debug.Log("アニメーション3");
+                    optionUI[0].SetActive(false);
+                    optionUI[1].SetActive(true);
+                    notesLineUI.SetActive(true);
                     gameMng.SetUIData();
                     gameMng.GenerateNotes();
                     Open_play();
@@ -437,6 +459,9 @@ namespace HPB
                     if (settingsMng.windowFlag == 4)
                     {
                         Debug.Log("アニメーション4en");
+                        optionUI[0].SetActive(true);
+                        optionUI[1].SetActive(false);
+                        notesLineUI.SetActive(false);
                         Open_result();
                     }
                     else
