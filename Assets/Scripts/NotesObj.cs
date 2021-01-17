@@ -45,8 +45,8 @@ namespace HPB
         private SettingsManager settingsMng;
         private PlayManager playMng;
 
-        [SerializeField, Tooltip("0=レーン\n1=要素番号")]
-        public int[] notesValue = new int[2];
+        [SerializeField, Tooltip("ノーツの参照番号\n0=レーン\n1=要素番号")]
+        public int[] notesReferenceNo = new int[2];
 
         void Start()
         {
@@ -59,17 +59,17 @@ namespace HPB
             if (settingsMng.gamePlay)
             {
                 //sad判定の範囲外に出たらミスとして判定
-                if (playMng.playTime > notesJudger.noteTimeList[notesValue[0]][notesValue[1]] +
+                if (playMng.playTime > notesJudger.noteTimeList[notesReferenceNo[0]][notesReferenceNo[1]] +
                    notesJudger.noteJudgeTimeSpanList[3])
                 {
                     Debug.Log("[<color=yellow>NotesObj</color>]Miss判定:" + gameObject.name);
-                    notesJudger.Judge_miss(notesValue[0], notesValue[1]);
+                    notesJudger.Judge_miss(notesReferenceNo[0], notesReferenceNo[1]);
                 }
                 //判定済みの場合は消去
-                if (notesJudger.noteJudgeResultsList[notesValue[0]][notesValue[1]] != 0)
+                if (notesJudger.noteJudgeResultsList[notesReferenceNo[0]][notesReferenceNo[1]] != 0)
                 {
                     Debug.Log("[<color=yellow>NotesObj</color>]判定が確認されました:" + gameObject.name);
-                    Destroy(gameObject);
+                    gameObject.SetActive(false);
                 }
                 transform.position += transform.forward * 3 * settingsMng.notesSpeed * Time.deltaTime;
             }

@@ -679,6 +679,7 @@ namespace HPB
             settingsMng.gamePlay = false;
             soundMng.audioSources[0].Stop();
             settingsMng.windowFlag = 4;
+            notesGen.DisableRootObj();
             playMng.playTime = 0;
             //全ミス状態の場合フラグを外す
             if (playMng.score_now == 0)
