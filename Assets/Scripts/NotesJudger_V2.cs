@@ -92,9 +92,9 @@ namespace HPB
 		        // None は念のため各条件式に当てはまらないように NaN を設定しておきます。
 		        float.NaN,
                 //絶対値を参照するため2で割る
-                0.04f,
+                0.05f,
                 0.1f,
-                0.15f,
+                0.2f,
             };
 
             noteTimeList = new float[LaneCount][];

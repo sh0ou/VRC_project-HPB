@@ -64,7 +64,7 @@ namespace HPB
 
         #endregion
         /// <summary>ノーツを生成</summary>
-        public void SetNotes()
+        public void GenerateNotes()
         {
             noteCountList = new int[notesJudger.LaneCount];
 
@@ -81,7 +81,7 @@ namespace HPB
                 float notesPosx = 0;
                 float notesPosy = 1.5f;
                 float notesPosz = (endPosition.position.z +
-                    (notesJudger.noteTimeList[notesLane][noteCountList[notesLane]] * 3 * hpb_GM.notesSpeed));
+                    (notesJudger.noteTimeList[notesLane][noteCountList[notesLane]] * (hpb_GM.notesSpeed * 5)));
                 /*2行目の数字は微調整用
                 ↑明らかにずれてる（スタート時ノーツとエンド時ノーツがずれてる）*/
                 #region デバッグ用
@@ -108,34 +108,22 @@ namespace HPB
                 #endregion
 
                 notesObjInstance[i] = notesRootObj.transform.GetChild(i).gameObject;
+                Vector2 vec2 = GetNotesPosValue_xy(notesLane);
+                notesPosx = vec2.x;
+                notesPosy = vec2.y;
 
                 //各種値を設定
                 switch (notesLane)
                 {
                     case 0:
-                        notesPosx = 0;
-                        notesPosy = 2;
-                        SetNotes_High(i);
+                    case 5:
+                        SetNotes(1, i);
                         break;
                     case 1:
-                        notesPosx = -0.75f;
-                        notesPosy = 0.5f;
-                        SetNotes_Normal(i);
-                        break;
                     case 2:
-                        notesPosx = -0.25f;
-                        notesPosy = 0.5f;
-                        SetNotes_Normal(i);
-                        break;
                     case 3:
-                        notesPosx = 0.25f;
-                        notesPosy = 0.5f;
-                        SetNotes_Normal(i);
-                        break;
                     case 4:
-                        notesPosx = 0.75f;
-                        notesPosy = 0.5f;
-                        SetNotes_Normal(i);
+                        SetNotes(0, i);
                         break;
                 }
 
@@ -184,52 +172,66 @@ namespace HPB
         }
 
         /// <summary>
-        /// ノーツのレーンを返す
+        /// ノーツの位置セット
         /// </summary>
-        /// <param name="i">対象要素番号</param>
-        /// <returns></returns>
-        public int SendNotesLaneNum(int i)
+        /// <param name="cat">ノーツ種類</param>
+        /// <param name="notesNum">ノーツ番号</param>
+        public void SetNotes(int cat, int notesNum)
         {
-            int i_r = -1;
-            switch (notesObjInstance[i].transform.position.x)
+            //位置設定
+            switch (cat)
             {
-                case -0.75f:
-                    i_r = 1;
+                case 0:
+                    notesObjInstance[notesNum].transform.rotation = Quaternion.Euler(0, 180, 0);
                     break;
-                case -0.25f:
-                    i_r = 2;
+                case 1:
+                    notesObjInstance[notesNum].transform.rotation = Quaternion.Euler(0, -180, 90);
                     break;
-                case 0.25f:
-                    i_r = 3;
-                    break;
-                case 0.75f:
-                    i_r = 4;
-                    break;
-                    //Highノーツ用処理をここに
             }
-            if (i_r == -1)
-            {
-                Debug.LogError("[<color=red>NotesJudger</color>]判定結果値が不正です");
-            }
-            return i_r;
+            //メッシュ,マテリアル差し替え
+            notesObjInstance[notesNum].GetComponent<MeshFilter>().mesh = notesMeshs[cat];
+            notesObjInstance[notesNum].GetComponent<Renderer>().material = notesMaterials[cat];
         }
 
-        //ここにノーツ設定メソッドをつくるのだ
-        public void SetNotes_Normal(int notesNum)
+        /// <summary>
+        /// ノーツのx,y位置情報を取得
+        /// </summary>
+        public Vector2 GetNotesPosValue_xy(int notesLane)
         {
-            //位置設定
-            notesObjInstance[notesNum].transform.rotation = Quaternion.Euler(180, 0, 0);
-            //メッシュ,マテリアル差し替え
-            notesObjInstance[notesNum].GetComponent<MeshFilter>().mesh = notesMeshs[0];
-            notesObjInstance[notesNum].GetComponent<Renderer>().material = notesMaterials[0];
+            Vector2 vec2 = new Vector2(9999, 9999);
+            switch (notesLane)
+            {
+                case 0:
+                    vec2 = new Vector2(-0.7f, 2);
+                    break;
+                case 5:
+                    vec2 = new Vector2(0.7f, 2);
+                    break;
+                case 1:
+                    vec2 = new Vector2(-0.75f, 0.45f);
+                    break;
+                case 2:
+                    vec2 = new Vector2(-0.25f, 0.45f);
+                    break;
+                case 3:
+                    vec2 = new Vector2(0.25f, 0.45f);
+                    break;
+                case 4:
+                    vec2 = new Vector2(0.75f, 0.45f);
+                    break;
+            }
+            if (vec2.x == 9999)
+            {
+                Debug.LogError("[<color=red>NotesGenerator</color>]ノーツの位置セットに失敗しました");
+            }
+            return vec2;
         }
-        public void SetNotes_High(int notesNum)
+
+        public float GetNotesPosValue_z(int notesLane, int notesNum)
         {
-            //位置設定
-            notesObjInstance[notesNum].transform.rotation = Quaternion.Euler(180, 0, 90);
-            //メッシュ,マテリアル差し替え
-            notesObjInstance[notesNum].GetComponent<MeshFilter>().mesh = notesMeshs[1];
-            notesObjInstance[notesNum].GetComponent<Renderer>().material = notesMaterials[1];
+            return (endPosition.position.z +
+                ((notesJudger.noteTimeList[notesLane][notesNum] - playMng.playTime)
+                * 3 * hpb_GM.notesSpeed));
         }
     }
 }

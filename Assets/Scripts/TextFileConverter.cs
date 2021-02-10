@@ -40,7 +40,7 @@ namespace HPB
             textDB[1] = textStorage[1].Split('\n');
             textDB[2] = textStorage[2].Split('\n');
             textDB[3] = textStorage[3].Split('\n');
-            Debug.Log("<color=green>譜面変換が完了しました</color>");
+            //Debug.Log("<color=green>譜面変換が完了しました</color>");
         }
 
         /// <summary>

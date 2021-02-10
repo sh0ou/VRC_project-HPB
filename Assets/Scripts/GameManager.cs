@@ -29,6 +29,9 @@ namespace HPB
         [SerializeField, Tooltip("ノーツ判定スクリプト")]
         private NotesJudger_V2 notesJudger;
 
+        [SerializeField, Tooltip("パーティクルジェネレータ")]
+        private ParticleGenerator particleGenerator;
+
         [SerializeField, Tooltip("サウンドマネージャ")]
         private SoundManager soundMng;
 
@@ -49,6 +52,15 @@ namespace HPB
 
         private void Update()
         {
+            if (settingsMng.gamePlay)
+            {
+                playMng.playTime = soundMng.audioSources[0].time;
+                //楽曲時間がプレイ時間を超えると終了
+                if (playMng.playTime >= playMng.endTime)
+                {
+                    EndMusic();
+                }
+            }
             #region キーボード入力
             if (Input.GetKeyDown(KeyCode.F))
             {
@@ -71,16 +83,6 @@ namespace HPB
                 DrumAction(0);
             }
             #endregion
-
-            if (settingsMng.gamePlay)
-            {
-                playMng.playTime += Time.deltaTime;
-                //楽曲時間がプレイ時間を超えると終了
-                if (playMng.playTime >= playMng.endTime)
-                {
-                    EndMusic();
-                }
-            }
         }
 
         /// <summary>
@@ -89,7 +91,7 @@ namespace HPB
         /// <param name="i">叩かれたドラム</param>
         public void DrumAction(int i)
         {
-            Debug.Log("[<color=yellow>GameManager</color>]ドラム判定" + i);
+            //Debug.Log("[<color=yellow>GameManager</color>]ドラム判定" + i);
             #region 処理メモ
             /*
             ドラム番号取得
@@ -236,7 +238,7 @@ namespace HPB
             SetUI_level();
             SetUIData();
             notesJudger.Setup();
-            notesGen.SetNotes();
+            notesGen.GenerateNotes();
 
             SetCalcValue();
         }
@@ -264,7 +266,7 @@ namespace HPB
             //    Debug.Log("アクティブ:SetUIData");
             //}
             txtConverter.SetTextFile(selectMusicNum, selectLevelNum);
-            Debug.Log("窓処理:" + settingsMng.windowFlag);
+            //Debug.Log("窓処理:" + settingsMng.windowFlag);
             //開いてる窓によって処理を変更
             switch (settingsMng.windowFlag)
             {
@@ -448,7 +450,7 @@ namespace HPB
         /// </summary>
         private void SetCalcValue()
         {
-            Debug.Log("アクティブ:SetCalcValue");
+            //Debug.Log("アクティブ:SetCalcValue");
             playMng.score_now = 0;
             playMng.playTime = 0;
             playMng.chain = 0;
@@ -465,18 +467,11 @@ namespace HPB
         {
             //Debug.Log("[<color=yellow>GameManager</color>]レーン" + i);
             int judge_v = notesJudger.Judge(i);
-            //int judge_i = judge_v;
-            //bool judge_b = judge_v.Item2;
-            //if (judge_v)
-            //{
-            //    drumActive = false;
-            //}
-            //Debug.Log("[<color=yellow>GameManager</color>]判定結果:" + judge_v);
             if (notesJudger.IsAllNotesJudged())
             {
                 drumActive = false;
             }
-            if (judge_v == 1)
+            if (judge_v == 1)//Happy
             {
                 playMng.judgedValue[0] += 1;
                 playMng.chain += 1;
@@ -490,36 +485,57 @@ namespace HPB
                     playMng.score_now = 100000;
                 }
                 uiMng.UIAnim_value(true);
+
                 GameObject g = VRCInstantiate(uiMng.uiObj_judge[0]);
                 g.GetComponent<JudgeTextObj>().judgeValue = i;
+
+                //効果再生
                 if (i == 0)
                 {
                     soundMng.audioSources[1].PlayOneShot(soundMng.seLists[1]);
+                    if (settingsMng.effectFlag)
+                    {
+                        particleGenerator.GenerateParticle(i);
+                    }
                 }
                 else
                 {
                     soundMng.audioSources[1].PlayOneShot(soundMng.seLists[0]);
+                    if (settingsMng.effectFlag)
+                    {
+                        particleGenerator.GenerateParticle(i);
+                    }
                 }
             }
-            else if (judge_v == 2)
+            else if (judge_v == 2)//Good
             {
                 playMng.judgedValue[1] += 1;
                 playMng.chain += 1;
                 playMng.score_now += Mathf.RoundToInt(playMng.scoreCalcValue[1] * 0.8f);
                 playMng.ahFlag = false;
                 uiMng.UIAnim_value(true);
+
                 GameObject g = VRCInstantiate(uiMng.uiObj_judge[1]);
                 g.GetComponent<JudgeTextObj>().judgeValue = i;
+
                 if (i == 0)
                 {
                     soundMng.audioSources[1].PlayOneShot(soundMng.seLists[1]);
+                    if (settingsMng.effectFlag)
+                    {
+                        particleGenerator.GenerateParticle(i);
+                    }
                 }
                 else
                 {
                     soundMng.audioSources[1].PlayOneShot(soundMng.seLists[0]);
+                    if (settingsMng.effectFlag)
+                    {
+                        particleGenerator.GenerateParticle(i);
+                    }
                 }
             }
-            else if (judge_v == 3)
+            else if (judge_v == 3)//Sad
             {
                 playMng.judgedValue[2] += 1;
                 playMng.chain = 0;
@@ -527,6 +543,7 @@ namespace HPB
                 playMng.ahFlag = false;
                 playMng.fcFlag = false;
                 uiMng.UIAnim_value(false);
+
                 GameObject g = VRCInstantiate(uiMng.uiObj_judge[2]);
                 g.GetComponent<JudgeTextObj>().judgeValue = i;
             }

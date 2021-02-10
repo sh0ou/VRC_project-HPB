@@ -38,6 +38,9 @@ namespace HPB
             ("ジャケット格納変数\n1列目=曲番号\n2列目=レベル番号")]
         public Material[][] jacketList;
 
+        [SerializeField, Tooltip("パーティクルジェネレータ")]
+        private ParticleGenerator particleGenerator;
+
         #endregion
         #region ウインドウ（アニメーションに使用）
         [SerializeField, Tooltip
@@ -233,10 +236,18 @@ namespace HPB
             windowAnims[5].gameObject.SetActive(true);
             if (playMng.ahFlag)
             {
+                if (settingsMng.effectFlag)
+                {
+                    particleGenerator.GenerateParticle(90);
+                }
                 UIActive_chain(0);
             }
             else if (playMng.fcFlag)
             {
+                if (settingsMng.effectFlag)
+                {
+                    particleGenerator.GenerateParticle(90);
+                }
                 UIActive_chain(1);
             }
             else
