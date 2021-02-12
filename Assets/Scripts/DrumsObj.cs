@@ -40,7 +40,7 @@ namespace HPB
             {
                 //ドラム処理
                 TestMethod();
-                other.GetComponent<VRC_Pickup>().PlayHaptics();
+                //other.GetComponent<VRC_Pickup>().PlayHaptics();
             }
         }
         public void TestMethod()

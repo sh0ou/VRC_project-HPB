@@ -679,7 +679,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: inputFields_select_1
+      Data: tmp_select_1
     - Name: $v
       Entry: 7
       Data: 50|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
@@ -691,7 +691,7 @@ MonoBehaviour:
       Data: 52|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: UnityEngine.UI.InputField[], UnityEngine.UI
+      Data: TMPro.TextMeshProUGUI[], Unity.TextMeshPro
     - Name: 
       Entry: 8
       Data: 
@@ -703,13 +703,13 @@ MonoBehaviour:
       Data: 0
     - Name: symbolResolvedTypeName
       Entry: 1
-      Data: UnityEngineUIInputFieldArray
+      Data: TMProTextMeshProUGUIArray
     - Name: symbolOriginalName
       Entry: 1
-      Data: inputFields_select_1
+      Data: tmp_select_1
     - Name: symbolUniqueName
       Entry: 1
-      Data: inputFields_select_1
+      Data: tmp_select_1
     - Name: symbolDefaultValue
       Entry: 6
       Data: 
@@ -838,7 +838,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: inputFields_select_2
+      Data: tmp_select_2
     - Name: $v
       Entry: 7
       Data: 62|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
@@ -856,13 +856,13 @@ MonoBehaviour:
       Data: 0
     - Name: symbolResolvedTypeName
       Entry: 1
-      Data: UnityEngineUIInputFieldArray
+      Data: TMProTextMeshProUGUIArray
     - Name: symbolOriginalName
       Entry: 1
-      Data: inputFields_select_2
+      Data: tmp_select_2
     - Name: symbolUniqueName
       Entry: 1
-      Data: inputFields_select_2
+      Data: tmp_select_2
     - Name: symbolDefaultValue
       Entry: 6
       Data: 
@@ -997,7 +997,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: inputFields_play_1
+      Data: tmp_play_1
     - Name: $v
       Entry: 7
       Data: 74|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
@@ -1015,13 +1015,13 @@ MonoBehaviour:
       Data: 0
     - Name: symbolResolvedTypeName
       Entry: 1
-      Data: UnityEngineUIInputFieldArray
+      Data: TMProTextMeshProUGUIArray
     - Name: symbolOriginalName
       Entry: 1
-      Data: inputFields_play_1
+      Data: tmp_play_1
     - Name: symbolUniqueName
       Entry: 1
-      Data: inputFields_play_1
+      Data: tmp_play_1
     - Name: symbolDefaultValue
       Entry: 6
       Data: 
@@ -1150,7 +1150,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: inputFields_play_2
+      Data: tmp_play_2
     - Name: $v
       Entry: 7
       Data: 85|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
@@ -1168,13 +1168,13 @@ MonoBehaviour:
       Data: 0
     - Name: symbolResolvedTypeName
       Entry: 1
-      Data: UnityEngineUIInputFieldArray
+      Data: TMProTextMeshProUGUIArray
     - Name: symbolOriginalName
       Entry: 1
-      Data: inputFields_play_2
+      Data: tmp_play_2
     - Name: symbolUniqueName
       Entry: 1
-      Data: inputFields_play_2
+      Data: tmp_play_2
     - Name: symbolDefaultValue
       Entry: 6
       Data: 
@@ -1526,7 +1526,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: jacketImage_result
+      Data: tmp_result
     - Name: $v
       Entry: 7
       Data: 112|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
@@ -1535,7 +1535,7 @@ MonoBehaviour:
       Data: 113|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
     - Name: internalType
       Entry: 9
-      Data: 70
+      Data: 52
     - Name: declarationType
       Entry: 3
       Data: 1
@@ -1544,13 +1544,13 @@ MonoBehaviour:
       Data: 0
     - Name: symbolResolvedTypeName
       Entry: 1
-      Data: UnityEngineGameObject
+      Data: TMProTextMeshProUGUIArray
     - Name: symbolOriginalName
       Entry: 1
-      Data: jacketImage_result
+      Data: tmp_result
     - Name: symbolUniqueName
       Entry: 1
-      Data: jacketImage_result
+      Data: tmp_result
     - Name: symbolDefaultValue
       Entry: 6
       Data: 
@@ -1583,6 +1583,78 @@ MonoBehaviour:
       Data: 117|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
+      Data: "\u5024\u66F4\u65B0\u7528UI\n0=\u30B9\u30B3\u30A2\n1=\u30B9\u30B3\u30A2_FC\n2=\u30B9\u30B3\u30A2_AH\n3=H\u5224\u5B9A\n4=G\u5224\u5B9A\n5=S\u5224\u5B9A\n6=M\u5224\u5B9A"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: userBehaviourSource
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: jacketImage_result
+    - Name: $v
+      Entry: 7
+      Data: 118|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
+    - Name: fieldSymbol
+      Entry: 7
+      Data: 119|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
+    - Name: internalType
+      Entry: 9
+      Data: 70
+    - Name: declarationType
+      Entry: 3
+      Data: 1
+    - Name: syncMode
+      Entry: 3
+      Data: 0
+    - Name: symbolResolvedTypeName
+      Entry: 1
+      Data: UnityEngineGameObject
+    - Name: symbolOriginalName
+      Entry: 1
+      Data: jacketImage_result
+    - Name: symbolUniqueName
+      Entry: 1
+      Data: jacketImage_result
+    - Name: symbolDefaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: fieldAttributes
+      Entry: 7
+      Data: 120|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 121|UnityEngine.SerializeField, UnityEngine.CoreModule
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 122|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
+    - Name: tooltip
+      Entry: 1
       Data: "\u30EA\u30B6\u30EB\u30C8\u753B\u9762\u30B8\u30E3\u30B1\u30C3\u30C8\u753B\u50CF"
     - Name: 
       Entry: 8
@@ -1610,13 +1682,13 @@ MonoBehaviour:
       Data: text_playerName
     - Name: $v
       Entry: 7
-      Data: 118|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
+      Data: 123|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: fieldSymbol
       Entry: 7
-      Data: 119|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
+      Data: 124|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
     - Name: internalType
       Entry: 7
-      Data: 120|System.RuntimeType, mscorlib
+      Data: 125|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: UnityEngine.UI.Text, UnityEngine.UI
@@ -1646,19 +1718,19 @@ MonoBehaviour:
       Data: 
     - Name: fieldAttributes
       Entry: 7
-      Data: 121|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
+      Data: 126|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
     - Name: 
       Entry: 7
-      Data: 122|UnityEngine.SerializeField, UnityEngine.CoreModule
+      Data: 127|UnityEngine.SerializeField, UnityEngine.CoreModule
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 123|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
+      Data: 128|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
       Data: "\u30D7\u30EC\u30A4\u30E4\u30FC\u540D"
@@ -1688,10 +1760,10 @@ MonoBehaviour:
       Data: uiObj_result
     - Name: $v
       Entry: 7
-      Data: 124|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
+      Data: 129|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: fieldSymbol
       Entry: 7
-      Data: 125|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
+      Data: 130|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
     - Name: internalType
       Entry: 9
       Data: 23
@@ -1718,79 +1790,6 @@ MonoBehaviour:
       Data: 
     - Name: fieldAttributes
       Entry: 7
-      Data: 126|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 7
-      Data: 127|UnityEngine.SerializeField, UnityEngine.CoreModule
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 128|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
-    - Name: tooltip
-      Entry: 1
-      Data: "UI\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\n0=RankD 1=RankC 2=RankB\n3=RankA
-        4=RankS\n5=score 6=score_FC 7=score_AH"
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: userBehaviourSource
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: valueFields_result
-    - Name: $v
-      Entry: 7
-      Data: 129|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
-    - Name: fieldSymbol
-      Entry: 7
-      Data: 130|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
-    - Name: internalType
-      Entry: 9
-      Data: 52
-    - Name: declarationType
-      Entry: 3
-      Data: 1
-    - Name: syncMode
-      Entry: 3
-      Data: 0
-    - Name: symbolResolvedTypeName
-      Entry: 1
-      Data: UnityEngineUIInputFieldArray
-    - Name: symbolOriginalName
-      Entry: 1
-      Data: valueFields_result
-    - Name: symbolUniqueName
-      Entry: 1
-      Data: valueFields_result
-    - Name: symbolDefaultValue
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: fieldAttributes
-      Entry: 7
       Data: 131|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
     - Name: 
       Entry: 12
@@ -1806,7 +1805,8 @@ MonoBehaviour:
       Data: 133|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: "\u5024\u66F4\u65B0\u7528UI\n0=\u30B9\u30B3\u30A2\n1=\u30B9\u30B3\u30A2_FC\n2=\u30B9\u30B3\u30A2_AH\n3=H\u5224\u5B9A\n4=G\u5224\u5B9A\n5=S\u5224\u5B9A\n6=M\u5224\u5B9A"
+      Data: "UI\u30AA\u30D6\u30B8\u30A7\u30AF\u30C8\n0=RankD 1=RankC 2=RankB\n3=RankA
+        4=RankS\n5=score 6=score_FC 7=score_AH"
     - Name: 
       Entry: 8
       Data: 

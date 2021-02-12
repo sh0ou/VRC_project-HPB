@@ -33,9 +33,6 @@ namespace HPB
         [SerializeField, Tooltip("終点の位置")]
         private Transform endPosition;
 
-        //[SerializeField, Tooltip("ノーツオブジェクト")]
-        //private GameObject[] notesObj;
-
         [SerializeField, Tooltip("ノーツ設定変更用")]
         private GameObject[] notesObjInstance;
 
@@ -50,15 +47,19 @@ namespace HPB
 
         void Start()
         {
+            //Obj非表示化
+            for (int i = 0; i < notesRootObj.transform.childCount; i++)
+            {
+                notesRootObj.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+
+        void AttachObj(int value)
+        {
             //オブジェクトをアタッチ
-            for (int i1 = 0; i1 < notesRootObj.transform.childCount; i1++)
+            for (int i1 = 0; i1 < value; i1++)
             {
                 notesObjInstance[i1] = notesRootObj.transform.GetChild(i1).gameObject;
-            }
-            //Obj非表示化
-            for (int i2 = 0; i2 < notesObjInstance.Length; i2++)
-            {
-                notesObjInstance[i2].SetActive(false);
             }
         }
 
@@ -70,12 +71,16 @@ namespace HPB
 
             notesObjInstance = new GameObject[textFileConverter.textDB[1].Length];
 
+            AttachObj(textFileConverter.textDB[1].Length);
+
             Debug.Log("ノーツ位置生成を開始します...");
-            Debug.Log("生成数;" + notesObjInstance.Length);
+            Debug.Log("生成数;" + textFileConverter.textDB[1].Length);
 
             //for = 条件が続く限り続行するやつ
             for (int i = 0; i < textFileConverter.textDB[1].Length; i++)
             {
+                notesObjInstance[i].SetActive(true);
+
                 //値宣言　判定時間を参照,設定
                 int notesLane = int.Parse(textFileConverter.textDB[3][i]);
                 float notesPosx = 0;
@@ -93,21 +98,7 @@ namespace HPB
                 //Debug.Log("スピード:" + hpb_GM.notesSpeed);
                 //Debug.Log("[<color=yellow>NotesGenerator</color>]NoteTime:" + notesJudger.noteTimeList[notesLane][noteCountList[notesLane]]);
                 #endregion
-                #region archive
-                //ノーツ生成
-                //if (notesLane == 0)
-                //{
-                //    notesObjInstance.SetValue(VRCInstantiate(notesObj[1]), i);
-                //    notesPosy = 2;
-                //}
-                //else
-                //{
-                //    notesObjInstance.SetValue(VRCInstantiate(notesObj[0]), i);
-                //    notesPosy = 0.5f;
-                //}
-                #endregion
 
-                notesObjInstance[i] = notesRootObj.transform.GetChild(i).gameObject;
                 Vector2 vec2 = GetNotesPosValue_xy(notesLane);
                 notesPosx = vec2.x;
                 notesPosy = vec2.y;
@@ -127,6 +118,7 @@ namespace HPB
                         break;
                 }
 
+                notesObjInstance[i] = notesRootObj.transform.GetChild(i).gameObject;
                 //ノーツ位置を設定
                 notesObjInstance[i].gameObject.transform.position = new Vector3(notesPosx, notesPosy, notesPosz);
 
@@ -139,20 +131,20 @@ namespace HPB
                 //Debug.Log("lifetime取得チェック:" + notesObjInstance[i].GetComponent<NotesObjScr>().lifeTime);
                 //Debug.Log("Parseチェック" + float.Parse(textFileConverter.textDB[1][i]));
                 #endregion
+
+                notesObjInstance[i].GetComponent<NotesObj>().notesReferenceNo = new int[2]
+                {
+                    notesLane, noteCountList[notesLane]
+                };
+
                 //ノーツ設定を変更
-                notesObjInstance[i].GetComponent<NotesObj>().notesReferenceNo =
-                    new int[] { notesLane, noteCountList[notesLane] };
                 notesObjInstance[i].SetActive(true);
                 noteCountList[notesLane]++;
             }
-            playMng.notesValue = notesObjInstance.Length;
+            playMng.notesValue = textFileConverter.textDB[1].Length;
             notesRootObj.SetActive(true);
             Debug.Log("<color=green>ノーツ生成が完了しました</color>");
         }
-        //public GameObject SendNotesObj(int i)
-        //{
-        //    return notesObjInstance[i];
-        //}
 
         /// <summary>
         /// ルートオブジェクトを非表示
@@ -160,15 +152,6 @@ namespace HPB
         public void DisableRootObj()
         {
             notesRootObj.SetActive(false);
-        }
-
-        /// <summary>
-        /// ノーツ数を返す
-        /// </summary>
-        /// <returns></returns>
-        public int SendNotesValue()
-        {
-            return notesObjInstance.Length;
         }
 
         /// <summary>

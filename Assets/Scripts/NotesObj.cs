@@ -50,6 +50,9 @@ namespace HPB
         [SerializeField, Tooltip("ノーツの参照番号\n0=レーン\n1=要素番号")]
         public int[] notesReferenceNo = new int[2];
 
+        //public int notesReferenceNo_0;
+        //public int notesReferenceNo_1;
+
         void Start()
         {
             notesJudger = GameObject.Find("NotesJudger").GetComponent<NotesJudger_V2>();
@@ -75,12 +78,12 @@ namespace HPB
                     gameObject.SetActive(false);
                 }
                 //transform.position += transform.forward * 3 * settingsMng.notesSpeed * Time.deltaTime;
+                //位置を更新
+                //Debug.Log("レーン更新を開始:" + notesReferenceNo[0] + "/" + notesReferenceNo[1]);
+                vec2 = notesGenerator.GetNotesPosValue_xy(notesReferenceNo[0]);
+                float f = notesGenerator.GetNotesPosValue_z(notesReferenceNo[0], notesReferenceNo[1]);
+                transform.position = new Vector3(vec2.x, vec2.y, f);
             }
-            //位置を更新
-            //Debug.Log("レーン更新を開始:" + notesReferenceNo[0] + "/" + notesReferenceNo[1]);
-            vec2 = notesGenerator.GetNotesPosValue_xy(notesReferenceNo[0]);
-            float f = notesGenerator.GetNotesPosValue_z(notesReferenceNo[0], notesReferenceNo[1]);
-            transform.position = new Vector3(vec2.x, vec2.y, f);
         }
     }
 }

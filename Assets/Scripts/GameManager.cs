@@ -91,32 +91,9 @@ namespace HPB
         /// <param name="i">叩かれたドラム</param>
         public void DrumAction(int i)
         {
-            //Debug.Log("[<color=yellow>GameManager</color>]ドラム判定" + i);
-            #region 処理メモ
-            /*
-            ドラム番号取得
-            ゲーム状態取得
-            タイトル画面の場合
-                タイトルアニメ再生
-            選曲画面の場合
-                曲移動処理
-                    基本情報更新
-                    ジャケット更新（+1-1のジャケットも更新）
-            レベル選択画面の場合
-                レベル移動処理、譜面生成処理
-            プレイ画面の場合
-                判定処理
-            リザルト画面の場合
-                選曲画面遷移処理
-            */
-            #endregion
             //処理待ち対策
             if (drumActive)
             {
-                //if (settingsMng.windowFlag != 3)
-                //{
-                //    Debug.Log("アクティブ:DrumAction");
-                //}
                 switch (settingsMng.windowFlag)
                 {
                     case 0:
@@ -239,7 +216,6 @@ namespace HPB
             SetUIData();
             notesJudger.Setup();
             notesGen.GenerateNotes();
-
             SetCalcValue();
         }
 
@@ -251,7 +227,6 @@ namespace HPB
             //Debug.Log("アクティブ:PlayMusic");
             soundMng.audioSources[0].clip = soundMng.bgmLists[0];
             soundMng.audioSources[0].Play();
-            //uiMng.SetBPMGuide(int.Parse(txtConverter.textDB[0][2]));
             playMng.endTime = float.Parse(txtConverter.textDB[0][4]);
             settingsMng.gamePlay = true;
         }
@@ -261,12 +236,7 @@ namespace HPB
         /// </summary>
         public void SetUIData()
         {
-            //if (settingsMng.windowFlag != 3)
-            //{
-            //    Debug.Log("アクティブ:SetUIData");
-            //}
             txtConverter.SetTextFile(selectMusicNum, selectLevelNum);
-            //Debug.Log("窓処理:" + settingsMng.windowFlag);
             //開いてる窓によって処理を変更
             switch (settingsMng.windowFlag)
             {
@@ -275,8 +245,8 @@ namespace HPB
                 case 1:
                     #region 選曲画面処理
                     //値をセット
-                    uiMng.inputFields_select_1[0].text = txtConverter.textDB[0][0];
-                    uiMng.inputFields_select_1[1].text = txtConverter.textDB[0][1];
+                    uiMng.tmp_select_1[0].text = txtConverter.textDB[0][0];
+                    uiMng.tmp_select_1[1].text = txtConverter.textDB[0][1];
 
                     //中央画像セット
                     uiMng.jacketImage_select_1[0].GetComponent<Renderer>().material =
@@ -314,35 +284,35 @@ namespace HPB
                 case 2:
                     #region レベル画面処理
                     //値をセット
-                    uiMng.inputFields_select_2[0].text = txtConverter.textDB[0][0];
-                    uiMng.inputFields_select_2[1].text = txtConverter.textDB[0][1];
+                    uiMng.tmp_select_2[0].text = txtConverter.textDB[0][0];
+                    uiMng.tmp_select_2[1].text = txtConverter.textDB[0][1];
                     uiMng.jacketImage_select_2.GetComponent<Renderer>().material =
                         uiMng.jacketList[selectMusicNum][selectLevelNum];
                     //レベル値のセット
                     txtConverter.SetTextFile(selectMusicNum, 0);
-                    uiMng.inputFields_select_2[2].text = txtConverter.textDB[0][3];
+                    uiMng.tmp_select_2[2].text = txtConverter.textDB[0][3];
                     txtConverter.SetTextFile(selectMusicNum, 1);
-                    uiMng.inputFields_select_2[3].text = txtConverter.textDB[0][3];
+                    uiMng.tmp_select_2[3].text = txtConverter.textDB[0][3];
                     txtConverter.SetTextFile(selectMusicNum, 2);
-                    uiMng.inputFields_select_2[3].text = txtConverter.textDB[0][3];
+                    uiMng.tmp_select_2[3].text = txtConverter.textDB[0][3];
                     #endregion
                     break;
                 case 3:
                     #region プレイ画面処理
                     //値をセット
-                    uiMng.inputFields_play_1[0].text = txtConverter.textDB[0][0];
-                    uiMng.inputFields_play_1[1].text = txtConverter.textDB[0][1];
-                    uiMng.inputFields_play_1[2].text = txtConverter.textDB[0][3];
-                    uiMng.inputFields_play_1[3].text = txtConverter.textDB[0][3];
-                    uiMng.inputFields_play_1[4].text = txtConverter.textDB[0][3];
-                    uiMng.inputFields_play_2[0].text = playMng.score_now.ToString();
-                    uiMng.inputFields_play_2[1].text = playMng.score_now.ToString();
-                    uiMng.inputFields_play_2[2].text = playMng.score_now.ToString();
-                    uiMng.inputFields_play_2[3].text = playMng.score_now.ToString();
-                    uiMng.inputFields_play_2[4].text = playMng.score_now.ToString();
-                    uiMng.inputFields_play_2[5].text = playMng.chain.ToString();
-                    uiMng.inputFields_play_2[6].text = playMng.chain.ToString();
-                    uiMng.inputFields_play_2[7].text = playMng.chain.ToString();
+                    uiMng.tmp_play_1[0].text = txtConverter.textDB[0][0];
+                    uiMng.tmp_play_1[1].text = txtConverter.textDB[0][1];
+                    uiMng.tmp_play_1[2].text = txtConverter.textDB[0][3];
+                    uiMng.tmp_play_1[3].text = txtConverter.textDB[0][3];
+                    uiMng.tmp_play_1[4].text = txtConverter.textDB[0][3];
+                    uiMng.tmp_play_2[0].text = playMng.score_now.ToString();
+                    uiMng.tmp_play_2[1].text = playMng.score_now.ToString();
+                    uiMng.tmp_play_2[2].text = playMng.score_now.ToString();
+                    uiMng.tmp_play_2[3].text = playMng.score_now.ToString();
+                    uiMng.tmp_play_2[4].text = playMng.score_now.ToString();
+                    uiMng.tmp_play_2[5].text = playMng.chain.ToString();
+                    uiMng.tmp_play_2[6].text = playMng.chain.ToString();
+                    uiMng.tmp_play_2[7].text = playMng.chain.ToString();
                     //レベル種類のセット
                     SetUI_score();
                     SetUI_chainFlag();
@@ -353,16 +323,16 @@ namespace HPB
                     //値をセット
                     SetUI_score();
                     SetUI_chainFlag();
-                    //Debug.LogError("[<color=red>HPB_GameManager</color>]DisplayNameがコメントアウトされてます\nアップロード時は解除してください");
+                    Debug.LogError("[<color=red>HPB_GameManager</color>]DisplayNameがコメントアウトされてます\nアップロード時は解除してください");
                     //uiMng.text_playerName.text = Networking.GetOwner(playMng.drumStick).displayName;
                     uiMng.text_playerName.text = "ななしの楽団員";
-                    uiMng.valueFields_result[0].text = playMng.score_now.ToString();
-                    uiMng.valueFields_result[1].text = playMng.score_now.ToString();
-                    uiMng.valueFields_result[2].text = playMng.score_now.ToString();
-                    uiMng.valueFields_result[3].text = playMng.judgedValue[0].ToString();
-                    uiMng.valueFields_result[4].text = playMng.judgedValue[1].ToString();
-                    uiMng.valueFields_result[5].text = playMng.judgedValue[2].ToString();
-                    uiMng.valueFields_result[6].text = playMng.judgedValue[3].ToString();
+                    uiMng.tmp_result[0].text = playMng.score_now.ToString();
+                    uiMng.tmp_result[1].text = playMng.score_now.ToString();
+                    uiMng.tmp_result[2].text = playMng.score_now.ToString();
+                    uiMng.tmp_result[3].text = playMng.judgedValue[0].ToString();
+                    uiMng.tmp_result[4].text = playMng.judgedValue[1].ToString();
+                    uiMng.tmp_result[5].text = playMng.judgedValue[2].ToString();
+                    uiMng.tmp_result[6].text = playMng.judgedValue[3].ToString();
                     uiMng.jacketImage_result.GetComponent<Renderer>().material =
                         uiMng.jacketList[selectMusicNum][selectLevelNum];
                     #endregion
@@ -387,10 +357,10 @@ namespace HPB
         /// </summary>
         private void SetUI_score()
         {
-            if (settingsMng.windowFlag != 3)
-            {
-                //Debug.Log("アクティブ:SetUI_score");
-            }
+            //if (settingsMng.windowFlag != 3)
+            //{
+            //    Debug.Log("アクティブ:SetUI_score");
+            //}
             //rankS
             if (playMng.score_now >= 95000)
             {
@@ -457,6 +427,7 @@ namespace HPB
             playMng.judgedValue = new int[4] { 0, 0, 0, 0 };
             playMng.scoreCalcValue[0] = playMng.notesValue;
             playMng.scoreCalcValue[1] = (100000 * 1) / playMng.scoreCalcValue[0];
+            Debug.Log("Calc:" + playMng.scoreCalcValue[1]);
         }
 
         /// <summary>
@@ -548,122 +519,6 @@ namespace HPB
                 g.GetComponent<JudgeTextObj>().judgeValue = i;
             }
             Update_UIData();
-            #region Archive
-            //if (settingsMng.windowFlag != 3)
-            //{
-            //    Debug.Log("アクティブ:JudgeNotes");
-            //}
-            ///*
-            //範囲外は無視
-            //判定時間より極端に早い場合は無視
-            //（スピード調整による誤動作防止）
-            //Sad判定の場合はフラグ全オフ
-            //    とChainリセット
-            //Good判定の場合はAHフラグをオフ
-            //Happy,Good判定の場合はChain加算
-
-            //レーン内のノーツを探して差を計算？
-            //*/
-            //if (i == -1)
-            //{
-            //    //M判定
-            //    playMng.judgedValue[3] += 1;
-            //    playMng.chain = 0;
-            //    playMng.ahFlag = false;
-            //    playMng.fcFlag = false;
-            //    uiMng.UIAnim_value(false);
-            //}
-            //else
-            //{
-            //    int judgeValue = notesJudgers[i].Judge(i);
-            //    //H判定
-            //    if (judgeValue == 0)
-            //    {
-            //        playMng.judgedValue[0] += 1;
-            //        playMng.chain += 1;
-            //        //理論値処理
-            //        if (playMng.score_now < (100000 - playMng.scoreCalcValue[1]))
-            //        {
-            //            playMng.score_now += playMng.scoreCalcValue[1];
-            //        }
-            //        else
-            //        {
-            //            playMng.score_now = 100000;
-            //        }
-            //        uiMng.UIAnim_value(true);
-            //        GameObject g = VRCInstantiate(uiMng.uiObj_judge[0]);
-            //        g.GetComponent<JudgeTextObj>().judgeValue = i;
-            //    }
-            //    //G判定
-            //    else if (judgeValue == 1)
-            //    {
-            //        playMng.judgedValue[1] += 1;
-            //        playMng.chain += 1;
-            //        playMng.score_now += Mathf.RoundToInt(playMng.scoreCalcValue[1] * 0.6f);
-            //        playMng.ahFlag = false;
-            //        uiMng.UIAnim_value(true);
-            //        GameObject g = VRCInstantiate(uiMng.uiObj_judge[1]);
-            //        g.GetComponent<JudgeTextObj>().judgeValue = i;
-            //    }
-            //    //S判定
-            //    else if(judgeValue == 2)
-            //    {
-            //        playMng.judgedValue[2] += 1;
-            //        playMng.chain = 0;
-            //        playMng.score_now += Mathf.RoundToInt(playMng.scoreCalcValue[1] * 0.2f);
-            //        playMng.ahFlag = false;
-            //        playMng.fcFlag = false;
-            //        uiMng.UIAnim_value(false);
-            //        GameObject g = VRCInstantiate(uiMng.uiObj_judge[2]);
-            //        g.GetComponent<JudgeTextObj>().judgeValue = i;
-            //    }
-
-            //    //H判定
-            //    if (Mathf.Abs(playMng.playTime - 0) <= 1f)
-            //    {
-            //        playMng.judgedValue[0] += 1;
-            //        playMng.chain += 1;
-            //        //理論値処理
-            //        if (playMng.score_now < (100000 - playMng.scoreCalcValue[1]))
-            //        {
-            //            playMng.score_now += playMng.scoreCalcValue[1];
-            //        }
-            //        else
-            //        {
-            //            playMng.score_now = 100000;
-            //        }
-            //        uiMng.UIAnim_value(true);
-            //        GameObject g = VRCInstantiate(uiMng.uiObj_judge[0]);
-            //        g.GetComponent<JudgeTextObj>().judgeValue = i;
-            //    }
-            //    //G判定
-            //    else if (Mathf.Abs(playMng.playTime - 0) <= 1f)
-            //    {
-            //        playMng.judgedValue[1] += 1;
-            //        playMng.chain += 1;
-            //        playMng.score_now += Mathf.RoundToInt(playMng.scoreCalcValue[1] * 0.6f);
-            //        playMng.ahFlag = false;
-            //        uiMng.UIAnim_value(true);
-            //        GameObject g = VRCInstantiate(uiMng.uiObj_judge[1]);
-            //        g.GetComponent<JudgeTextObj>().judgeValue = i;
-            //    }
-            //    //S判定
-            //    else
-            //    {
-            //        playMng.judgedValue[2] += 1;
-            //        playMng.chain = 0;
-            //        playMng.score_now += Mathf.RoundToInt(playMng.scoreCalcValue[1] * 0.2f);
-            //        playMng.ahFlag = false;
-            //        playMng.fcFlag = false;
-            //        uiMng.UIAnim_value(false);
-            //        GameObject g = VRCInstantiate(uiMng.uiObj_judge[2]);
-            //        g.GetComponent<JudgeTextObj>().judgeValue = i;
-            //    }
-            //}
-            //SetUIData();
-            //SetUI_score();
-            //SetUI_chainFlag();
-            #endregion
         }
 
         public void Judge_miss(int laneIndex)

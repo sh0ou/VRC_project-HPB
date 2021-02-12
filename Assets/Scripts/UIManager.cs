@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VRC.SDKBase;
 using VRC.Udon;
+using TMPro;
 
 namespace HPB
 {
@@ -52,7 +53,7 @@ namespace HPB
         [Header("選曲画面1")]
         [SerializeField, Tooltip
             ("値更新用UI\n0=タイトル\n1=アーティスト")]
-        public InputField[] inputFields_select_1;
+        public TextMeshProUGUI[] tmp_select_1;
 
         [SerializeField, Tooltip
             ("選曲画面1ジャケット画像\n0=中\n1=左\n2=右")]
@@ -61,7 +62,7 @@ namespace HPB
         [Header("選曲画面2")]
         [SerializeField, Tooltip
             ("値更新用UI\n0=タイトル\n1=アーティスト\n2=レベル1\n3=レベル2\n4=レベル3")]
-        public InputField[] inputFields_select_2;
+        public TextMeshProUGUI[] tmp_select_2;
 
         [SerializeField, Tooltip("選曲画面2ジャケット画像")]
         public GameObject jacketImage_select_2;
@@ -71,7 +72,7 @@ namespace HPB
         [Header("プレイ画面1")]
         [SerializeField, Tooltip
             ("値更新用UI\n0=タイトル\n1=アーティスト\n2=レベル1\n3=レベル2\n4=レベル3")]
-        public InputField[] inputFields_play_1;
+        public TextMeshProUGUI[] tmp_play_1;
 
         [SerializeField, Tooltip("UIオブジェクト\n0=レベル1\n1=レベル2\n2=レベル3")]
         private GameObject[] uiObj_play_1;
@@ -79,7 +80,7 @@ namespace HPB
         [Header("プレイ画面2")]
         [SerializeField, Tooltip
             ("値更新用UI\n0=スコアD\n1=スコアC\n2=スコアB\n3=スコアA\n4=スコアS\n5=チェイン\n6=チェインFC\n7=チェインAH")]
-        public InputField[] inputFields_play_2;
+        public TextMeshProUGUI[] tmp_play_2;
 
         [SerializeField, Tooltip
             ("値更新アニメUI")]
@@ -101,6 +102,10 @@ namespace HPB
         #endregion
         #region リザルト画面（値,色更新に使用）
         [Header("リザルト画面")]
+        [SerializeField, Tooltip
+            ("値更新用UI\n0=スコア\n1=スコア_FC\n2=スコア_AH\n3=H判定\n4=G判定\n5=S判定\n6=M判定")]
+        public TextMeshProUGUI[] tmp_result;
+
         [SerializeField, Tooltip("リザルト画面ジャケット画像")]
         public GameObject jacketImage_result;
 
@@ -110,10 +115,6 @@ namespace HPB
         [SerializeField, Tooltip
         ("UIオブジェクト\n0=RankD 1=RankC 2=RankB\n3=RankA 4=RankS\n5=score 6=score_FC 7=score_AH")]
         private GameObject[] uiObj_result;
-
-        [SerializeField, Tooltip
-            ("値更新用UI\n0=スコア\n1=スコア_FC\n2=スコア_AH\n3=H判定\n4=G判定\n5=S判定\n6=M判定")]
-        public InputField[] valueFields_result;
 
         //[SerializeField, Tooltip
         //    ("色更新用UI\n0=ランク\n1=スコア値\n2=スコアテキスト")]
@@ -371,7 +372,7 @@ namespace HPB
         /// <param name="i">フラグ</param>
         public void UIActive_chain(int i)
         {
-            Debug.Log("アクティブ:UIActive_chain");
+            //Debug.Log("アクティブ:UIActive_chain");
             switch (i)
             {
                 //AH
@@ -381,7 +382,7 @@ namespace HPB
                     uiObj_play_2[7].SetActive(true);
                     uiObj_result[5].SetActive(false);
                     uiObj_result[6].SetActive(false);
-                    Debug.Log("AH");
+                    //Debug.Log("AH");
                     uiObj_result[7].SetActive(true);
                     break;
                 //FC
@@ -391,7 +392,7 @@ namespace HPB
                     uiObj_play_2[7].SetActive(false);
                     uiObj_result[5].SetActive(false);
                     uiObj_result[6].SetActive(true);
-                    Debug.Log("FC");
+                    //Debug.Log("FC");
                     uiObj_result[7].SetActive(false);
                     break;
                 //フラグなし
@@ -401,7 +402,7 @@ namespace HPB
                     uiObj_play_2[7].SetActive(false);
                     uiObj_result[5].SetActive(true);
                     uiObj_result[6].SetActive(false);
-                    Debug.Log("none");
+                    //Debug.Log("none");
                     uiObj_result[7].SetActive(false);
                     break;
             }

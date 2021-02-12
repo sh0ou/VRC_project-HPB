@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VRC.SDKBase;
 using VRC.Udon;
+using TMPro;
 
 namespace HPB
 {
@@ -32,6 +33,9 @@ namespace HPB
         [SerializeField, Tooltip("ノーツスピード")]
         public int notesSpeed;
 
+        [SerializeField, Tooltip("判定調整値")]
+        public float judgeAdjust;
+
         [SerializeField, Tooltip("エフェクト表示フラグ")]
         public bool effectFlag;
 
@@ -45,12 +49,12 @@ namespace HPB
         private GameObject[] opUIObj;
 
         [SerializeField, Tooltip
-            ("各設定スライダーUI\n0=BGM\n1=SE\n2=スピード")]
-        private Slider[] opSliders = new Slider[3];
+            ("各設定スライダーUI\n0=BGM\n1=SE\n2=スピード\n3=判定調整値")]
+        private Slider[] opSliders = new Slider[4];
 
         [SerializeField, Tooltip
-            ("値更新用InputField\n0=bgm\n1=se\n2=speed")]
-        private InputField[] opValueFields = new InputField[3];
+            ("値更新用TMP\n0=bgm\n1=se\n2=speed\n3=Adjust")]
+        private TextMeshProUGUI[] opValueText;
 
         [SerializeField, Tooltip
             ("各設定トグルUI\n0=エフェクト\n1=デバッグ")]
@@ -63,6 +67,7 @@ namespace HPB
             bgmVol = 5;
             seVol = 5;
             notesSpeed = 1;
+            judgeAdjust = 0;
             gamePlay = false;
             debugFlag = false;
             effectFlag = true;
@@ -82,12 +87,21 @@ namespace HPB
             bgmVol = (int)opSliders[0].value;
             seVol = (int)opSliders[1].value;
             notesSpeed = (int)opSliders[2].value;
+            if(opSliders[3].value == 0)
+            {
+                judgeAdjust = 0;
+            }
+            else
+            {
+                judgeAdjust = (int)opSliders[3].value * 0.01f;
+            }
             soundMng.audioSources[0].volume = bgmVol;
             soundMng.audioSources[1].volume = seVol;
             //スライダーの値を表示
-            opValueFields[0].text = bgmVol.ToString();
-            opValueFields[1].text = seVol.ToString();
-            opValueFields[2].text = notesSpeed.ToString();
+            opValueText[0].text = bgmVol.ToString();
+            opValueText[1].text = seVol.ToString();
+            opValueText[2].text = notesSpeed.ToString();
+            opValueText[3].text = judgeAdjust.ToString();
             //トグルを反映
             effectFlag = opToggles[0].isOn;
             debugFlag = opToggles[1].isOn;
