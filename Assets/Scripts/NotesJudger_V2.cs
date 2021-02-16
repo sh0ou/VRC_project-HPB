@@ -174,10 +174,9 @@ namespace HPB
 
             // 現在時刻と Happy 判定時刻から、時間の差を求めます。
             var currentTime = playManager.playTime;
-            var noteTime = noteTimeList[laneIndex][judgedNotesCount] + settingsMng.judgeAdjust;
+            var noteTime = noteTimeList[laneIndex][judgedNotesCount];
             var distance = currentTime - noteTime;
             Debug.Log("[<color=yellow>NotesJudger_V2</color>]時間差:" + (currentTime - noteTime));
-            Debug.Log("[<color=yellow>NotesJudger_V2</color>]判定調整値" + settingsMng.judgeAdjust);
 
             // 各判定に対して、判定幅が小さい順に試行します。
             // NoteJudge.None を 0 番にしているので、judgeKindIndex は 1 から始めます。

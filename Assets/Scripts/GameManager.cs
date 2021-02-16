@@ -61,28 +61,29 @@ namespace HPB
                     EndMusic();
                 }
             }
-            #region キーボード入力
-            if (Input.GetKeyDown(KeyCode.F))
+            if (settingsMng.keyboardFlag)
             {
-                DrumAction(1);
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    DrumAction(1);
+                }
+                if (Input.GetKeyDown(KeyCode.G))
+                {
+                    DrumAction(2);
+                }
+                if (Input.GetKeyDown(KeyCode.H))
+                {
+                    DrumAction(3);
+                }
+                if (Input.GetKeyDown(KeyCode.J))
+                {
+                    DrumAction(4);
+                }
+                if (Input.GetKeyDown(KeyCode.K))
+                {
+                    DrumAction(0);
+                }
             }
-            if (Input.GetKeyDown(KeyCode.G))
-            {
-                DrumAction(2);
-            }
-            if (Input.GetKeyDown(KeyCode.H))
-            {
-                DrumAction(3);
-            }
-            if (Input.GetKeyDown(KeyCode.J))
-            {
-                DrumAction(4);
-            }
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                DrumAction(0);
-            }
-            #endregion
         }
 
         /// <summary>
@@ -94,6 +95,27 @@ namespace HPB
             //処理待ち対策
             if (drumActive)
             {
+                switch (i)
+                {
+                    case 0:
+                        particleGenerator.GenerateParticle(10);
+                        break;
+                    case 5:
+                        particleGenerator.GenerateParticle(15);
+                        break;
+                    case 1:
+                        particleGenerator.GenerateParticle(11);
+                        break;
+                    case 2:
+                        particleGenerator.GenerateParticle(12);
+                        break;
+                    case 3:
+                        particleGenerator.GenerateParticle(13);
+                        break;
+                    case 4:
+                        particleGenerator.GenerateParticle(14);
+                        break;
+                }
                 switch (settingsMng.windowFlag)
                 {
                     case 0:
@@ -228,6 +250,7 @@ namespace HPB
             soundMng.audioSources[0].clip = soundMng.bgmLists[0];
             soundMng.audioSources[0].Play();
             playMng.endTime = float.Parse(txtConverter.textDB[0][4]);
+            uiMng.StartBPMGuide(float.Parse(txtConverter.textDB[0][2]) / 60);
             settingsMng.gamePlay = true;
         }
 
@@ -254,30 +277,17 @@ namespace HPB
 
                     //左画像セット
 
-                    if ((selectMusicNum - 1) == -1)
-                    {
-                        uiMng.jacketImage_select_1[1].GetComponent<Renderer>().material =
-                            uiMng.jacketList[txtConverter.SendMusicLength()][0];
-                    }
-                    else
-                    {
-                        uiMng.jacketImage_select_1[1].GetComponent<Renderer>().material =
-                            uiMng.jacketList[selectMusicNum - 1][0];
-                    }
+                    uiMng.jacketImage_select_1[1].GetComponent<Renderer>().material =
+                        (selectMusicNum - 1) == -1
+                        ? uiMng.jacketList[txtConverter.SendMusicLength()][0]
+                        : uiMng.jacketList[selectMusicNum - 1][0];
 
                     //右画像セット
 
-                    if (selectMusicNum == txtConverter.SendMusicLength())
-                    {
-                        uiMng.jacketImage_select_1[2].GetComponent<Renderer>().material =
-                            uiMng.jacketList[0][0];
-                    }
-                    else
-                    {
-                        uiMng.jacketImage_select_1[2].GetComponent<Renderer>().material =
-                            uiMng.jacketList[selectMusicNum + 1][0];
-                    }
-
+                    uiMng.jacketImage_select_1[2].GetComponent<Renderer>().material =
+                        selectMusicNum == txtConverter.SendMusicLength()
+                        ? uiMng.jacketList[0][0]
+                        : uiMng.jacketList[selectMusicNum + 1][0];
 
                     #endregion
                     break;
@@ -323,8 +333,8 @@ namespace HPB
                     //値をセット
                     SetUI_score();
                     SetUI_chainFlag();
-                    Debug.LogError("[<color=red>HPB_GameManager</color>]DisplayNameがコメントアウトされてます\nアップロード時は解除してください");
-                    //uiMng.text_playerName.text = Networking.GetOwner(playMng.drumStick).displayName;
+                    //Debug.LogError("[<color=red>HPB_GameManager</color>]DisplayNameがコメントアウトされてます\nアップロード時は解除してください");
+                    uiMng.text_playerName.text = Networking.GetOwner(playMng.drumStick).displayName;
                     uiMng.text_playerName.text = "ななしの楽団員";
                     uiMng.tmp_result[0].text = playMng.score_now.ToString();
                     uiMng.tmp_result[1].text = playMng.score_now.ToString();
@@ -562,6 +572,7 @@ namespace HPB
             int missNotes = playMng.notesValue - notesJudger.totalJudgedNotes;
             playMng.judgedValue[3] += missNotes;
             Update_UIData();
+            uiMng.StopBPMGuide();
             uiMng.Close_play();
         }
     }

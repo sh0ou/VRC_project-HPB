@@ -13,7 +13,7 @@ namespace HPB
         #region システム変数
         [Header("システム変数")]
         [SerializeField]
-        private SettingsManager hpb_GM;
+        private SettingsManager settingsMng;
 
         [SerializeField]
         private PlayManager playMng;
@@ -86,7 +86,7 @@ namespace HPB
                 float notesPosx = 0;
                 float notesPosy = 1.5f;
                 float notesPosz = (endPosition.position.z +
-                    (notesJudger.noteTimeList[notesLane][noteCountList[notesLane]] * (hpb_GM.notesSpeed * 5)));
+                    (notesJudger.noteTimeList[notesLane][noteCountList[notesLane]] * (settingsMng.notesSpeed * 5)));
                 /*2行目の数字は微調整用
                 ↑明らかにずれてる（スタート時ノーツとエンド時ノーツがずれてる）*/
                 #region デバッグ用
@@ -182,25 +182,26 @@ namespace HPB
         public Vector2 GetNotesPosValue_xy(int notesLane)
         {
             Vector2 vec2 = new Vector2(9999, 9999);
+            float f = settingsMng.drumHeight * 0.1f;
             switch (notesLane)
             {
                 case 0:
-                    vec2 = new Vector2(-0.7f, 2);
+                    vec2 = new Vector2(-0.65f, f + 1.5f);
                     break;
                 case 5:
-                    vec2 = new Vector2(0.7f, 2);
+                    vec2 = new Vector2(0.65f, f + 1.5f);
                     break;
                 case 1:
-                    vec2 = new Vector2(-0.75f, 0.45f);
+                    vec2 = new Vector2(-0.75f, f - 0.05f);
                     break;
                 case 2:
-                    vec2 = new Vector2(-0.25f, 0.45f);
+                    vec2 = new Vector2(-0.25f, f - 0.05f);
                     break;
                 case 3:
-                    vec2 = new Vector2(0.25f, 0.45f);
+                    vec2 = new Vector2(0.25f, f - 0.05f);
                     break;
                 case 4:
-                    vec2 = new Vector2(0.75f, 0.45f);
+                    vec2 = new Vector2(0.75f, f - 0.05f);
                     break;
             }
             if (vec2.x == 9999)
@@ -214,7 +215,7 @@ namespace HPB
         {
             return (endPosition.position.z +
                 ((notesJudger.noteTimeList[notesLane][notesNum] - playMng.playTime)
-                * 3 * hpb_GM.notesSpeed));
+                * 3 * settingsMng.notesSpeed));
         }
     }
 }

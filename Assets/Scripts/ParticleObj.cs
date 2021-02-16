@@ -97,14 +97,10 @@ namespace HPB
             }
 
             this.transform.localScale = new Vector3(1, 1, 1);
-            if (posz == 9999)
-            {
-                this.transform.localPosition = new Vector3(posx, posy, 0);
-            }
-            else
-            {
-                this.transform.localPosition = new Vector3(posx, posy, posz);
-            }
+            this.transform.localPosition =
+                posz == 9999
+                ? new Vector3(posx, posy, 0)
+                : new Vector3(posx, posy, posz);
             ParticleSystem p = this.GetComponent<ParticleSystem>();
             p.Play();
         }

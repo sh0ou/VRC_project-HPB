@@ -12,11 +12,6 @@ namespace HPB
     /// </summary>
     public class UIManager : UdonSharpBehaviour
     {
-        /*メモ
-        色は0~1の小数で指定　255指定はできない
-        bottomが下　topが上
-        */
-
         #region 共通
         [Header("共通")]
         [SerializeField, Tooltip("ゲームマネージャ")]
@@ -27,6 +22,11 @@ namespace HPB
 
         [SerializeField, Tooltip("設定マネージャ")]
         private SettingsManager settingsMng;
+
+        [SerializeField, Tooltip
+            ("位置調整できるオブジェクト\n0=ドラム\n1=ガイドレーン\n2=メインUI")]
+        private GameObject[] adjustablePosObjs;
+        //オプションUIは調整しない（値変更中に動いてしまうので）
 
         [SerializeField, Tooltip
             ("ドラムガイドUI\n0=左UI_選曲\n1=左UI_レベル\n2=右UI=選曲\n3=右UI_レベル")]
@@ -89,8 +89,8 @@ namespace HPB
         [SerializeField, Tooltip("ノーツラインUI")]
         private GameObject notesLineUI;
 
-        //[SerializeField, Tooltip("BPMガイドUI")]
-        //private Animator[] bpmGuideUI;
+        [SerializeField, Tooltip("BPMガイドUI")]
+        public Animator[] bpmGuideUI;
 
         [SerializeField, Tooltip
             ("UIオブジェクト\n0=RankD 1=RankC 2=RankB\n3=RankA 4=RankS\n5=chain 6=chain_FC 7=chain_AH\n8=chain_root")]
@@ -133,6 +133,27 @@ namespace HPB
             windowAnims[4].gameObject.SetActive(false);
             windowAnims[5].gameObject.SetActive(false);
         }
+
+        private void Update()
+        {
+            //UI位置を更新
+            if (!settingsMng.gamePlay)
+            {
+                Vector3[] adjObjs = new Vector3[]
+                {
+                    adjustablePosObjs[0].transform.position,
+                    adjustablePosObjs[1].transform.position,
+                    adjustablePosObjs[2].transform.position,
+                };
+                adjustablePosObjs[0].transform.position =
+                    new Vector3(adjObjs[0].x, (settingsMng.drumHeight * 0.1f), adjObjs[0].z);
+                adjustablePosObjs[1].transform.position =
+                    new Vector3(adjObjs[1].x, (settingsMng.drumHeight * 0.1f), adjObjs[1].z);
+                adjustablePosObjs[2].transform.position =
+                    new Vector3(adjObjs[2].x, (settingsMng.drumHeight * 0.1f) + 2f, adjObjs[2].z);
+            }
+        }
+
         #region アニメーション処理関数
         /// <summary>
         /// タイトル画面クローズ
@@ -429,13 +450,23 @@ namespace HPB
             }
         }
 
-        //public void SetBPMGuide(int bpm)
-        //{
-        //    bpmGuideUI[0].speed = bpm / 60;
-        //    bpmGuideUI[1].speed = bpm / 60;
-        //    bpmGuideUI[0].Play("bpmGuide", 0, 0);
-        //    bpmGuideUI[1].Play("bpmGuide", 0, 0);
-        //}
+        public void StartBPMGuide(float bpm)
+        {
+            Debug.Log("BPMガイド開始:BPM" + bpm);
+            bpmGuideUI[0].speed = bpm;
+            bpmGuideUI[1].speed = bpm;
+            bpmGuideUI[0].Play("bpmGuide", 0, 0);
+            bpmGuideUI[1].Play("bpmGuide", 0, 0);
+        }
+
+        public void StopBPMGuide()
+        {
+            Debug.Log("BPMガイド終了");
+            bpmGuideUI[0].speed = 0;
+            bpmGuideUI[1].speed = 0;
+            bpmGuideUI[0].Play("bpmGuide", 0, 0);
+            bpmGuideUI[1].Play("bpmGuide", 0, 0);
+        }
 
         /// <summary>
         /// アニメーション終了後処理

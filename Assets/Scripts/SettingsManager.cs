@@ -33,14 +33,14 @@ namespace HPB
         [SerializeField, Tooltip("ノーツスピード")]
         public int notesSpeed;
 
-        [SerializeField, Tooltip("判定調整値")]
-        public float judgeAdjust;
+        [SerializeField, Tooltip("ドラムの高さ")]
+        public int drumHeight;
 
         [SerializeField, Tooltip("エフェクト表示フラグ")]
         public bool effectFlag;
 
-        [SerializeField, Tooltip("デバッグフラグ")]
-        private bool debugFlag;
+        [SerializeField, Tooltip("キーボードフラグ")]
+        public bool keyboardFlag;
 
         #endregion
         #region UIオブジェクト
@@ -67,9 +67,9 @@ namespace HPB
             bgmVol = 5;
             seVol = 5;
             notesSpeed = 1;
-            judgeAdjust = 0;
+            drumHeight = 5;
             gamePlay = false;
-            debugFlag = false;
+            keyboardFlag = false;
             effectFlag = true;
             SetUIActive(true);
         }
@@ -87,24 +87,17 @@ namespace HPB
             bgmVol = (int)opSliders[0].value;
             seVol = (int)opSliders[1].value;
             notesSpeed = (int)opSliders[2].value;
-            if(opSliders[3].value == 0)
-            {
-                judgeAdjust = 0;
-            }
-            else
-            {
-                judgeAdjust = (int)opSliders[3].value * 0.01f;
-            }
+            drumHeight = (int)opSliders[3].value;
             soundMng.audioSources[0].volume = bgmVol;
             soundMng.audioSources[1].volume = seVol;
             //スライダーの値を表示
             opValueText[0].text = bgmVol.ToString();
             opValueText[1].text = seVol.ToString();
             opValueText[2].text = notesSpeed.ToString();
-            opValueText[3].text = judgeAdjust.ToString();
+            opValueText[3].text = drumHeight.ToString();
             //トグルを反映
             effectFlag = opToggles[0].isOn;
-            debugFlag = opToggles[1].isOn;
+            keyboardFlag = opToggles[1].isOn;
         }
 
         /// <summary>

@@ -126,14 +126,10 @@ namespace HPB
                 g.transform.SetParent(GameObject.Find(parentText).transform);
             }
             g.transform.localScale = new Vector3(1, 1, 1);
-            if (posz == 9999)
-            {
-                g.transform.localPosition = new Vector3(posx, posy, 0);
-            }
-            else
-            {
-                g.transform.localPosition = new Vector3(posx, posy, posz);
-            }
+            g.transform.localPosition =
+                posz == 9999
+                ? new Vector3(posx, posy, 0)
+                : new Vector3(posx, posy, posz);
             if (rotateOp != 0)
             {
                 g.transform.localRotation = Quaternion.Euler(-110, 30, 0);
