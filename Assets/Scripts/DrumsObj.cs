@@ -32,7 +32,8 @@ namespace HPB
             {
                 //ドラム処理
                 gameMng.DrumAction(drumNum);
-                //other.GetComponent<VRC_Pickup>().PlayHaptics();
+                var v = (VRC_Pickup)other.GetComponent(typeof(VRC_Pickup));
+                v.PlayHaptics();
             }
         }
     }

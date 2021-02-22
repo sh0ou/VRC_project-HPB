@@ -40,7 +40,7 @@ namespace HPB
         private const int NoteJudgeKindCount = 3 + 1;  // None の為に +1
 
         [Tooltip("レーンの個数")]
-        public readonly int LaneCount = 5;
+        public readonly int LaneCount = 6;
 
         [Tooltip("各ノートの判定位置")]
         public float[][] noteTimeList;
@@ -176,7 +176,7 @@ namespace HPB
             var currentTime = playManager.playTime;
             var noteTime = noteTimeList[laneIndex][judgedNotesCount];
             var distance = currentTime - noteTime;
-            Debug.Log("[<color=yellow>NotesJudger_V2</color>]時間差:" + (currentTime - noteTime));
+            //Debug.Log("[<color=yellow>NotesJudger_V2</color>]時間差:" + (currentTime - noteTime));
 
             // 各判定に対して、判定幅が小さい順に試行します。
             // NoteJudge.None を 0 番にしているので、judgeKindIndex は 1 から始めます。

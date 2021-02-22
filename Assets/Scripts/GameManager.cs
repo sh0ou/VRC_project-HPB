@@ -65,23 +65,27 @@ namespace HPB
             {
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    DrumAction(1);
+                    DrumAction(0);
                 }
                 if (Input.GetKeyDown(KeyCode.G))
                 {
-                    DrumAction(2);
+                    DrumAction(1);
                 }
                 if (Input.GetKeyDown(KeyCode.H))
                 {
-                    DrumAction(3);
+                    DrumAction(2);
                 }
                 if (Input.GetKeyDown(KeyCode.J))
                 {
-                    DrumAction(4);
+                    DrumAction(3);
                 }
                 if (Input.GetKeyDown(KeyCode.K))
                 {
-                    DrumAction(0);
+                    DrumAction(4);
+                }
+                if (Input.GetKeyDown(KeyCode.L))
+                {
+                    DrumAction(5);
                 }
             }
         }
@@ -120,12 +124,9 @@ namespace HPB
                 {
                     case 0:
                         //ゲーム開始
-                        if (i == 0)
-                        {
-                            drumActive = false;
-                            settingsMng.windowFlag = 1;
-                            uiMng.Close_title();
-                        }
+                        drumActive = false;
+                        settingsMng.windowFlag = 1;
+                        uiMng.Close_title();
                         break;
                     case 1:
                         #region 処理
@@ -156,10 +157,11 @@ namespace HPB
                             SetUIData();
                         }
                         //楽曲決定
-                        else if (i == 0)
+                        else if (i == 0 || i == 5)
                         {
                             drumActive = false;
                             settingsMng.windowFlag = 2;
+                            selectLevelNum = 0;
                             uiMng.Close_select1();
                         }
                         break;
@@ -176,23 +178,50 @@ namespace HPB
                         //レベルを下げる
                         else if (i == 2)
                         {
-                            if (selectLevelNum != 0)
+                            drumActive = false;
+                            switch (selectLevelNum)
                             {
-                                selectLevelNum -= 1;
-                                SetUIData();
+                                case 0:
+                                    drumActive = true;
+                                    break;
+                                case 1:
+                                    selectLevelNum = 0;
+                                    uiMng.UIAnim_level(1);
+                                    break;
+                                case 2:
+                                    selectLevelNum = 1;
+                                    uiMng.UIAnim_level(3);
+                                    break;
                             }
+                            SetUIData();
                         }
                         //レベルを上げる
                         else if (i == 3)
                         {
-                            if (selectLevelNum != 2)
+                            drumActive = false;
+                            switch (selectLevelNum)
                             {
-                                selectLevelNum += 1;
-                                SetUIData();
+                                case 0:
+                                    selectLevelNum = 1;
+                                    uiMng.UIAnim_level(0);
+                                    break;
+                                case 1:
+                                    selectLevelNum = 2;
+                                    uiMng.UIAnim_level(2);
+                                    break;
+                                case 2:
+                                    drumActive = true;
+                                    break;
                             }
+                            //if (selectLevelNum != 2)
+                            //{
+                            //    selectLevelNum += 1;
+                            //    SetUIData();
+                            //}
+                            SetUIData();
                         }
                         //プレイ開始
-                        else if (i == 0)
+                        else if (i == 0 || i == 5)
                         {
                             drumActive = false;
                             playMng.fcFlag = true;
@@ -247,7 +276,8 @@ namespace HPB
         public void PlayMusic()
         {
             //Debug.Log("アクティブ:PlayMusic");
-            soundMng.audioSources[0].clip = soundMng.bgmLists[0];
+            //soundMng.audioSources[0].clip = soundMng.bgmLists[0];
+            soundMng.audioSources[0].clip = soundMng.bgmLists[int.Parse(txtConverter.textDB[0][5])];
             soundMng.audioSources[0].Play();
             playMng.endTime = float.Parse(txtConverter.textDB[0][4]);
             uiMng.StartBPMGuide(float.Parse(txtConverter.textDB[0][2]) / 60);
@@ -335,7 +365,7 @@ namespace HPB
                     SetUI_chainFlag();
                     //Debug.LogError("[<color=red>HPB_GameManager</color>]DisplayNameがコメントアウトされてます\nアップロード時は解除してください");
                     uiMng.text_playerName.text = Networking.GetOwner(playMng.drumStick).displayName;
-                    uiMng.text_playerName.text = "ななしの楽団員";
+                    //uiMng.text_playerName.text = "ななしの楽団員";
                     uiMng.tmp_result[0].text = playMng.score_now.ToString();
                     uiMng.tmp_result[1].text = playMng.score_now.ToString();
                     uiMng.tmp_result[2].text = playMng.score_now.ToString();
@@ -473,7 +503,6 @@ namespace HPB
                 //効果再生
                 if (i == 0)
                 {
-                    soundMng.audioSources[1].PlayOneShot(soundMng.seLists[1]);
                     if (settingsMng.effectFlag)
                     {
                         particleGenerator.GenerateParticle(i);
@@ -481,12 +510,13 @@ namespace HPB
                 }
                 else
                 {
-                    soundMng.audioSources[1].PlayOneShot(soundMng.seLists[0]);
                     if (settingsMng.effectFlag)
                     {
                         particleGenerator.GenerateParticle(i);
                     }
                 }
+                int seListValue = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
+                soundMng.audioSources[1].PlayOneShot(soundMng.seLists[seListValue + 10]);
             }
             else if (judge_v == 2)//Good
             {
@@ -501,7 +531,6 @@ namespace HPB
 
                 if (i == 0)
                 {
-                    soundMng.audioSources[1].PlayOneShot(soundMng.seLists[1]);
                     if (settingsMng.effectFlag)
                     {
                         particleGenerator.GenerateParticle(i);
@@ -509,12 +538,13 @@ namespace HPB
                 }
                 else
                 {
-                    soundMng.audioSources[1].PlayOneShot(soundMng.seLists[0]);
                     if (settingsMng.effectFlag)
                     {
                         particleGenerator.GenerateParticle(i);
                     }
                 }
+                int seListValue = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
+                soundMng.audioSources[1].PlayOneShot(soundMng.seLists[seListValue + 10]);
             }
             else if (judge_v == 3)//Sad
             {
@@ -527,6 +557,9 @@ namespace HPB
 
                 GameObject g = VRCInstantiate(uiMng.uiObj_judge[2]);
                 g.GetComponent<JudgeTextObj>().judgeValue = i;
+
+                int seListValue = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
+                soundMng.audioSources[1].PlayOneShot(soundMng.seLists[seListValue + 10]);
             }
             Update_UIData();
         }

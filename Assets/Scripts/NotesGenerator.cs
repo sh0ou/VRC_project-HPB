@@ -74,7 +74,7 @@ namespace HPB
             AttachObj(textFileConverter.textDB[1].Length);
 
             Debug.Log("ノーツ位置生成を開始します...");
-            Debug.Log("生成数;" + textFileConverter.textDB[1].Length);
+            Debug.Log("生成数:" + textFileConverter.textDB[1].Length);
 
             //for = 条件が続く限り続行するやつ
             for (int i = 0; i < textFileConverter.textDB[1].Length; i++)

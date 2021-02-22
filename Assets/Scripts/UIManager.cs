@@ -24,7 +24,7 @@ namespace HPB
         private SettingsManager settingsMng;
 
         [SerializeField, Tooltip
-            ("位置調整できるオブジェクト\n0=ドラム\n1=ガイドレーン\n2=メインUI")]
+            ("位置調整できるオブジェクト\n0=ドラム\n1=レーン\n2=メインUI")]
         private GameObject[] adjustablePosObjs;
         //オプションUIは調整しない（値変更中に動いてしまうので）
 
@@ -303,6 +303,30 @@ namespace HPB
                     uiObj_play_1[0].SetActive(false);
                     uiObj_play_1[1].SetActive(false);
                     uiObj_play_1[2].SetActive(true);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// レベルUIアニメーション
+        /// </summary>
+        /// <param name="i">番号 0=1to2 1=2to1 2=2to3 3=3to2</param>
+        public void UIAnim_level(int i)
+        {
+            Debug.Log("アクティブ:UIAnim_level");
+            switch (i)
+            {
+                case 0:
+                    windowAnims[2].Play("ChangeLv_1to2", 0, 0);
+                    break;
+                case 1:
+                    windowAnims[2].Play("ChangeLv_2to1", 0, 0);
+                    break;
+                case 2:
+                    windowAnims[2].Play("ChangeLv_2to3", 0, 0);
+                    break;
+                case 3:
+                    windowAnims[2].Play("ChangeLv_3to2", 0, 0);
                     break;
             }
         }
