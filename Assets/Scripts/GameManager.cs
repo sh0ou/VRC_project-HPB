@@ -102,9 +102,11 @@ namespace HPB
                 switch (i)
                 {
                     case 0:
+                        uiMng.Anim_Simbal(i);
                         particleGenerator.GenerateParticle(10);
                         break;
                     case 5:
+                        uiMng.Anim_Simbal(i);
                         particleGenerator.GenerateParticle(15);
                         break;
                     case 1:
@@ -125,6 +127,10 @@ namespace HPB
                     case 0:
                         //ゲーム開始
                         drumActive = false;
+                        if (i == 1 || i == 2 || i == 3 || i == 4)
+                        {
+                            uiMng.Anim_Drums(i, 0);
+                        }
                         settingsMng.windowFlag = 1;
                         uiMng.Close_title();
                         break;
@@ -133,6 +139,7 @@ namespace HPB
                         //左に移動
                         if (i == 1 || i == 2)
                         {
+                            uiMng.Anim_Drums(i, 0);
                             if (selectMusicNum == 0)
                             {
                                 selectMusicNum = txtConverter.SendMusicLength();
@@ -146,6 +153,7 @@ namespace HPB
                         //右に移動
                         else if (i == 3 || i == 4)
                         {
+                            uiMng.Anim_Drums(i, 0);
                             if (selectMusicNum == txtConverter.SendMusicLength())
                             {
                                 selectMusicNum = 0;
@@ -172,6 +180,7 @@ namespace HPB
                         if (i == 1 || i == 4)
                         {
                             drumActive = false;
+                            uiMng.Anim_Drums(i, 0);
                             settingsMng.windowFlag = 1;
                             uiMng.Close_select2_return();
                         }
@@ -179,6 +188,7 @@ namespace HPB
                         else if (i == 2)
                         {
                             drumActive = false;
+                            uiMng.Anim_Drums(i, 0);
                             switch (selectLevelNum)
                             {
                                 case 0:
@@ -199,6 +209,7 @@ namespace HPB
                         else if (i == 3)
                         {
                             drumActive = false;
+                            uiMng.Anim_Drums(i, 0);
                             switch (selectLevelNum)
                             {
                                 case 0:
@@ -238,6 +249,10 @@ namespace HPB
                     case 4:
                         //楽曲選択に戻る
                         drumActive = false;
+                        if (i == 1 || i == 2 || i == 3 || i == 4)
+                        {
+                            uiMng.Anim_Drums(i, 0);
+                        }
                         settingsMng.windowFlag = 1;
                         uiMng.Close_result();
                         break;
@@ -363,9 +378,9 @@ namespace HPB
                     //値をセット
                     SetUI_score();
                     SetUI_chainFlag();
-                    //Debug.LogError("[<color=red>HPB_GameManager</color>]DisplayNameがコメントアウトされてます\nアップロード時は解除してください");
-                    uiMng.text_playerName.text = Networking.GetOwner(playMng.drumStick).displayName;
-                    //uiMng.text_playerName.text = "ななしの楽団員";
+                    Debug.LogWarning("[<color=red>HPB_GameManager</color>]DisplayNameがコメントアウトされてます\nアップロード時は解除してください");
+                    //uiMng.text_playerName.text = Networking.GetOwner(playMng.drumStick).displayName;
+                    uiMng.text_playerName.text = "ななしの楽団員";
                     uiMng.tmp_result[0].text = playMng.score_now.ToString();
                     uiMng.tmp_result[1].text = playMng.score_now.ToString();
                     uiMng.tmp_result[2].text = playMng.score_now.ToString();
@@ -500,6 +515,14 @@ namespace HPB
                 GameObject g = VRCInstantiate(uiMng.uiObj_judge[0]);
                 g.GetComponent<JudgeTextObj>().judgeValue = i;
 
+                if (i == 1 || i == 2 || i == 3 || i == 4)
+                {
+                    uiMng.Anim_Drums(i, 0);
+                }
+                else
+                {
+                    uiMng.Anim_SimbalAcc(i, 0);
+                }
                 //効果再生
                 if (i == 0)
                 {
@@ -528,6 +551,15 @@ namespace HPB
 
                 GameObject g = VRCInstantiate(uiMng.uiObj_judge[1]);
                 g.GetComponent<JudgeTextObj>().judgeValue = i;
+
+                if (i == 1 || i == 2 || i == 3 || i == 4)
+                {
+                    uiMng.Anim_Drums(i, 1);
+                }
+                else
+                {
+                    uiMng.Anim_SimbalAcc(i, 1);
+                }
 
                 if (i == 0)
                 {
@@ -558,6 +590,14 @@ namespace HPB
                 GameObject g = VRCInstantiate(uiMng.uiObj_judge[2]);
                 g.GetComponent<JudgeTextObj>().judgeValue = i;
 
+                if (i == 1 || i == 2 || i == 3 || i == 4)
+                {
+                    uiMng.Anim_Drums(i, 2);
+                }
+                else
+                {
+                    uiMng.Anim_SimbalAcc(i, 2);
+                }
                 int seListValue = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
                 soundMng.audioSources[1].PlayOneShot(soundMng.seLists[seListValue + 10]);
             }

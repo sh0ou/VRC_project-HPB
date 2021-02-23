@@ -32,6 +32,10 @@ namespace HPB
             ("ドラムガイドUI\n0=左UI_選曲\n1=左UI_レベル\n2=右UI=選曲\n3=右UI_レベル")]
         private GameObject[] guideUI;
 
+        [SerializeField, Tooltip
+            ("ドラムアニメーション用\n0=左sim\n1-4=ドラム\n5=右sim\n6,7=simアクセサリ")]
+        private Animator[] DrumAnims;
+
         [SerializeField, Tooltip("オプションUI")]
         private GameObject[] optionUI;
 
@@ -132,6 +136,18 @@ namespace HPB
             windowAnims[3].gameObject.SetActive(false);
             windowAnims[4].gameObject.SetActive(false);
             windowAnims[5].gameObject.SetActive(false);
+            for (int i = 1; i <= 7; i++)
+            {
+                Debug.Log("DrumInitalize..." + i);
+                if (i == 1 || i == 2 || i == 3 || i == 4)
+                {
+                    DrumAnims[i].Play("Drum_happy", 0, 0);
+                }
+                else if (i == 6 || i == 7)
+                {
+                    DrumAnims[i].Play("CymbalAcc_Happy", 0, 0);
+                }
+            }
         }
 
         private void Update()
@@ -490,6 +506,60 @@ namespace HPB
             bpmGuideUI[1].speed = 0;
             bpmGuideUI[0].Play("bpmGuide", 0, 0);
             bpmGuideUI[1].Play("bpmGuide", 0, 0);
+        }
+
+        /// <summary>
+        /// ドラムアニメーション再生処理
+        /// </summary>
+        /// <param name="lane">対象レーン</param>
+        /// <param name="id">Anim番号</param>
+        public void Anim_Drums(int lane, int id)
+        {
+            //0=Happy&決定 1=good 2=sad
+            switch (id)
+            {
+                case 0:
+                    DrumAnims[lane].Play("Drum_happy", 0, 0);
+                    break;
+                case 1:
+                    DrumAnims[lane].Play("Drum_good", 0, 0);
+                    break;
+                case 2:
+                    DrumAnims[lane].Play("Drum_sad", 0, 0);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// シンバルアニメーション再生処理
+        /// </summary>
+        /// <param name="lane">対象レーン</param>
+        public void Anim_Simbal(int lane)
+        {
+            DrumAnims[lane].Play("Cymbal_close", 0, 0);
+        }
+
+        /// <summary>
+        /// シンバルアクセアニメーション再生処理
+        /// </summary>
+        /// <param name="lane">対象レーン</param>
+        /// <param name="id">Anim番号</param>
+        public void Anim_SimbalAcc(int lane, int id)
+        {
+            int i =
+                lane == 0 ? 6 : 7;
+            switch (id)
+            {
+                case 0:
+                    DrumAnims[i].Play("CymbalAcc_Happy", 0, 0);
+                    break;
+                case 1:
+                    DrumAnims[i].Play("CymbalAcc_Good", 0, 0);
+                    break;
+                case 2:
+                    DrumAnims[i].Play("CymbalAcc_Sad", 0, 0);
+                    break;
+            }
         }
 
         /// <summary>
