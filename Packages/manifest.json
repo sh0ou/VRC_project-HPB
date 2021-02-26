@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.unity.2d.psdimporter": "1.0.0-preview.4",
     "com.unity.cinemachine": "2.6.1",
     "com.unity.package-manager-ui": "2.0.13",
     "com.unity.postprocessing": "2.3.0",

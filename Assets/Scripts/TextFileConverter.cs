@@ -29,6 +29,7 @@ namespace HPB
         ///<param name="i">譜面番号</param><param name="i2">レベル種</param>
         public void SetTextFile(int i, int i2)
         {
+            Debug.Log("humenNo. : " + i + " /level:" + i2);
             //テキストファイルを変換
             textStorage[0] = textFile[i][i2][0].text;
             textStorage[1] = textFile[i][i2][1].text;

@@ -6,7 +6,7 @@ using VRC.Udon;
 namespace HPB
 {
     /// <summary>
-    /// 各種パーティクル用スクリプト
+    /// 各種パーティクル処理用スクリプト
     /// </summary>
     public class ParticleObj : UdonSharpBehaviour
     {

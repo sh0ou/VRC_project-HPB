@@ -35,6 +35,9 @@ namespace HPB
             gameObject.SetActive(false);
         }
 
+        /// <summary>
+        /// 番号に応じた処理を実行
+        /// </summary>
         public void SetEvent()
         {
             Debug.Log("アクティブ:SetEvent");

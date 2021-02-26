@@ -10,42 +10,11 @@ namespace HPB
     /// </summary>
     public class NotesObj : UdonSharpBehaviour
     {
-        #region archive
-        //[SerializeField, Tooltip("ノーツの生存時間")]
-        //public float lifeTime;
-
-        //[SerializeField, Tooltip("判定時間")]
-        //public float judgeTime;
-
-        //private HPB_SettingsManager settingsMng;
-
-        //private HPB_NotesJudger notesJudger;
-        //void Start()
-        //{
-        //    judgeTime = lifeTime;
-        //    notesJudger = GameObject.Find("NotesJudger").GetComponent<HPB_NotesJudger>();
-        //    settingsMng = GameObject.Find("GameManager").GetComponent<HPB_SettingsManager>();
-        //}
-        //private void Update()
-        //{
-        //    //ゲーム中のみ動かす
-        //    if (settingsMng.gamePlay)
-        //    {
-        //        if()
-        //        transform.position += transform.forward * 3 * settingsMng.notesSpeed * Time.deltaTime;
-        //        lifeTime -= Time.deltaTime;
-        //        if (lifeTime <= 0.0f)
-        //        {
-        //            Destroy(gameObject);
-        //        }
-        //    }
-        //}
-        #endregion
         private NotesJudger_V2 notesJudger;
         private NotesGenerator notesGenerator;
         private SettingsManager settingsMng;
         private PlayManager playMng;
-        private Vector2 vec2;
+        private Vector2 vec2; //位置更新用Vector2
 
         [SerializeField, Tooltip("ノーツの参照番号\n0=レーン\n1=要素番号")]
         public int[] notesReferenceNo = new int[2];

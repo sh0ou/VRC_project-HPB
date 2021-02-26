@@ -99,28 +99,32 @@ namespace HPB
             //処理待ち対策
             if (drumActive)
             {
-                switch (i)
+                //エフェクト処理
+                if (settingsMng.effectFlag)
                 {
-                    case 0:
-                        uiMng.Anim_Simbal(i);
-                        particleGenerator.GenerateParticle(10);
-                        break;
-                    case 5:
-                        uiMng.Anim_Simbal(i);
-                        particleGenerator.GenerateParticle(15);
-                        break;
-                    case 1:
-                        particleGenerator.GenerateParticle(11);
-                        break;
-                    case 2:
-                        particleGenerator.GenerateParticle(12);
-                        break;
-                    case 3:
-                        particleGenerator.GenerateParticle(13);
-                        break;
-                    case 4:
-                        particleGenerator.GenerateParticle(14);
-                        break;
+                    switch (i)
+                    {
+                        case 0:
+                            uiMng.Anim_Simbal(i);
+                            particleGenerator.GenerateParticle(10);
+                            break;
+                        case 5:
+                            uiMng.Anim_Simbal(i);
+                            particleGenerator.GenerateParticle(15);
+                            break;
+                        case 1:
+                            particleGenerator.GenerateParticle(11);
+                            break;
+                        case 2:
+                            particleGenerator.GenerateParticle(12);
+                            break;
+                        case 3:
+                            particleGenerator.GenerateParticle(13);
+                            break;
+                        case 4:
+                            particleGenerator.GenerateParticle(14);
+                            break;
+                    }
                 }
                 switch (settingsMng.windowFlag)
                 {
@@ -512,9 +516,11 @@ namespace HPB
                 }
                 uiMng.UIAnim_value(true);
 
+                //判定テキストを生成
                 GameObject g = VRCInstantiate(uiMng.uiObj_judge[0]);
                 g.GetComponent<JudgeTextObj>().judgeValue = i;
 
+                //ドラムアニメーション再生
                 if (i == 1 || i == 2 || i == 3 || i == 4)
                 {
                     uiMng.Anim_Drums(i, 0);
@@ -523,7 +529,7 @@ namespace HPB
                 {
                     uiMng.Anim_SimbalAcc(i, 0);
                 }
-                //効果再生
+                //エフェクト生成
                 if (i == 0)
                 {
                     if (settingsMng.effectFlag)
@@ -538,6 +544,7 @@ namespace HPB
                         particleGenerator.GenerateParticle(i);
                     }
                 }
+                //効果音再生
                 int seListValue = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
                 soundMng.audioSources[1].PlayOneShot(soundMng.seLists[seListValue + 10]);
             }
@@ -604,6 +611,10 @@ namespace HPB
             Update_UIData();
         }
 
+        /// <summary>
+        /// ミス判定処理
+        /// </summary>
+        /// <param name="laneIndex"></param>
         public void Judge_miss(int laneIndex)
         {
             playMng.judgedValue[3] += 1;
@@ -617,6 +628,9 @@ namespace HPB
             Update_UIData();
         }
 
+        /// <summary>
+        /// UIを更新
+        /// </summary>
         private void Update_UIData()
         {
             SetUIData();

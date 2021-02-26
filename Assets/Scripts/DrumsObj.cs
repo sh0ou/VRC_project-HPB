@@ -27,8 +27,7 @@ namespace HPB
 
         private void OnTriggerEnter(Collider other)
         {
-            //Debug.Log("[<color=yellow>DrumsObj</color>]レイヤー番号:" + other.gameObject.layer);
-            if (other.gameObject.layer == 23)
+            if (other.gameObject.layer == 13)
             {
                 //ドラム処理
                 gameMng.DrumAction(drumNum);

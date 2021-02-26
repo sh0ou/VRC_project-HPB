@@ -87,8 +87,6 @@ namespace HPB
                 float notesPosy = 1.5f;
                 float notesPosz = (endPosition.position.z +
                     (notesJudger.noteTimeList[notesLane][noteCountList[notesLane]] * (settingsMng.notesSpeed * 5)));
-                /*2行目の数字は微調整用
-                ↑明らかにずれてる（スタート時ノーツとエンド時ノーツがずれてる）*/
                 #region デバッグ用
                 //Debug.Log("ノーツNo." + i);
                 //Debug.Log("終点位置:" + endPosition.position.z);
@@ -211,6 +209,12 @@ namespace HPB
             return vec2;
         }
 
+        /// <summary>
+        /// ノーツの位置を取得
+        /// </summary>
+        /// <param name="notesLane">レーン番号</param>
+        /// <param name="notesNum">ノーツ番号</param>
+        /// <returns></returns>
         public float GetNotesPosValue_z(int notesLane, int notesNum)
         {
             return (endPosition.position.z +
