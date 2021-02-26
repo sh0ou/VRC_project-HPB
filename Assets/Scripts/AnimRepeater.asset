@@ -24,7 +24,7 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 11500000, guid: b8eeaf6b94c530847aaf39872d8351f9, type: 3}
+    - {fileID: 11500000, guid: c637279ee6341aa4496bed6aa42e1c1b, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -61,7 +61,7 @@ MonoBehaviour:
       Data: 4|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
-      Data: HPB_UIManager, Assembly-CSharp
+      Data: HPB.UIManager, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 

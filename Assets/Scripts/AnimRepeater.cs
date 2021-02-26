@@ -3,51 +3,57 @@ using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 
-/// <summary>
-/// アニメーション処理中継スクリプト
-/// </summary>
-public class AnimRepeater : UdonSharpBehaviour
+namespace HPB
 {
-    [SerializeField, Tooltip("UIマネージャ")]
-    private HPB_UIManager uiMng;
-
-    [SerializeField, Tooltip("処理番号")]
-    private int taskValue;
-
     /// <summary>
-    /// ドラムアクティブ状態を切替
+    /// アニメーション処理中継スクリプト
     /// </summary>
-    public void SetEvent_0()
+    public class AnimRepeater : UdonSharpBehaviour
     {
-        Debug.Log("アクティブ:SetEvent_0");
-        uiMng.AnimEnd(0);
-    }
+        [SerializeField, Tooltip("UIマネージャ")]
+        private UIManager uiMng;
 
-    /// <summary>
-    /// 選曲画面を表示
-    /// </summary>
-    public void SetEvent_1()
-    {
-        Debug.Log("アクティブ:SetEvent_1");
-        uiMng.AnimEnd(1);
-        gameObject.SetActive(false);
-    }
+        [SerializeField, Tooltip("処理番号")]
+        private int taskValue;
 
-    public void SetEvent()
-    {
-        Debug.Log("アクティブ:SetEvent");
-        uiMng.AnimEnd(taskValue);
-        if(gameObject.name == "Window_Play_2"/* && GameObject.Find("GameManager").GetComponent<HPB_SettingsManager>().windowFlag == 3*/)
+        /// <summary>
+        /// ドラムアクティブ状態を切替
+        /// </summary>
+        public void SetEvent_0()
         {
-            Debug.Log("非アクティブ処理がスキップされました");
+            Debug.Log("アクティブ:SetEvent_0");
+            uiMng.AnimEnd(0);
         }
-        else
+
+        /// <summary>
+        /// 選曲画面を表示
+        /// </summary>
+        public void SetEvent_1()
         {
+            Debug.Log("アクティブ:SetEvent_1");
+            uiMng.AnimEnd(1);
             gameObject.SetActive(false);
         }
-    }
-    private void OnDisable()
-    {
-        Debug.LogWarning("無効化されました:" + gameObject.name);
+
+        /// <summary>
+        /// 番号に応じた処理を実行
+        /// </summary>
+        public void SetEvent()
+        {
+            Debug.Log("アクティブ:SetEvent");
+            uiMng.AnimEnd(taskValue);
+            if (gameObject.name == "Window_Play_2"/* && GameObject.Find("GameManager").GetComponent<HPB_SettingsManager>().windowFlag == 3*/)
+            {
+                Debug.Log("非アクティブ処理がスキップされました");
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
+        }
+        private void OnDisable()
+        {
+            Debug.LogWarning("無効化されました:" + gameObject.name);
+        }
     }
 }

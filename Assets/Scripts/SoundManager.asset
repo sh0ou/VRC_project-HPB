@@ -16,7 +16,7 @@ MonoBehaviour:
     type: 2}
   udonAssembly: 
   assemblyError: 
-  sourceCsScript: {fileID: 11500000, guid: 063be6397847c8546b95dbe44d89f4c2, type: 3}
+  sourceCsScript: {fileID: 11500000, guid: 5f2b893447e5a574ba5cb1eb16040775, type: 3}
   behaviourIDHeapVarName: __refl_const_intnl_udonTypeID
   compileErrors: []
   hasInteractEvent: 0
@@ -102,7 +102,7 @@ MonoBehaviour:
       Data: 7|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: "BGM\u30EA\u30B9\u30C8\n0=\u901A\u5E38BGM 1...=\u697D\u66F2BGM"
+      Data: "BGM\u30EA\u30B9\u30C8\n0=\u9078\u66F2BGM\n1=\u30EA\u30B6\u30EB\u30C8BGM\n2-9=\u7A7A\u304D\n10...=\u697D\u66F2BGM"
     - Name: 
       Entry: 8
       Data: 
@@ -174,7 +174,7 @@ MonoBehaviour:
       Data: 12|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: "\u52B9\u679C\u97F3\u30EA\u30B9\u30C8\n0=\u6C7A\u5B9A\u97F3"
+      Data: "\u52B9\u679C\u97F3\u30EA\u30B9\u30C8\n0=\u7121\u97F3\n1=\u6C7A\u5B9A\u97F3\n2=\u30AD\u30E3\u30F3\u30BB\u30EB\u97F3\n3-10=\u7A7A\u304D\n11...=\u697D\u66F2\u30A8\u30D5\u30A7\u30AF\u30C8"
     - Name: 
       Entry: 8
       Data: 
