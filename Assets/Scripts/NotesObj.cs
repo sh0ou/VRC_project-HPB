@@ -14,13 +14,11 @@ namespace HPB
         private NotesGenerator notesGenerator;
         private SettingsManager settingsMng;
         private PlayManager playMng;
+        private MeshRenderer meshRenderer;
         private Vector2 vec2; //位置更新用Vector2
 
-        [SerializeField, Tooltip("ノーツの参照番号\n0=レーン\n1=要素番号")]
-        public int[] notesReferenceNo = new int[2];
-
-        //public int notesReferenceNo_0;
-        //public int notesReferenceNo_1;
+        [SerializeField, Tooltip("ノーツの参照番号\n0=レーン\n1=要素番号(レーン内)\n2=要素番号(単体)")]
+        public int[] notesReferenceNo = new int[3];
 
         void Start()
         {
@@ -28,6 +26,7 @@ namespace HPB
             notesGenerator = GameObject.Find("NotesGenerator").GetComponent<NotesGenerator>();
             settingsMng = GameObject.Find("GameManager").GetComponent<SettingsManager>();
             playMng = GameObject.Find("GameManager").GetComponent<PlayManager>();
+            meshRenderer = gameObject.GetComponent<MeshRenderer>();
         }
         void Update()
         {
@@ -44,14 +43,20 @@ namespace HPB
                 if (notesJudger.noteJudgeResultsList[notesReferenceNo[0]][notesReferenceNo[1]] != 0)
                 {
                     //Debug.Log("[<color=yellow>NotesObj</color>]判定が確認されました:" + gameObject.name);
+                    if (notesGenerator.notesObjInstance[notesReferenceNo[2] + 10] != null)
+                    {
+                        notesGenerator.notesObjInstance[notesReferenceNo[2] + 10].GetComponent<MeshRenderer>().enabled = true;
+                    }
                     gameObject.SetActive(false);
                 }
-                //transform.position += transform.forward * 3 * settingsMng.notesSpeed * Time.deltaTime;
                 //位置を更新
                 //Debug.Log("レーン更新を開始:" + notesReferenceNo[0] + "/" + notesReferenceNo[1]);
-                vec2 = notesGenerator.GetNotesPosValue_xy(notesReferenceNo[0]);
-                float f = notesGenerator.GetNotesPosValue_z(notesReferenceNo[0], notesReferenceNo[1]);
-                transform.position = new Vector3(vec2.x, vec2.y, f);
+                if (meshRenderer.enabled)
+                {
+                    vec2 = notesGenerator.GetNotesPosValue_xy(notesReferenceNo[0]);
+                    float f = notesGenerator.GetNotesPosValue_z(notesReferenceNo[0], notesReferenceNo[1]);
+                    transform.position = new Vector3(vec2.x, vec2.y, f);
+                }
             }
         }
     }

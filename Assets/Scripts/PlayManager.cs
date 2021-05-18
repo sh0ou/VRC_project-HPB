@@ -34,7 +34,7 @@ namespace HPB
         public int[] judgedValue = new int[4];
 
         [SerializeField, Tooltip
-            ("スコア計算用値\n0=理論スコア\n1=1ノーツあたりのスコア")]
+            ("スコア計算用値\n0=総ノーツ数\n1=1ノーツあたりのスコア")]
         public int[] scoreCalcValue = new int[2];
 
         [SerializeField, Tooltip("フルチェインフラグ")]

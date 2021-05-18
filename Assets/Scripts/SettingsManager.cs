@@ -69,7 +69,8 @@ namespace HPB
             notesSpeed = 1;
             drumHeight = 5;
             gamePlay = false;
-            keyboardFlag = false;
+            keyboardFlag = true;
+            //keyboardFlag = Networking.LocalPlayer.IsUserInVR() ? false : true;
             effectFlag = true;
             SetUIActive(true);
         }
@@ -97,7 +98,7 @@ namespace HPB
             opValueText[3].text = drumHeight.ToString();
             //トグルを反映
             effectFlag = opToggles[0].isOn;
-            keyboardFlag = opToggles[1].isOn;
+            //keyboardFlag = opToggles[1].isOn;
         }
 
         /// <summary>
