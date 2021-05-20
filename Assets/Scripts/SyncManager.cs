@@ -20,10 +20,12 @@ namespace HPB
         SettingsManager settingsManager;
         [SerializeField]
         PlayManager playManager;
+        [Tooltip("自分がプレイヤーなのか")]
+        public bool isActivePlayer;
 
         void Start()
         {
-
+            isActivePlayer = Networking.IsInstanceOwner ? true : false;
         }
 
         public override void OnPlayerJoined(VRCPlayerApi player)
@@ -35,6 +37,7 @@ namespace HPB
         {
             text_playerName.text = Networking.GetOwner(stickObj[0].gameObject).displayName;
             text_playerMode.text = Networking.LocalPlayer.IsUserInVR() ? "VR Mode" : "Desktop Mode";
+            isActivePlayer = Networking.GetOwner(stickObj[0].gameObject) == Networking.LocalPlayer ? true : false;
             if (settingsManager.gamePlay)
             {
                 stickObj[0].pickupable = Networking.GetOwner(stickObj[0].gameObject) == Networking.LocalPlayer ? true : false;
