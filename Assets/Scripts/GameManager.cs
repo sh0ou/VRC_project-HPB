@@ -35,6 +35,9 @@ namespace HPB
         [SerializeField, Tooltip("サウンドマネージャ")]
         private SoundManager soundMng;
 
+        [SerializeField, Tooltip("同期マネージャ")]
+        private SyncManager syncMng;
+
         [SerializeField, Tooltip("ドラム処理フラグ（falseだと判定が無視される）")]
         private bool drumActive;
 
@@ -96,8 +99,8 @@ namespace HPB
         /// <param name="i">叩かれたドラム</param>
         public void DrumAction(int i)
         {
-            //処理待ち対策
-            if (drumActive)
+            //処理待ち対策 & プレイヤーチェック
+            if (drumActive && syncMng.isActivePlayer)
             {
                 //エフェクト処理
                 if (settingsMng.effectFlag)

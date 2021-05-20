@@ -492,7 +492,7 @@ namespace HPB
 
         public void StartBPMGuide(float bpm)
         {
-            Debug.Log("BPMガイド開始:BPM" + bpm);
+            //Debug.Log("BPMガイド開始");
             bpmGuideUI[0].speed = bpm;
             bpmGuideUI[1].speed = bpm;
             bpmGuideUI[0].Play("bpmGuide", 0, 0);
@@ -501,7 +501,7 @@ namespace HPB
 
         public void StopBPMGuide()
         {
-            Debug.Log("BPMガイド終了");
+            //Debug.Log("BPMガイド終了");
             bpmGuideUI[0].speed = 0;
             bpmGuideUI[1].speed = 0;
             bpmGuideUI[0].Play("bpmGuide", 0, 0);

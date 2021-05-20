@@ -34,7 +34,7 @@ namespace HPB
         private Transform endPosition;
 
         [SerializeField, Tooltip("ノーツ設定変更用")]
-        private GameObject[] notesObjInstance;
+        public GameObject[] notesObjInstance;
 
         [SerializeField, Tooltip("ノーツカウント用")]
         public int[] noteCountList;
@@ -130,13 +130,19 @@ namespace HPB
                 //Debug.Log("Parseチェック" + float.Parse(textFileConverter.textDB[1][i]));
                 #endregion
 
-                notesObjInstance[i].GetComponent<NotesObj>().notesReferenceNo = new int[2]
+                notesObjInstance[i].GetComponent<NotesObj>().notesReferenceNo = new int[3]
                 {
-                    notesLane, noteCountList[notesLane]
+                    notesLane, noteCountList[notesLane],i
                 };
 
                 //ノーツ設定を変更
                 notesObjInstance[i].SetActive(true);
+                //(負荷軽減のため)10ノーツ目以降の位置更新処理を無効化させる
+                if (i > 9)
+                {
+                    //Debug.Log("MeshRendererを無効化 / " + i);
+                    notesObjInstance[i].GetComponent<MeshRenderer>().enabled = false;
+                }
                 noteCountList[notesLane]++;
             }
             playMng.notesValue = textFileConverter.textDB[1].Length;
