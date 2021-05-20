@@ -140,7 +140,7 @@ namespace HPB
                 //(負荷軽減のため)10ノーツ目以降の位置更新処理を無効化させる
                 if (i > 9)
                 {
-                    Debug.Log("MeshRendererを無効化 / " + i);
+                    //Debug.Log("MeshRendererを無効化 / " + i);
                     notesObjInstance[i].GetComponent<MeshRenderer>().enabled = false;
                 }
                 noteCountList[notesLane]++;

@@ -43,16 +43,25 @@ namespace HPB
                 if (notesJudger.noteJudgeResultsList[notesReferenceNo[0]][notesReferenceNo[1]] != 0)
                 {
                     //Debug.Log("[<color=yellow>NotesObj</color>]判定が確認されました:" + gameObject.name);
-                    if (notesGenerator.notesObjInstance[notesReferenceNo[2] + 10] != null)
+                    if ((notesJudger.totalPlacedNotes - notesJudger.totalJudgedNotes) > 9)
                     {
+                        //176 - 166 OK
+                        //176 - 167 Err
                         notesGenerator.notesObjInstance[notesReferenceNo[2] + 10].GetComponent<MeshRenderer>().enabled = true;
+                    }
+                    else if (notesJudger.totalPlacedNotes != notesJudger.totalJudgedNotes)
+                    {
+                        //Debug.Log("EnableCheck : " + (notesJudger.totalPlacedNotes - notesJudger.totalJudgedNotes) + "/to : " + gameObject.name);
+                        //Debug.Log("ReferenceCheck : " + notesGenerator.notesObjInstance[notesReferenceNo[2] + (notesJudger.totalPlacedNotes - notesJudger.totalJudgedNotes)].name);
+                        notesGenerator.notesObjInstance[notesReferenceNo[2] + (notesJudger.totalPlacedNotes - notesJudger.totalJudgedNotes)]
+                            .GetComponent<MeshRenderer>().enabled = true;
                     }
                     gameObject.SetActive(false);
                 }
                 //位置を更新
-                //Debug.Log("レーン更新を開始:" + notesReferenceNo[0] + "/" + notesReferenceNo[1]);
                 if (meshRenderer.enabled)
                 {
+                    //Debug.Log("[<color=yellow>NotesObj</color>]位置更新を開始:" + notesReferenceNo[0] + "/" + notesReferenceNo[1]);
                     vec2 = notesGenerator.GetNotesPosValue_xy(notesReferenceNo[0]);
                     float f = notesGenerator.GetNotesPosValue_z(notesReferenceNo[0], notesReferenceNo[1]);
                     transform.position = new Vector3(vec2.x, vec2.y, f);
