@@ -11,10 +11,11 @@ namespace HPB
     public class PlayManager : UdonSharpBehaviour
     {
         #region 変数
-        [SerializeField, Tooltip("ドラムスティック（右）")]
-        public GameObject drumStick;
+        [SerializeField] GameObject drumStick_L;
+        [SerializeField] GameObject drumStick_R;
+        [SerializeField] Transform stickpos_L;
+        [SerializeField] Transform stickpos_R;
 
-        [SerializeField]
         public float playTime;
 
         [SerializeField, Tooltip("楽曲スコア")]
@@ -47,6 +48,14 @@ namespace HPB
         void Start()
         {
             playTime = 0;
+        }
+
+        public void RespawnStick()
+        {
+            drumStick_L.transform.position = stickpos_L.position;
+            drumStick_L.transform.rotation = stickpos_L.rotation;
+            drumStick_R.transform.position = stickpos_R.position;
+            drumStick_R.transform.rotation = stickpos_R.rotation;
         }
     }
 }

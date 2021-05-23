@@ -16,32 +16,42 @@ namespace HPB
         TextMeshProUGUI text_playerName;
         [SerializeField, Tooltip("プレイモード表示UI")]
         TextMeshProUGUI text_playerMode;
-        [SerializeField]
-        SettingsManager settingsManager;
-        [SerializeField]
-        PlayManager playManager;
-        [Tooltip("自分がプレイヤーなのか")]
+        [SerializeField] GameManager gameManager;
+        [SerializeField] SettingsManager settingsManager;
+        [SerializeField] PlayManager playManager;
+        [SerializeField, Tooltip("自分がプレイヤーなのか")]
         public bool isActivePlayer;
+        [Header("デバッグモード"), SerializeField]
+        private bool isDebugMode;
 
         void Start()
         {
-            isActivePlayer = Networking.IsInstanceOwner ? true : false;
+            if (isDebugMode) { Debug.Log("[<color=red>SyncManager</color>]デバッグモードが有効になってます"); }
+            isActivePlayer = isDebugMode ? true : (Networking.IsInstanceOwner ? true : false);
+
         }
 
         public override void OnPlayerJoined(VRCPlayerApi player)
         {
-            //プレイ,リザルト,難易度画面の場合、Wait画面を表示させる（同期ズレのため）
+            if (player == Networking.LocalPlayer)
+            {
+                //プレイ,リザルト,難易度画面の場合、Wait画面を表示させる（同期ズレのため）
+
+            }
         }
 
         private void Update()
         {
-            text_playerName.text = Networking.GetOwner(stickObj[0].gameObject).displayName;
-            text_playerMode.text = Networking.LocalPlayer.IsUserInVR() ? "VR Mode" : "Desktop Mode";
-            isActivePlayer = Networking.GetOwner(stickObj[0].gameObject) == Networking.LocalPlayer ? true : false;
-            if (settingsManager.gamePlay)
+            if (!isDebugMode)
             {
-                stickObj[0].pickupable = Networking.GetOwner(stickObj[0].gameObject) == Networking.LocalPlayer ? true : false;
-                stickObj[1].pickupable = Networking.GetOwner(stickObj[1].gameObject) == Networking.LocalPlayer ? true : false;
+                text_playerName.text = Networking.GetOwner(stickObj[0].gameObject).displayName;
+                text_playerMode.text = Networking.LocalPlayer.IsUserInVR() ? "VR Mode" : "Desktop Mode";
+                isActivePlayer = Networking.GetOwner(stickObj[0].gameObject) == Networking.LocalPlayer ? true : false;
+                if (settingsManager.gamePlay)
+                {
+                    stickObj[0].pickupable = Networking.GetOwner(stickObj[0].gameObject) == Networking.LocalPlayer ? true : false;
+                    stickObj[1].pickupable = Networking.GetOwner(stickObj[1].gameObject) == Networking.LocalPlayer ? true : false;
+                }
             }
         }
 

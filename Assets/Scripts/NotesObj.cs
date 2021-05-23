@@ -42,16 +42,17 @@ namespace HPB
                 //判定済みの場合は消去
                 if (notesJudger.noteJudgeResultsList[notesReferenceNo[0]][notesReferenceNo[1]] != 0)
                 {
-                    //Debug.Log("[<color=yellow>NotesObj</color>]判定が確認されました:" + gameObject.name);
+                    //Debug.Log("EnableCheck : " + (notesJudger.totalPlacedNotes - notesJudger.totalJudgedNotes) + "/to : " + gameObject.name);
+
                     if ((notesJudger.totalPlacedNotes - notesJudger.totalJudgedNotes) > 9)
                     {
+                        //Debug.Log("ReferenceCheck : " + notesGenerator.notesObjInstance[notesReferenceNo[2] + 10].name);
                         //176 - 166 OK
                         //176 - 167 Err
                         notesGenerator.notesObjInstance[notesReferenceNo[2] + 10].GetComponent<MeshRenderer>().enabled = true;
                     }
                     else if (notesJudger.totalPlacedNotes != notesJudger.totalJudgedNotes)
                     {
-                        //Debug.Log("EnableCheck : " + (notesJudger.totalPlacedNotes - notesJudger.totalJudgedNotes) + "/to : " + gameObject.name);
                         //Debug.Log("ReferenceCheck : " + notesGenerator.notesObjInstance[notesReferenceNo[2] + (notesJudger.totalPlacedNotes - notesJudger.totalJudgedNotes)].name);
                         notesGenerator.notesObjInstance[notesReferenceNo[2] + (notesJudger.totalPlacedNotes - notesJudger.totalJudgedNotes)]
                             .GetComponent<MeshRenderer>().enabled = true;
