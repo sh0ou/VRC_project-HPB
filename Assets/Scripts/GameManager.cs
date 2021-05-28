@@ -100,7 +100,7 @@ namespace HPB
         public void DrumAction(int i)
         {
             //処理待ち対策 & プレイヤーチェック
-            if (drumActive && syncMng.isActivePlayer)
+            if (drumActive)
             {
                 //エフェクト処理
                 if (settingsMng.effectFlag)
@@ -129,143 +129,143 @@ namespace HPB
                             break;
                     }
                 }
-                switch (settingsMng.windowFlag)
+                if (syncMng.isActivePlayer)
                 {
-                    case 0:
-                        //ゲーム開始
-                        drumActive = false;
-                        if (i == 1 || i == 2 || i == 3 || i == 4)
-                        {
-                            uiMng.Anim_Drums(i, 0);
-                        }
-                        settingsMng.windowFlag = 1;
-                        uiMng.Close_title();
-                        break;
-                    case 1:
-                        #region 処理
-                        //左に移動
-                        if (i == 1 || i == 2)
-                        {
-                            uiMng.Anim_Drums(i, 0);
-                            if (selectMusicNum == 0)
-                            {
-                                selectMusicNum = txtConverter.SendMusicLength();
-                            }
-                            else
-                            {
-                                selectMusicNum -= 1;
-                            }
-                            SetUIData();
-                        }
-                        //右に移動
-                        else if (i == 3 || i == 4)
-                        {
-                            uiMng.Anim_Drums(i, 0);
-                            if (selectMusicNum == txtConverter.SendMusicLength())
-                            {
-                                selectMusicNum = 0;
-                            }
-                            else
-                            {
-                                selectMusicNum += 1;
-                            }
-                            SetUIData();
-                        }
-                        //楽曲決定
-                        else if (i == 0 || i == 5)
-                        {
+                    switch (settingsMng.windowFlag)
+                    {
+                        case 0:
+                            //ゲーム開始
                             drumActive = false;
-                            settingsMng.windowFlag = 2;
-                            selectLevelNum = 0;
-                            uiMng.Close_select1();
-                        }
-                        break;
-                    #endregion
-                    case 2:
-                        #region 処理
-                        //楽曲選択に戻る
-                        if (i == 1 || i == 4)
-                        {
-                            drumActive = false;
-                            uiMng.Anim_Drums(i, 0);
+                            if (i == 1 || i == 2 || i == 3 || i == 4)
+                            {
+                                uiMng.Anim_Drums(i, 0);
+                            }
                             settingsMng.windowFlag = 1;
-                            uiMng.Close_select2_return();
-                        }
-                        //レベルを下げる
-                        else if (i == 2)
-                        {
-                            drumActive = false;
-                            uiMng.Anim_Drums(i, 0);
-                            switch (selectLevelNum)
+                            uiMng.Close_title();
+                            break;
+                        case 1:
+                            #region 処理
+                            //左に移動
+                            if (i == 1 || i == 2)
                             {
-                                case 0:
-                                    drumActive = true;
-                                    break;
-                                case 1:
-                                    selectLevelNum = 0;
-                                    uiMng.UIAnim_level(1);
-                                    break;
-                                case 2:
-                                    selectLevelNum = 1;
-                                    uiMng.UIAnim_level(3);
-                                    break;
+                                uiMng.Anim_Drums(i, 0);
+                                selectMusicNum = selectMusicNum == 0 ? txtConverter.SendMusicLength() : selectMusicNum--;
+                                //if (selectMusicNum == 0)
+                                //{
+                                //    selectMusicNum = txtConverter.SendMusicLength();
+                                //}
+                                //else
+                                //{
+                                //    selectMusicNum -= 1;
+                                //}
+                                SetUIData();
                             }
-                            SetUIData();
-                        }
-                        //レベルを上げる
-                        else if (i == 3)
-                        {
-                            drumActive = false;
-                            uiMng.Anim_Drums(i, 0);
-                            switch (selectLevelNum)
+                            //右に移動
+                            else if (i == 3 || i == 4)
                             {
-                                case 0:
-                                    selectLevelNum = 1;
-                                    uiMng.UIAnim_level(0);
-                                    break;
-                                case 1:
-                                    selectLevelNum = 2;
-                                    uiMng.UIAnim_level(2);
-                                    break;
-                                case 2:
-                                    drumActive = true;
-                                    break;
+                                uiMng.Anim_Drums(i, 0);
+                                selectMusicNum = selectMusicNum == txtConverter.SendMusicLength() ? 0 : selectMusicNum++;
+                                //if (selectMusicNum == txtConverter.SendMusicLength())
+                                //{
+                                //    selectMusicNum = 0;
+                                //}
+                                //else
+                                //{
+                                //    selectMusicNum += 1;
+                                //}
+                                SetUIData();
                             }
-                            //if (selectLevelNum != 2)
-                            //{
-                            //    selectLevelNum += 1;
-                            //    SetUIData();
-                            //}
-                            SetUIData();
-                        }
-                        //プレイ開始
-                        else if (i == 0 || i == 5)
-                        {
+                            //楽曲決定
+                            else if (i == 0 || i == 5)
+                            {
+                                drumActive = false;
+                                settingsMng.windowFlag = 2;
+                                selectLevelNum = 0;
+                                uiMng.Close_select1();
+                            }
+                            break;
+                        #endregion
+                        case 2:
+                            #region 処理
+                            //楽曲選択に戻る
+                            if (i == 1 || i == 4)
+                            {
+                                drumActive = false;
+                                uiMng.Anim_Drums(i, 0);
+                                settingsMng.windowFlag = 1;
+                                uiMng.Close_select2_return();
+                            }
+                            //レベルを下げる
+                            else if (i == 2)
+                            {
+                                drumActive = false;
+                                uiMng.Anim_Drums(i, 0);
+                                switch (selectLevelNum)
+                                {
+                                    case 0:
+                                        drumActive = true;
+                                        break;
+                                    case 1:
+                                        selectLevelNum = 0;
+                                        uiMng.UIAnim_level(1);
+                                        break;
+                                    case 2:
+                                        selectLevelNum = 1;
+                                        uiMng.UIAnim_level(3);
+                                        break;
+                                }
+                                SetUIData();
+                            }
+                            //レベルを上げる
+                            else if (i == 3)
+                            {
+                                drumActive = false;
+                                uiMng.Anim_Drums(i, 0);
+                                switch (selectLevelNum)
+                                {
+                                    case 0:
+                                        selectLevelNum = 1;
+                                        uiMng.UIAnim_level(0);
+                                        break;
+                                    case 1:
+                                        selectLevelNum = 2;
+                                        uiMng.UIAnim_level(2);
+                                        break;
+                                    case 2:
+                                        drumActive = true;
+                                        break;
+                                }
+                                SetUIData();
+                            }
+                            //プレイ開始
+                            else if (i == 0 || i == 5)
+                            {
+                                drumActive = false;
+                                playMng.fcFlag = true;
+                                playMng.ahFlag = true;
+                                settingsMng.windowFlag = 3;
+                                uiMng.Close_select2();
+                            }
+                            break;
+                        #endregion
+                        case 3:
+                            //判定処理
+                            JudgeNotes(i);
+                            break;
+                        case 4:
+                            //楽曲選択に戻る
                             drumActive = false;
-                            playMng.fcFlag = true;
-                            playMng.ahFlag = true;
-                            settingsMng.windowFlag = 3;
-                            uiMng.Close_select2();
-                        }
-                        break;
-                    #endregion
-                    case 3:
-                        //判定処理
-                        JudgeNotes(i);
-                        break;
-                    case 4:
-                        //楽曲選択に戻る
-                        drumActive = false;
-                        if (i == 1 || i == 2 || i == 3 || i == 4)
-                        {
-                            uiMng.Anim_Drums(i, 0);
-                        }
-                        settingsMng.windowFlag = 1;
-                        uiMng.Close_result();
-                        break;
-                    default:
-                        Debug.LogError("[<color=red>HPB_GameManager</color>]画面番号が不正です");
-                        break;
+                            if (i == 1 || i == 2 || i == 3 || i == 4)
+                            {
+                                uiMng.Anim_Drums(i, 0);
+                            }
+                            settingsMng.windowFlag = 1;
+                            uiMng.Close_result();
+                            break;
+                        default:
+                            Debug.LogError("[<color=red>HPB_GameManager</color>]画面番号が不正です");
+                            break;
+                    }
                 }
             }
         }
@@ -509,14 +509,7 @@ namespace HPB
                 playMng.judgedValue[0] += 1;
                 playMng.chain += 1;
                 //理論値処理
-                if (playMng.judgedValue[0] != playMng.notesValue)
-                {
-                    playMng.score_now += playMng.scoreCalcValue[1];
-                }
-                else
-                {
-                    playMng.score_now = 100000;
-                }
+                playMng.score_now = playMng.judgedValue[0] != playMng.notesValue ? playMng.score_now += playMng.scoreCalcValue[1] : 100000;
                 uiMng.UIAnim_value(true);
 
                 //判定テキストを生成
@@ -533,19 +526,9 @@ namespace HPB
                     uiMng.Anim_SimbalAcc(i, 0);
                 }
                 //エフェクト生成
-                if (i == 0)
+                if (settingsMng.effectFlag)
                 {
-                    if (settingsMng.effectFlag)
-                    {
-                        particleGenerator.GenerateParticle(i);
-                    }
-                }
-                else
-                {
-                    if (settingsMng.effectFlag)
-                    {
-                        particleGenerator.GenerateParticle(i);
-                    }
+                    particleGenerator.GenerateParticle(i);
                 }
                 //効果音再生
                 int seListValue = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
@@ -571,19 +554,9 @@ namespace HPB
                     uiMng.Anim_SimbalAcc(i, 1);
                 }
 
-                if (i == 0)
+                if (settingsMng.effectFlag)
                 {
-                    if (settingsMng.effectFlag)
-                    {
-                        particleGenerator.GenerateParticle(i);
-                    }
-                }
-                else
-                {
-                    if (settingsMng.effectFlag)
-                    {
-                        particleGenerator.GenerateParticle(i);
-                    }
+                    particleGenerator.GenerateParticle(i);
                 }
                 int seListValue = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
                 soundMng.audioSources[1].PlayOneShot(soundMng.seLists[seListValue + 10]);

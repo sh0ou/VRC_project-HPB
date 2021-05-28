@@ -42,8 +42,8 @@ namespace HPB
                 //判定済みの場合は消去
                 if (notesJudger.noteJudgeResultsList[notesReferenceNo[0]][notesReferenceNo[1]] != 0)
                 {
+                    //MeshRenderer表示,非表示処理
                     //Debug.Log("EnableCheck : " + (notesJudger.totalPlacedNotes - notesJudger.totalJudgedNotes) + "/to : " + gameObject.name);
-
                     if ((notesJudger.totalPlacedNotes - notesJudger.totalJudgedNotes) > 9)
                     {
                         //Debug.Log("ReferenceCheck : " + notesGenerator.notesObjInstance[notesReferenceNo[2] + 10].name);

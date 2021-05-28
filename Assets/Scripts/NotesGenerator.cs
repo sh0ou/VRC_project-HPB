@@ -54,9 +54,12 @@ namespace HPB
             }
         }
 
+        /// <summary>
+        /// オブジェクトをアタッチします
+        /// </summary>
+        /// <param name="value">アタッチする数</param>
         void AttachObj(int value)
         {
-            //オブジェクトをアタッチ
             for (int i1 = 0; i1 < value; i1++)
             {
                 notesObjInstance[i1] = notesRootObj.transform.GetChild(i1).gameObject;
@@ -97,11 +100,10 @@ namespace HPB
                 //Debug.Log("[<color=yellow>NotesGenerator</color>]NoteTime:" + notesJudger.noteTimeList[notesLane][noteCountList[notesLane]]);
                 #endregion
 
+                //ノーツ回転,形を設定
                 Vector2 vec2 = GetNotesPosValue_xy(notesLane);
                 notesPosx = vec2.x;
                 notesPosy = vec2.y;
-
-                //各種値を設定
                 switch (notesLane)
                 {
                     case 0:
@@ -119,7 +121,6 @@ namespace HPB
                 notesObjInstance[i] = notesRootObj.transform.GetChild(i).gameObject;
                 //ノーツ位置を設定
                 notesObjInstance[i].gameObject.transform.position = new Vector3(notesPosx, notesPosy, notesPosz);
-
                 #region デバッグ用
                 //Debug.Log("ゲームマネージャ:" + hpb_GM);
                 //Debug.Log("ノーツスピード:" + hpb_GM.notesSpeed);
@@ -129,25 +130,23 @@ namespace HPB
                 //Debug.Log("lifetime取得チェック:" + notesObjInstance[i].GetComponent<NotesObjScr>().lifeTime);
                 //Debug.Log("Parseチェック" + float.Parse(textFileConverter.textDB[1][i]));
                 #endregion
-
+                //ノーツの参照番号をセット
                 notesObjInstance[i].GetComponent<NotesObj>().notesReferenceNo = new int[3]
                 {
                     notesLane, noteCountList[notesLane],i
                 };
-
-                //ノーツ設定を変更
                 notesObjInstance[i].SetActive(true);
-                //(負荷軽減のため)10ノーツ目以降の位置更新処理を無効化させる
+                //(負荷軽減のため)10ノーツ以降の位置更新処理を無効化させる
                 if (i > 9)
                 {
-                    //Debug.Log("MeshRendererを無効化 / " + i);
                     notesObjInstance[i].GetComponent<MeshRenderer>().enabled = false;
                 }
+
                 noteCountList[notesLane]++;
             }
             playMng.notesValue = textFileConverter.textDB[1].Length;
             notesRootObj.SetActive(true);
-            Debug.Log("<color=green>ノーツ生成が完了しました</color>");
+            Debug.Log("[<color=green>NotesGenerator</color>]ノーツ生成が完了しました");
         }
 
         /// <summary>
