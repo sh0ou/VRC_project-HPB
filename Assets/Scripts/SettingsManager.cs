@@ -16,7 +16,7 @@ namespace HPB
         [SerializeField, Tooltip("サウンドマネージャ")]
         private SoundManager soundMng;
 
-        [SerializeField, Tooltip("表示されている画面番号\n0=タイトル\n1=選曲\n2=レベル選択\n3=プレイ\n4=リザルト")]
+        [UdonSynced, SerializeField, Tooltip("表示されている画面番号\n0=タイトル\n1=選曲\n2=レベル選択\n3=プレイ\n4=リザルト")]
         public int windowFlag;
 
         [SerializeField, Tooltip("リズムゲーム進行フラグ")]

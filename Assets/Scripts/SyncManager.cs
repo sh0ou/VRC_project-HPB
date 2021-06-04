@@ -8,8 +8,8 @@ namespace HPB
 {
     public class SyncManager : UdonSharpBehaviour
     {
-        [UdonSynced, SerializeField, Tooltip("現在のプレイ状況\n0.タイトル画面\n1.選曲画面\n2.プレイ中")]
-        int activePhase;
+        //[/*UdonSynced,*/ SerializeField, Tooltip("現在のプレイ状況\n0.タイトル画面\n1.選曲画面\n2.プレイ中")]
+        //int activeWindow;
         [SerializeField, Tooltip("ドラムスティック")]
         VRC_Pickup[] stickObj;
         [SerializeField, Tooltip("プレイヤー名表示UI")]
@@ -19,10 +19,20 @@ namespace HPB
         [SerializeField] GameManager gameManager;
         [SerializeField] SettingsManager settingsManager;
         [SerializeField] PlayManager playManager;
+        [SerializeField] UIManager uIManager;
+        [SerializeField] SoundManager soundManager;
+        [SerializeField] ParticleGenerator particleGenerator;
         [SerializeField, Tooltip("自分がプレイヤーなのか")]
         public bool isActivePlayer;
         [Header("デバッグモード"), SerializeField]
-        private bool isDebugMode;
+        public bool isDebugMode;
+
+        [UdonSynced] public int targetlane;//レーン指定用変数
+        [UdonSynced] public int targetid_a;//同期用汎用変数1
+        [UdonSynced] public int targetid_b;//同期用納用変数2
+        [UdonSynced] public int targetTextid_a;//判定テキスト同期用変数1
+        [UdonSynced] public int targetTextid_b;//判定テキスト同期用変数2
+        [UdonSynced] public bool targetBool;//同期用汎用フラグ
 
         void Start()
         {
@@ -31,14 +41,14 @@ namespace HPB
 
         }
 
-        public override void OnPlayerJoined(VRCPlayerApi player)
-        {
-            if (player == Networking.LocalPlayer)
-            {
-                //プレイ,リザルト,難易度画面の場合、Wait画面を表示させる（同期ズレのため）
+        //public override void OnPlayerJoined(VRCPlayerApi player)
+        //{
+        //    if (player == Networking.LocalPlayer)
+        //    {
+        //        //プレイ,リザルト,難易度画面の場合、Wait画面を表示させる（同期ズレのため）
 
-            }
-        }
+        //    }
+        //}
 
         private void Update()
         {
@@ -51,16 +61,9 @@ namespace HPB
                 {
                     stickObj[0].pickupable = Networking.GetOwner(stickObj[0].gameObject) == Networking.LocalPlayer ? true : false;
                     stickObj[1].pickupable = Networking.GetOwner(stickObj[1].gameObject) == Networking.LocalPlayer ? true : false;
+                    RequestSerialization();
                 }
             }
-        }
-
-        /// <summary>
-        /// 画面を同期します
-        /// </summary>
-        public void SyncWindow()
-        {
-            //playManager.
         }
 
         /// <summary>
@@ -70,6 +73,49 @@ namespace HPB
         {
             Networking.SetOwner(Networking.LocalPlayer, stickObj[0].gameObject);
             Networking.SetOwner(Networking.LocalPlayer, stickObj[1].gameObject);
+            RequestSerialization();
+        }
+
+        public void Anim_Drums()
+        {
+            uIManager.Anim_Drums(targetlane, targetid_a);
+        }
+
+        public void Anim_SimbalAcc()
+        {
+            uIManager.Anim_SimbalAcc(targetlane, targetid_a);
+        }
+
+        public void UIAnim_level()
+        {
+            uIManager.UIAnim_level(targetid_a);
+        }
+
+        public void UIAnim_value()
+        {
+            uIManager.UIAnim_value(targetBool);
+        }
+
+        /// <summary>
+        /// (使用ID:A)SEを再生します
+        /// </summary>
+        public void PlayDrumSE()
+        {
+            soundManager.audioSources[1].PlayOneShot(soundManager.seLists[targetid_a + 10]);
+        }
+
+        public void GenerateParticle()
+        {
+            particleGenerator.GenerateParticle(targetlane);
+        }
+
+        /// <summary>
+        /// (使用ID:A,B)判定テキストを生成します
+        /// </summary>
+        public void GenerateJudgeText()
+        {
+            GameObject g = VRCInstantiate(uIManager.uiObj_judge[targetTextid_a]);
+            g.GetComponent<JudgeTextObj>().judgeValue = targetTextid_b;
         }
     }
 }

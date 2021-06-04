@@ -16,14 +16,6 @@ namespace HPB
         [SerializeField, Tooltip("各パーティクル位置\n0-5=判定ライン\n6-11=ドラム\n12=リザルト")]
         private Transform[] particlePoss;
 
-        private void Start()
-        {
-            for (int round = 0; round < particlePoss.Length; round++)
-            {
-                Debug.Log("Pos" + round + ":" + particlePoss[round].position);
-            }
-        }
-
         public void GenerateParticle(int id)
         {
             GameObject generateObj = null;

@@ -41,10 +41,10 @@ namespace HPB
         [SerializeField, Tooltip("ドラム処理フラグ（falseだと判定が無視される）")]
         private bool drumActive;
 
-        [SerializeField, Tooltip("選択中の曲番号")]
+        [SerializeField, Tooltip("選択中の曲番号"), UdonSynced]
         private int selectMusicNum;
 
-        [SerializeField, Tooltip("選択中の曲レベル")]
+        [SerializeField, Tooltip("選択中の曲レベル"), UdonSynced]
         private int selectLevelNum;
 
         #endregion
@@ -138,42 +138,46 @@ namespace HPB
                             drumActive = false;
                             if (i == 1 || i == 2 || i == 3 || i == 4)
                             {
-                                uiMng.Anim_Drums(i, 0);
+                                syncMng.targetlane = i;
+                                syncMng.targetid_a = 0;
+                                RequestSerialization();
+                                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_Drums");
+                                //uiMng.Anim_Drums(i, 0);
                             }
                             settingsMng.windowFlag = 1;
-                            uiMng.Close_title();
+                            RequestSerialization();
+                            //uiMng.Close_title();
+                            uiMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Close_title");
                             break;
                         case 1:
                             #region 処理
                             //左に移動
                             if (i == 1 || i == 2)
                             {
-                                uiMng.Anim_Drums(i, 0);
-                                selectMusicNum = selectMusicNum == 0 ? txtConverter.SendMusicLength() : selectMusicNum--;
-                                //if (selectMusicNum == 0)
-                                //{
-                                //    selectMusicNum = txtConverter.SendMusicLength();
-                                //}
-                                //else
-                                //{
-                                //    selectMusicNum -= 1;
-                                //}
-                                SetUIData();
+                                syncMng.targetlane = i;
+                                syncMng.targetid_a = 0;
+                                syncMng.targetid_b = -1;
+                                RequestSerialization();
+                                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_Drums");
+                                //uiMng.Anim_Drums(i, 0);
+                                //selectMusicNum = selectMusicNum == 0 ? txtConverter.SendMusicLength() : selectMusicNum--;
+                                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.Owner, "ChangeMusicNo");
+                                //SetUIData();
+                                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUIData");
                             }
                             //右に移動
                             else if (i == 3 || i == 4)
                             {
-                                uiMng.Anim_Drums(i, 0);
-                                selectMusicNum = selectMusicNum == txtConverter.SendMusicLength() ? 0 : selectMusicNum++;
-                                //if (selectMusicNum == txtConverter.SendMusicLength())
-                                //{
-                                //    selectMusicNum = 0;
-                                //}
-                                //else
-                                //{
-                                //    selectMusicNum += 1;
-                                //}
-                                SetUIData();
+                                syncMng.targetlane = i;
+                                syncMng.targetid_a = 0;
+                                syncMng.targetid_b = 1;
+                                RequestSerialization();
+                                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_Drums");
+                                //uiMng.Anim_Drums(i, 0);
+                                //selectMusicNum = selectMusicNum == txtConverter.SendMusicLength() ? 0 : selectMusicNum++;
+                                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.Owner, "ChangeMusicNo");
+                                //SetUIData();
+                                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUIData");
                             }
                             //楽曲決定
                             else if (i == 0 || i == 5)
@@ -181,7 +185,9 @@ namespace HPB
                                 drumActive = false;
                                 settingsMng.windowFlag = 2;
                                 selectLevelNum = 0;
-                                uiMng.Close_select1();
+                                RequestSerialization();
+                                //uiMng.Close_select1();
+                                uiMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Close_select1");
                             }
                             break;
                         #endregion
@@ -191,15 +197,24 @@ namespace HPB
                             if (i == 1 || i == 4)
                             {
                                 drumActive = false;
-                                uiMng.Anim_Drums(i, 0);
+                                syncMng.targetlane = i;
+                                syncMng.targetid_a = 0;
                                 settingsMng.windowFlag = 1;
-                                uiMng.Close_select2_return();
+                                RequestSerialization();
+                                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_Drums");
+                                //uiMng.Anim_Drums(i, 0);
+                                //uiMng.Close_select2_return();
+                                uiMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Close_select2_return");
                             }
                             //レベルを下げる
                             else if (i == 2)
                             {
                                 drumActive = false;
-                                uiMng.Anim_Drums(i, 0);
+                                syncMng.targetlane = i;
+                                syncMng.targetid_a = 0;
+                                RequestSerialization();
+                                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_Drums");
+                                //uiMng.Anim_Drums(i, 0);
                                 switch (selectLevelNum)
                                 {
                                     case 0:
@@ -207,35 +222,53 @@ namespace HPB
                                         break;
                                     case 1:
                                         selectLevelNum = 0;
-                                        uiMng.UIAnim_level(1);
+                                        //uiMng.UIAnim_level(1);
+                                        syncMng.targetid_a = 1;
+                                        RequestSerialization();
+                                        syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "UIAnim_level");
                                         break;
                                     case 2:
                                         selectLevelNum = 1;
-                                        uiMng.UIAnim_level(3);
+                                        //uiMng.UIAnim_level(3);
+                                        syncMng.targetid_a = 3;
+                                        RequestSerialization();
+                                        syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "UIAnim_level");
                                         break;
                                 }
-                                SetUIData();
+                                //SetUIData();
+                                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUIData");
                             }
                             //レベルを上げる
                             else if (i == 3)
                             {
                                 drumActive = false;
-                                uiMng.Anim_Drums(i, 0);
+                                syncMng.targetlane = i;
+                                syncMng.targetid_a = 0;
+                                RequestSerialization();
+                                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_Drums");
+                                //uiMng.Anim_Drums(i, 0);
                                 switch (selectLevelNum)
                                 {
                                     case 0:
                                         selectLevelNum = 1;
-                                        uiMng.UIAnim_level(0);
+                                        //uiMng.UIAnim_level(0);
+                                        syncMng.targetid_a = 0;
+                                        RequestSerialization();
+                                        syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "UIAnim_level");
                                         break;
                                     case 1:
                                         selectLevelNum = 2;
-                                        uiMng.UIAnim_level(2);
+                                        //uiMng.UIAnim_level(2);
+                                        syncMng.targetid_a = 2;
+                                        RequestSerialization();
+                                        syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "UIAnim_level");
                                         break;
                                     case 2:
                                         drumActive = true;
                                         break;
                                 }
-                                SetUIData();
+                                //SetUIData();
+                                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUIData");
                             }
                             //プレイ開始
                             else if (i == 0 || i == 5)
@@ -244,7 +277,9 @@ namespace HPB
                                 playMng.fcFlag = true;
                                 playMng.ahFlag = true;
                                 settingsMng.windowFlag = 3;
-                                uiMng.Close_select2();
+                                //uiMng.Close_select2();
+                                RequestSerialization();
+                                uiMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Close_select2");
                             }
                             break;
                         #endregion
@@ -257,10 +292,16 @@ namespace HPB
                             drumActive = false;
                             if (i == 1 || i == 2 || i == 3 || i == 4)
                             {
-                                uiMng.Anim_Drums(i, 0);
+                                syncMng.targetlane = i;
+                                syncMng.targetid_a = 0;
+                                RequestSerialization();
+                                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_Drums");
+                                //uiMng.Anim_Drums(i, 0);
                             }
                             settingsMng.windowFlag = 1;
-                            uiMng.Close_result();
+                            RequestSerialization();
+                            //uiMng.Close_result();
+                            uiMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Close_result");
                             break;
                         default:
                             Debug.LogError("[<color=red>HPB_GameManager</color>]画面番号が不正です");
@@ -298,7 +339,8 @@ namespace HPB
         public void PlayMusic()
         {
             //Debug.Log("アクティブ:PlayMusic");
-            //soundMng.audioSources[0].clip = soundMng.bgmLists[0];
+            Debug.Log("[<color=yellow>GameManager</color>]サウンドTxtチェック:" + txtConverter.textDB[0][5]);
+            Debug.Log("[<color=yellow>GameManager</color>]サウンドチェック:" + soundMng.bgmLists[int.Parse(txtConverter.textDB[0][5])]);
             soundMng.audioSources[0].clip = soundMng.bgmLists[int.Parse(txtConverter.textDB[0][5])];
             soundMng.audioSources[0].Play();
             playMng.endTime = float.Parse(txtConverter.textDB[0][4]);
@@ -316,9 +358,11 @@ namespace HPB
             switch (settingsMng.windowFlag)
             {
                 case 0:
+                    Debug.Log("[<color=yellow>GameManager</color>]UI更新がスキップされました");
                     break;
                 case 1:
                     #region 選曲画面処理
+                    Debug.Log("[<color=yellow>GameManager</color>]UI更新:選曲画面");
                     //値をセット
                     uiMng.tmp_select_1[0].text = txtConverter.textDB[0][0];
                     uiMng.tmp_select_1[1].text = txtConverter.textDB[0][1];
@@ -326,6 +370,8 @@ namespace HPB
                     //中央画像セット
                     uiMng.jacketImage_select_1[0].GetComponent<Renderer>().material =
                         uiMng.jacketList[selectMusicNum][0];
+
+                    Debug.Log("中央画像:" + uiMng.jacketImage_select_1[0].GetComponent<Renderer>().material.name);
 
                     //左画像セット
 
@@ -345,6 +391,7 @@ namespace HPB
                     break;
                 case 2:
                     #region レベル画面処理
+                    Debug.Log("[<color=yellow>GameManager</color>]UI更新:レベル画面");
                     //値をセット
                     uiMng.tmp_select_2[0].text = txtConverter.textDB[0][0];
                     uiMng.tmp_select_2[1].text = txtConverter.textDB[0][1];
@@ -361,6 +408,7 @@ namespace HPB
                     break;
                 case 3:
                     #region プレイ画面処理
+                    //Debug.Log("[<color=yellow>GameManager</color>]UI更新:プレイ画面");
                     //値をセット
                     uiMng.tmp_play_1[0].text = txtConverter.textDB[0][0];
                     uiMng.tmp_play_1[1].text = txtConverter.textDB[0][1];
@@ -382,12 +430,14 @@ namespace HPB
                     break;
                 case 4:
                     #region リザルト画面処理
+                    Debug.Log("[<color=yellow>GameManager</color>]UI更新:リザルト画面");
                     //値をセット
                     SetUI_score();
                     SetUI_chainFlag();
-                    Debug.LogWarning("[<color=red>HPB_GameManager</color>]DisplayNameがコメントアウトされてます\nアップロード時は解除してください");
-                    //uiMng.text_playerName.text = Networking.GetOwner(playMng.drumStick).displayName;
-                    uiMng.text_playerName.text = "ななしの楽団員";
+                    string s;
+                    if (syncMng.isDebugMode) { s = ""; }
+                    else { s = Networking.GetOwner(playMng.GetStickOwner()).IsUserInVR() ? "(VR)" : "(Desktop)"; }
+                    uiMng.text_playerName.text = syncMng.isDebugMode ? "ななしの楽団員" : Networking.GetOwner(playMng.GetStickOwner()).displayName + s;
                     uiMng.tmp_result[0].text = playMng.score_now.ToString();
                     uiMng.tmp_result[1].text = playMng.score_now.ToString();
                     uiMng.tmp_result[2].text = playMng.score_now.ToString();
@@ -419,10 +469,7 @@ namespace HPB
         /// </summary>
         private void SetUI_score()
         {
-            //if (settingsMng.windowFlag != 3)
-            //{
-            //    Debug.Log("アクティブ:SetUI_score");
-            //}
+            if (settingsMng.windowFlag != 3) { Debug.Log("アクティブ:SetUI_score"); }
             //rankS
             if (playMng.score_now >= 95000)
             {
@@ -455,10 +502,7 @@ namespace HPB
         /// </summary>
         private void SetUI_chainFlag()
         {
-            //if (settingsMng.windowFlag != 3)
-            //{
-            //    Debug.Log("アクティブ:SetUI_chainFlag");
-            //}
+            if (settingsMng.windowFlag != 3) { Debug.Log("アクティブ:SetUI_chainFlag"); }
             //5チェイン以上のみ表示
             if (playMng.chain >= 5)
             {
@@ -487,6 +531,7 @@ namespace HPB
             playMng.playTime = 0;
             playMng.chain = 0;
             playMng.judgedValue = new int[4] { 0, 0, 0, 0 };
+            RequestSerialization();
             playMng.scoreCalcValue[0] = playMng.notesValue;
             playMng.scoreCalcValue[1] = (100000 * 1) / playMng.scoreCalcValue[0];
             Debug.Log("Calc:" + playMng.scoreCalcValue[1]);
@@ -510,29 +555,50 @@ namespace HPB
                 playMng.chain += 1;
                 //理論値処理
                 playMng.score_now = playMng.judgedValue[0] != playMng.notesValue ? playMng.score_now += playMng.scoreCalcValue[1] : 100000;
-                uiMng.UIAnim_value(true);
+                syncMng.targetBool = true;
+                RequestSerialization();
+                //uiMng.UIAnim_value(true);
+                syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "UIAnim_value");
 
                 //判定テキストを生成
-                GameObject g = VRCInstantiate(uiMng.uiObj_judge[0]);
-                g.GetComponent<JudgeTextObj>().judgeValue = i;
+                syncMng.targetTextid_a = 0;
+                syncMng.targetTextid_b = i;
+                RequestSerialization();
+                //GameObject g = VRCInstantiate(uiMng.uiObj_judge[0]);
+                //g.GetComponent<JudgeTextObj>().judgeValue = i;
+                syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "GenerateJudgeText");
 
                 //ドラムアニメーション再生
                 if (i == 1 || i == 2 || i == 3 || i == 4)
                 {
-                    uiMng.Anim_Drums(i, 0);
+                    syncMng.targetlane = i;
+                    syncMng.targetid_a = 0;
+                    RequestSerialization();
+                    syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_Drums");
+                    //uiMng.Anim_Drums(i, 0);
                 }
                 else
                 {
-                    uiMng.Anim_SimbalAcc(i, 0);
+                    syncMng.targetlane = i;
+                    syncMng.targetid_a = 0;
+                    RequestSerialization();
+                    syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_SimbalAcc");
+                    //uiMng.Anim_SimbalAcc(i, 0);
                 }
                 //エフェクト生成
                 if (settingsMng.effectFlag)
                 {
-                    particleGenerator.GenerateParticle(i);
+                    syncMng.targetlane = i;
+                    RequestSerialization();
+                    //particleGenerator.GenerateParticle(i);
+                    syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "GenerateParticle");
                 }
                 //効果音再生
-                int seListValue = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
-                soundMng.audioSources[1].PlayOneShot(soundMng.seLists[seListValue + 10]);
+                //int seListValue = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
+                //soundMng.audioSources[1].PlayOneShot(soundMng.seLists[seListValue + 10]);
+                syncMng.targetid_a = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
+                RequestSerialization();
+                syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayDrumSE");
             }
             else if (judge_v == 2)//Good
             {
@@ -540,26 +606,47 @@ namespace HPB
                 playMng.chain += 1;
                 playMng.score_now += Mathf.RoundToInt(playMng.scoreCalcValue[1] * 0.8f);
                 playMng.ahFlag = false;
-                uiMng.UIAnim_value(true);
+                syncMng.targetBool = true;
+                //uiMng.UIAnim_value(true);
+                RequestSerialization();
+                syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "UIAnim_value");
 
-                GameObject g = VRCInstantiate(uiMng.uiObj_judge[1]);
-                g.GetComponent<JudgeTextObj>().judgeValue = i;
+                syncMng.targetTextid_a = 1;
+                syncMng.targetTextid_b = i;
+                RequestSerialization();
+                //GameObject g = VRCInstantiate(uiMng.uiObj_judge[1]);
+                //g.GetComponent<JudgeTextObj>().judgeValue = i;
+                syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "GenerateJudgeText");
 
                 if (i == 1 || i == 2 || i == 3 || i == 4)
                 {
-                    uiMng.Anim_Drums(i, 1);
+                    syncMng.targetlane = i;
+                    syncMng.targetid_a = 1;
+                    RequestSerialization();
+                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_Drums");
+                    //uiMng.Anim_Drums(i, 1);
                 }
                 else
                 {
-                    uiMng.Anim_SimbalAcc(i, 1);
+                    syncMng.targetlane = i;
+                    syncMng.targetid_a = 1;
+                    RequestSerialization();
+                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_SimbalAcc");
+                    //uiMng.Anim_SimbalAcc(i, 1);
                 }
 
                 if (settingsMng.effectFlag)
                 {
-                    particleGenerator.GenerateParticle(i);
+                    syncMng.targetlane = i;
+                    RequestSerialization();
+                    //particleGenerator.GenerateParticle(i);
+                    syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "GenerateParticle");
                 }
-                int seListValue = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
-                soundMng.audioSources[1].PlayOneShot(soundMng.seLists[seListValue + 10]);
+                //int seListValue = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
+                //soundMng.audioSources[1].PlayOneShot(soundMng.seLists[seListValue + 10]);
+                syncMng.targetid_a = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
+                RequestSerialization();
+                syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayDrumSE");
             }
             else if (judge_v == 3)//Sad
             {
@@ -568,21 +655,39 @@ namespace HPB
                 playMng.score_now += Mathf.RoundToInt(playMng.scoreCalcValue[1] * 0.5f);
                 playMng.ahFlag = false;
                 playMng.fcFlag = false;
-                uiMng.UIAnim_value(false);
+                syncMng.targetBool = false;
+                RequestSerialization();
+                //uiMng.UIAnim_value(false);
+                syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "UIAnim_value");
 
-                GameObject g = VRCInstantiate(uiMng.uiObj_judge[2]);
-                g.GetComponent<JudgeTextObj>().judgeValue = i;
+                syncMng.targetTextid_a = 2;
+                syncMng.targetTextid_b = i;
+                RequestSerialization();
+                //GameObject g = VRCInstantiate(uiMng.uiObj_judge[2]);
+                //g.GetComponent<JudgeTextObj>().judgeValue = i;
+                syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "GenerateJudgeText");
 
                 if (i == 1 || i == 2 || i == 3 || i == 4)
                 {
-                    uiMng.Anim_Drums(i, 2);
+                    syncMng.targetlane = i;
+                    syncMng.targetid_a = 2;
+                    RequestSerialization();
+                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_Drums");
+                    //uiMng.Anim_Drums(i, 2);
                 }
                 else
                 {
-                    uiMng.Anim_SimbalAcc(i, 2);
+                    syncMng.targetlane = i;
+                    syncMng.targetid_a = 2;
+                    RequestSerialization();
+                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_SimbalAcc");
+                    //uiMng.Anim_SimbalAcc(i, 2);
                 }
-                int seListValue = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
-                soundMng.audioSources[1].PlayOneShot(soundMng.seLists[seListValue + 10]);
+                //int seListValue = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
+                //soundMng.audioSources[1].PlayOneShot(soundMng.seLists[seListValue + 10]);
+                syncMng.targetid_a = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
+                RequestSerialization();
+                syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayDrumSE");
             }
             Update_UIData();
         }
@@ -597,9 +702,15 @@ namespace HPB
             playMng.chain = 0;
             playMng.ahFlag = false;
             playMng.fcFlag = false;
-            uiMng.UIAnim_value(false);
-            GameObject g = VRCInstantiate(uiMng.uiObj_judge[3]);
-            g.GetComponent<JudgeTextObj>().judgeValue = laneIndex;
+            syncMng.targetBool = false;
+            syncMng.targetTextid_a = 3;
+            syncMng.targetTextid_b = laneIndex;
+            RequestSerialization();
+            //uiMng.UIAnim_value(false);
+            syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "UIAnim_value");
+            //GameObject g = VRCInstantiate(uiMng.uiObj_judge[3]);
+            //g.GetComponent<JudgeTextObj>().judgeValue = laneIndex;
+            syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "GenerateJudgeText");
             //データ更新
             Update_UIData();
         }
@@ -609,9 +720,25 @@ namespace HPB
         /// </summary>
         private void Update_UIData()
         {
-            SetUIData();
-            SetUI_score();
-            SetUI_chainFlag();
+            //SetUIData();
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUIData");
+            //SetUI_score();
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUI_score");
+            //SetUI_chainFlag();
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUI_chainFlag");
+        }
+
+        public void ChangeMusicNo()
+        {
+            if (syncMng.targetid_b == -1)
+            {
+                selectMusicNum = selectMusicNum == 0 ? txtConverter.SendMusicLength() : selectMusicNum--;
+            }
+            else
+            {
+                selectMusicNum = selectMusicNum == txtConverter.SendMusicLength() ? 0 : selectMusicNum++;
+            }
+            RequestSerialization();
         }
 
         /// <summary>

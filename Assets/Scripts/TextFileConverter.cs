@@ -23,6 +23,12 @@ namespace HPB
             ("テキストDB\n<1列目>\n0=基本データ\n1=時間データ\n2=ノーツデータ\n3=レーンデータ\n4=サウンドデータ\n<2列目>\n参照する要素番号")]
         public string[][] textDB = new string[5][];
 
+        private void Start()
+        {
+            Debug.Log("[<color=yellow>TextFileConverter</color>]ファイルチェック:" +
+                textFile);
+        }
+
         /// <summary>
         /// 譜面ファイルを配列に変換するメソッド（譜面番号,レベル）
         /// </summary>

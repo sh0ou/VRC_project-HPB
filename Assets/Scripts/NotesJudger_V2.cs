@@ -23,6 +23,9 @@ namespace HPB
         [SerializeField, Tooltip("設定マネージャ")]
         private SettingsManager settingsMng;
 
+        [SerializeField, Tooltip("同期マネージャ")]
+        private SyncManager syncManager;
+
         private const int NoteJudgeNone = 0;
         private const int NoteJudgeHappy = 1;
         private const int NoteJudgeGood = 2;
@@ -60,7 +63,7 @@ namespace HPB
         [Tooltip("各ノートごとの判定")]
         public int[][] noteJudgeResultsList;
 
-        [Tooltip("全てのレーンの判定済みノート数")]
+        [UdonSynced, Tooltip("全てのレーンの判定済みノート数")]
         public int totalJudgedNotes;
 
         [Tooltip("各判定の総和\n*要素の順番や個数は NoteJudge と同じ順番と個数になるようにしてください。")]
@@ -105,6 +108,7 @@ namespace HPB
             judgedNotesCountPerLaneList = new int[LaneCount];
             noteJudgeResultsList = new int[LaneCount][];
             totalJudgedNotes = 0;
+            RequestSerialization();
             judgesCountList = new int[NoteJudgeKindCount];
             noteCountList = new int[LaneCount];
         }
@@ -194,10 +198,16 @@ namespace HPB
             // 何かしらの判定が起きた場合は各種カウンターの値を増やします。
             if (judgeResult != NoteJudge[0])
             {
-                noteJudgeResultsList[laneIndex][judgedNotesCount] = judgeResult;
+                syncManager.targetlane = laneIndex;
+                syncManager.targetid_a = judgedNotesCount;
+                syncManager.targetid_b = judgeResult;
+                //noteJudgeResultsList[laneIndex][judgedNotesCount] = judgeResult;
+                RequestSerialization();
+                SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetResultsList");
                 judgedNotesCountPerLaneList[laneIndex]++;
                 judgesCountList[judgeResult]++;
                 totalJudgedNotes++;
+                RequestSerialization();
             }
             return judgeResult;
         }
@@ -215,11 +225,25 @@ namespace HPB
         /// </summary>
         public void Judge_miss(int laneIndex, int noteNum)
         {
-            noteJudgeResultsList[laneIndex][noteNum] = 3;
+            syncManager.targetlane = laneIndex;
+            syncManager.targetid_a = noteNum;
+            syncManager.targetid_b = 3;
+            RequestSerialization();
+            //noteJudgeResultsList[laneIndex][noteNum] = 3;
+            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetResultsList");
             judgedNotesCountPerLaneList[laneIndex]++;
             judgesCountList[3]++;
             totalJudgedNotes++;
+            RequestSerialization();
             gameManager.Judge_miss(laneIndex);
+        }
+
+        /// <summary>
+        /// ノーツ判定値を更新します
+        /// </summary>
+        public void SetResultsList()
+        {
+            noteJudgeResultsList[syncManager.targetlane][syncManager.targetid_a] = syncManager.targetid_b;
         }
     }
 }

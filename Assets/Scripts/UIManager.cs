@@ -23,6 +23,9 @@ namespace HPB
         [SerializeField, Tooltip("設定マネージャ")]
         private SettingsManager settingsMng;
 
+        [SerializeField, Tooltip("同期マネージャ")]
+        private SyncManager syncMng;
+
         [SerializeField, Tooltip
             ("位置調整できるオブジェクト\n0=ドラム\n1=レーン\n2=メインUI")]
         private GameObject[] adjustablePosObjs;
@@ -264,7 +267,8 @@ namespace HPB
             windowAnims[3].gameObject.SetActive(true);
             windowAnims[3].Play("open_play_1");
             windowAnims[4].gameObject.SetActive(true);
-            gameMng.SetUIData();
+            //gameMng.SetUIData();
+            gameMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUIData");
             windowAnims[4].Play("open_play_2");
         }
 
@@ -575,12 +579,15 @@ namespace HPB
                     break;
                 case 1://選曲画面オープン
                     Debug.Log("アニメーション1");
-                    gameMng.SetUIData();
+                    //gameMng.SetUIData();
+                    gameMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUIData");
+                    playMng.score_now = 0;
                     Open_select1();
                     break;
                 case 2://レベル画面オープン
                     Debug.Log("アニメーション2");
-                    gameMng.SetUIData();
+                    //gameMng.SetUIData();
+                    gameMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUIData");
                     Open_select2();
                     break;
                 case 3://プレイ画面オープン
@@ -588,7 +595,9 @@ namespace HPB
                     optionUI[0].SetActive(false);
                     optionUI[1].SetActive(true);
                     notesLineUI.SetActive(true);
-                    gameMng.SetUIData();
+                    Debug.Log("[<color=yellow>UIManager</color>]window = " + settingsMng.windowFlag);
+                    //gameMng.SetUIData();
+                    gameMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUIData");
                     gameMng.GenerateNotes();
                     Open_play();
                     break;
@@ -609,7 +618,7 @@ namespace HPB
                     }
                     break;
                 default:
-                    Debug.LogError("[<color=red>E104</color>]アニメ後処理値が不正です");
+                    Debug.LogError("[<color=red>UIManager</color>]アニメ後処理値が不正です");
                     break;
             }
         }
