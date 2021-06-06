@@ -41,15 +41,6 @@ namespace HPB
 
         }
 
-        //public override void OnPlayerJoined(VRCPlayerApi player)
-        //{
-        //    if (player == Networking.LocalPlayer)
-        //    {
-        //        //プレイ,リザルト,難易度画面の場合、Wait画面を表示させる（同期ズレのため）
-
-        //    }
-        //}
-
         private void Update()
         {
             if (!isDebugMode)
@@ -66,6 +57,16 @@ namespace HPB
             }
         }
 
+        public override void OnPreSerialization()
+        {
+            Debug.Log("[<color=blue>SyncManager</color>]値を送信しました");
+        }
+
+        public override void OnDeserialization()
+        {
+            Debug.Log("[<color=green>SyncManager</color>]値を受信しました");
+        }
+
         /// <summary>
         /// Playerを変更します
         /// </summary>
@@ -73,6 +74,8 @@ namespace HPB
         {
             Networking.SetOwner(Networking.LocalPlayer, stickObj[0].gameObject);
             Networking.SetOwner(Networking.LocalPlayer, stickObj[1].gameObject);
+            Networking.SetOwner(Networking.LocalPlayer, this.gameObject);
+            Networking.SetOwner(Networking.LocalPlayer, GameObject.Find("NotesJudger"));
             RequestSerialization();
         }
 

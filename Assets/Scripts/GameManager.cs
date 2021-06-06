@@ -93,6 +93,16 @@ namespace HPB
             }
         }
 
+        public int GetMusicNum()
+        {
+            return selectMusicNum;
+        }
+
+        public int GetLevelNum()
+        {
+            return selectLevelNum;
+        }
+
         /// <summary>
         /// ドラム処理
         /// </summary>
@@ -469,7 +479,6 @@ namespace HPB
         /// </summary>
         private void SetUI_score()
         {
-            if (settingsMng.windowFlag != 3) { Debug.Log("アクティブ:SetUI_score"); }
             //rankS
             if (playMng.score_now >= 95000)
             {
@@ -495,6 +504,7 @@ namespace HPB
             {
                 uiMng.UIActive_rank(4);
             }
+            Debug.Log("完了:SetUI_score");
         }
 
         /// <summary>
@@ -502,7 +512,7 @@ namespace HPB
         /// </summary>
         private void SetUI_chainFlag()
         {
-            if (settingsMng.windowFlag != 3) { Debug.Log("アクティブ:SetUI_chainFlag"); }
+
             //5チェイン以上のみ表示
             if (playMng.chain >= 5)
             {
@@ -519,6 +529,7 @@ namespace HPB
                     uiMng.UIActive_chain(2);
                 }
             }
+            Debug.Log("完了:SetUI_chainFlag");
         }
 
         /// <summary>
@@ -543,7 +554,7 @@ namespace HPB
         /// <param name="i">レーン</param>
         public void JudgeNotes(int i)
         {
-            //Debug.Log("[<color=yellow>GameManager</color>]レーン" + i);
+            Debug.Log("[<color=yellow>GameManager</color>]開始:ノーツ判定");
             int judge_v = notesJudger.Judge(i);
             if (notesJudger.IsAllNotesJudged())
             {
@@ -690,6 +701,7 @@ namespace HPB
                 syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayDrumSE");
             }
             Update_UIData();
+            Debug.Log("[<color=yellow>GameManager</color>]完了:ノーツ判定");
         }
 
         /// <summary>
@@ -698,6 +710,7 @@ namespace HPB
         /// <param name="laneIndex"></param>
         public void Judge_miss(int laneIndex)
         {
+            Debug.Log("[<color=yellow>GameManager</color>]開始:Missノーツ判定");
             playMng.judgedValue[3] += 1;
             playMng.chain = 0;
             playMng.ahFlag = false;
@@ -713,6 +726,7 @@ namespace HPB
             syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "GenerateJudgeText");
             //データ更新
             Update_UIData();
+            Debug.Log("[<color=yellow>GameManager</color>]完了:Missノーツ判定");
         }
 
         /// <summary>
@@ -723,9 +737,9 @@ namespace HPB
             //SetUIData();
             SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUIData");
             //SetUI_score();
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUI_score");
+            //SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUI_score");
             //SetUI_chainFlag();
-            SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUI_chainFlag");
+            //SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUI_chainFlag");
         }
 
         public void ChangeMusicNo()

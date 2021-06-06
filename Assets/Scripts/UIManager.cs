@@ -357,10 +357,10 @@ namespace HPB
         /// <param name="i">ランク</param>
         public void UIActive_rank(int i)
         {
-            if (settingsMng.windowFlag != 3)
-            {
+            //if (settingsMng.windowFlag != 3)
+            //{
                 Debug.Log("アクティブ:UIActive_rank");
-            }
+            //}
             switch (i)
             {
                 //rankS
@@ -479,10 +479,10 @@ namespace HPB
         /// <param name="b">フラグ</param>
         public void UIAnim_value(bool b)
         {
-            if (settingsMng.windowFlag != 3)
-            {
+            //if (settingsMng.windowFlag != 3)
+            //{
                 Debug.Log("アクティブ:UIAnim_value");
-            }
+            //}
             if (b)
             {
                 uiObj_play_2[8].SetActive(true);

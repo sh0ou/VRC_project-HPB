@@ -63,5 +63,15 @@ namespace HPB
         {
             return drumStick_L;
         }
+
+        public void StopPlay()
+        {
+            score_now = 0;
+            chain = 0;
+            judgedValue = new int[4]{ 0, 0, 0, 0 };
+            fcFlag = false;
+            ahFlag = false;
+
+        }
     }
 }

@@ -39,7 +39,9 @@ namespace HPB
         [SerializeField, Tooltip("エフェクト表示フラグ")]
         public bool effectFlag;
 
-        [SerializeField, Tooltip("キーボードフラグ")]
+        [SerializeField, Tooltip("デバッグモードフラグ")]
+        public bool debugFlag;
+
         public bool keyboardFlag;
 
         #endregion
@@ -69,9 +71,9 @@ namespace HPB
             notesSpeed = 1;
             drumHeight = 5;
             gamePlay = false;
-            keyboardFlag = true;
-            //keyboardFlag = Networking.LocalPlayer.IsUserInVR() ? false : true;
             effectFlag = true;
+            debugFlag = false;
+            keyboardFlag = Networking.LocalPlayer.IsUserInVR() ? false : true;
             SetUIActive(true);
         }
         private void Update()
@@ -98,7 +100,7 @@ namespace HPB
             opValueText[3].text = drumHeight.ToString();
             //トグルを反映
             effectFlag = opToggles[0].isOn;
-            //keyboardFlag = opToggles[1].isOn;
+            debugFlag = opToggles[1].isOn;
         }
 
         /// <summary>

@@ -46,14 +46,7 @@ namespace HPB
                     //判定済みの場合は消去
                     if (notesJudger.noteJudgeResultsList[notesReferenceNo[0]][notesReferenceNo[1]] != 0)
                     {
-                        //かきのこし　これからやること
-                        //同期：ノーツ判定後の非表示化
-                        //ReferenceNoを参照している
-                        //同期にすこしコツ要る
-                        //対象ノーツ=int
-                        //switch使わない連番メモを参照(scrapbox
-                        //判定時、同期イベント呼び出しでNoを変える
-                        //あとすこしだ、たのむ
+                        Debug.Log("[<color=yellow>NotesObj</color>]開始:Mesh消去処理");
 
                         //MeshRenderer表示,非表示処理（10以上を非表示化）
                         //Debug.Log("EnableCheck : " + (notesJudger.totalPlacedNotes - notesJudger.totalJudgedNotes) + "/to : " + gameObject.name);
@@ -69,12 +62,14 @@ namespace HPB
                                 .GetComponent<MeshRenderer>().enabled = true;
                         }
                         gameObject.SetActive(false);
+                        Debug.Log("[<color=yellow>NotesObj</color>]完了:Mesh消去処理");
                     }
                 }
                 else
                 {
                     if (notesReferenceNo[2] < notesJudger.totalJudgedNotes)
                     {
+                        Debug.Log("[<color=yellow>NotesObj</color>]開始:Mesh消去処理_Guest");
                         if ((notesJudger.totalPlacedNotes - notesJudger.totalJudgedNotes) > 9)
                         {
                             //Debug.Log("ReferenceCheck : " + notesGenerator.notesObjInstance[notesReferenceNo[2] + 10].name);
@@ -87,6 +82,7 @@ namespace HPB
                                 .GetComponent<MeshRenderer>().enabled = true;
                         }
                         gameObject.SetActive(false);
+                        Debug.Log("[<color=yellow>NotesObj</color>]完了:Mesh消去処理_Guest");
                     }
                 }
 
