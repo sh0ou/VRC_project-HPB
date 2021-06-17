@@ -259,6 +259,7 @@ namespace HPB
             guideUI[1].SetActive(true);
             guideUI[2].SetActive(false);
             guideUI[3].SetActive(true);
+            gameMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUIData");
         }
 
         public void Open_play()
@@ -280,7 +281,8 @@ namespace HPB
             {
                 if (settingsMng.effectFlag)
                 {
-                    particleGenerator.GenerateParticle(90);
+                    syncMng.targetParticleID = 90;
+                    particleGenerator.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "GenerateParticle");
                 }
                 UIActive_chain(0);
             }
@@ -288,7 +290,8 @@ namespace HPB
             {
                 if (settingsMng.effectFlag)
                 {
-                    particleGenerator.GenerateParticle(90);
+                    syncMng.targetParticleID = 90;
+                    particleGenerator.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "GenerateParticle");
                 }
                 UIActive_chain(1);
             }
@@ -359,7 +362,7 @@ namespace HPB
         {
             //if (settingsMng.windowFlag != 3)
             //{
-                Debug.Log("アクティブ:UIActive_rank");
+            //Debug.Log("アクティブ:UIActive_rank");
             //}
             switch (i)
             {
@@ -477,22 +480,22 @@ namespace HPB
         /// 値加算,リセット処理
         /// </summary>
         /// <param name="b">フラグ</param>
-        public void UIAnim_value(bool b)
-        {
-            //if (settingsMng.windowFlag != 3)
-            //{
-                Debug.Log("アクティブ:UIAnim_value");
-            //}
-            if (b)
-            {
-                uiObj_play_2[8].SetActive(true);
-                fixedText_play_2.Play("addvalue", 0, 0);
-            }
-            else
-            {
-                uiObj_play_2[8].SetActive(false);
-            }
-        }
+        //public void UIAnim_value(bool b)
+        //{
+        //    if (settingsMng.windowFlag != 3)
+        //    {
+        //        Debug.Log("アクティブ:UIAnim_value");
+        //    }
+        //    if (b)
+        //    {
+        //        uiObj_play_2[8].SetActive(true);
+        //        fixedText_play_2.Play("addvalue", 0, 0);
+        //    }
+        //    else
+        //    {
+        //        uiObj_play_2[8].SetActive(false);
+        //    }
+        //}
 
         public void StartBPMGuide(float bpm)
         {
@@ -517,22 +520,22 @@ namespace HPB
         /// </summary>
         /// <param name="lane">対象レーン</param>
         /// <param name="id">Anim番号</param>
-        public void Anim_Drums(int lane, int id)
-        {
-            //0=Happy&決定 1=good 2=sad
-            switch (id)
-            {
-                case 0:
-                    DrumAnims[lane].Play("Drum_happy", 0, 0);
-                    break;
-                case 1:
-                    DrumAnims[lane].Play("Drum_good", 0, 0);
-                    break;
-                case 2:
-                    DrumAnims[lane].Play("Drum_sad", 0, 0);
-                    break;
-            }
-        }
+        //public void Anim_Drums(int lane, int id)
+        //{
+        //    //0=Happy&決定 1=good 2=sad
+        //    switch (id)
+        //    {
+        //        case 0:
+        //            DrumAnims[lane].Play("Drum_happy", 0, 0);
+        //            break;
+        //        case 1:
+        //            DrumAnims[lane].Play("Drum_good", 0, 0);
+        //            break;
+        //        case 2:
+        //            DrumAnims[lane].Play("Drum_sad", 0, 0);
+        //            break;
+        //    }
+        //}
 
         /// <summary>
         /// シンバルアニメーション再生処理
@@ -548,23 +551,23 @@ namespace HPB
         /// </summary>
         /// <param name="lane">対象レーン</param>
         /// <param name="id">Anim番号</param>
-        public void Anim_SimbalAcc(int lane, int id)
-        {
-            int i =
-                lane == 0 ? 6 : 7;
-            switch (id)
-            {
-                case 0:
-                    DrumAnims[i].Play("CymbalAcc_Happy", 0, 0);
-                    break;
-                case 1:
-                    DrumAnims[i].Play("CymbalAcc_Good", 0, 0);
-                    break;
-                case 2:
-                    DrumAnims[i].Play("CymbalAcc_Sad", 0, 0);
-                    break;
-            }
-        }
+        //public void Anim_SimbalAcc(int lane, int id)
+        //{
+        //    int i =
+        //        lane == 0 ? 6 : 7;
+        //    switch (id)
+        //    {
+        //        case 0:
+        //            DrumAnims[i].Play("CymbalAcc_Happy", 0, 0);
+        //            break;
+        //        case 1:
+        //            DrumAnims[i].Play("CymbalAcc_Good", 0, 0);
+        //            break;
+        //        case 2:
+        //            DrumAnims[i].Play("CymbalAcc_Sad", 0, 0);
+        //            break;
+        //    }
+        //}
 
         /// <summary>
         /// アニメーション終了後処理

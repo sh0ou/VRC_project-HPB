@@ -8,14 +8,14 @@
 
 #VRCOnly
 [Aa]ssets/Udon/
-[Aa]ssets/VRChat Examples/
-[Aa]ssets/VRCSDK/
-[Aa]ssets/UdonSharp/
-[Pp]ackages/com.vrchat.vrcsdk3/
 [Aa]ssets/Udon.meta
+[Aa]ssets/VRChat Examples/
 [Aa]ssets/VRChat Examples.meta
+[Aa]ssets/VRCSDK/
 [Aa]ssets/VRCSDK.meta
+[Aa]ssets/UdonSharp/
 [Aa]ssets/UdonSharp.meta
+[Pp]ackages/com.vrchat.vrcsdk3/
 [Aa]ssets/Gizmos/UdonSharp/
 [Aa]ssets/Gizmos/UdonSharp.meta
 
@@ -36,6 +36,8 @@
 [Aa]ssets/Fonts/Extension.meta
 [Aa]ssets/General/MusicText/
 [Aa]ssets/General/MusicText.meta
+[Aa]ssets/Ca-Lab/
+[Aa]ssets/Ca-Lab.meta
 
 # Visual Studio cache directory
 .vs/

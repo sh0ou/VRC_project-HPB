@@ -16,7 +16,10 @@ namespace HPB
         [SerializeField, Tooltip("各パーティクル位置\n0-5=判定ライン\n6-11=ドラム\n12=リザルト")]
         private Transform[] particlePoss;
 
-        public void GenerateParticle(int id)
+        [SerializeField, Tooltip("同期マネージャ")]
+        private SyncManager syncManager;
+
+        public void GenerateParticle()
         {
             GameObject generateObj = null;
             //string parentText = null;
@@ -25,7 +28,7 @@ namespace HPB
             float posx = 0;
             float posy = 0;
             float posz = 0;
-            switch (id)
+            switch (syncManager.targetParticleID)
             {
                 //ノーツ
                 case 0:

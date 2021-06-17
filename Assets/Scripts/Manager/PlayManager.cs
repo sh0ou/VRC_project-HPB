@@ -11,11 +11,14 @@ namespace HPB
     public class PlayManager : UdonSharpBehaviour
     {
         #region 変数
-        [SerializeField] GameObject drumStick_L;
-        [SerializeField] GameObject drumStick_R;
-        [SerializeField] Transform stickpos_L;
-        [SerializeField] Transform stickpos_R;
+        //[SerializeField] GameObject drumStick_L;
+        //[SerializeField] GameObject drumStick_R;
+        //[SerializeField] Transform stickpos_L;
+        //[SerializeField] Transform stickpos_R;
 
+        private GameManager gameManager;
+        private SyncManager syncManager;
+        private SettingsManager settingsManager;
         public float playTime;
 
         [SerializeField, Tooltip("楽曲スコア"), UdonSynced]
@@ -24,7 +27,7 @@ namespace HPB
         [SerializeField, Tooltip("総ノーツ数")]
         public int notesValue;
 
-        [SerializeField, Tooltip("チェイン数"),UdonSynced]
+        [SerializeField, Tooltip("チェイン数"), UdonSynced]
         public int chain;
 
         [SerializeField, Tooltip("終了時間")]
@@ -48,30 +51,34 @@ namespace HPB
         void Start()
         {
             playTime = 0;
+            gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            syncManager = GameObject.Find("GameManager").GetComponent<SyncManager>();
+            settingsManager = GameObject.Find("GameManager").GetComponent<SettingsManager>();
         }
 
-        public void RespawnStick()
-        {
-            drumStick_L.transform.position = stickpos_L.position;
-            drumStick_L.transform.rotation = stickpos_L.rotation;
-            drumStick_R.transform.position = stickpos_R.position;
-            drumStick_R.transform.rotation = stickpos_R.rotation;
-            RequestSerialization();
-        }
+        //public void RespawnStick()
+        //{
+        //    drumStick_L.transform.position = stickpos_L.position;
+        //    drumStick_L.transform.rotation = stickpos_L.rotation;
+        //    drumStick_R.transform.position = stickpos_R.position;
+        //    drumStick_R.transform.rotation = stickpos_R.rotation;
+        //    RequestSerialization();
+        //}
 
-        public GameObject GetStickOwner()
-        {
-            return drumStick_L;
-        }
+        //public GameObject GetStickOwner()
+        //{
+        //    return drumStick_L;
+        //}
 
         public void StopPlay()
         {
             score_now = 0;
             chain = 0;
-            judgedValue = new int[4]{ 0, 0, 0, 0 };
+            judgedValue = new int[4] { 0, 0, 0, 0 };
             fcFlag = false;
             ahFlag = false;
-
+            RequestSerialization();
+            gameManager.EndMusic();
         }
     }
 }

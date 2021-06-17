@@ -15,10 +15,16 @@ namespace HPB
         PlayManager playManager;
         SettingsManager settingsManager;
         SyncManager syncManager;
+        TextFileConverter textFileConverter;
+        NotesGenerator notesGenerator;
         NotesJudger_V2 notesJudger;
+        [SerializeField] NotesObj notesObj_0;
+        [SerializeField] NotesObj notesObj_1;
 
         [SerializeField] GameObject debugWindow;
+        [SerializeField] GameObject debugWindow_b;
         [SerializeField] TextMeshProUGUI[] tmp_Debug;
+        [SerializeField] TextMeshProUGUI[] tmp_Debug_b;
 
         void Start()
         {
@@ -26,7 +32,10 @@ namespace HPB
             playManager = GetComponent<PlayManager>();
             settingsManager = GetComponent<SettingsManager>();
             syncManager = GetComponent<SyncManager>();
+            textFileConverter = GameObject.Find("TextFileConverter").GetComponent<TextFileConverter>();
+            notesGenerator = GameObject.Find("NotesGenerator").GetComponent<NotesGenerator>();
             notesJudger = GameObject.Find("NotesJudger").GetComponent<NotesJudger_V2>();
+
         }
 
         void Update()
@@ -54,11 +63,24 @@ namespace HPB
                 tmp_Debug[17].text = "totalJudgedNotes: " + notesJudger.totalJudgedNotes;
                 //Local変数の表示
                 tmp_Debug[18].text = "isActivePlayer: " + syncManager.isActivePlayer;
+
+                //Nullチェック
+                tmp_Debug_b[0].text = "GameManager: " + (gameManager.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
+                tmp_Debug_b[1].text = "PlayManager: " + (playManager.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
+                tmp_Debug_b[2].text = "SettingManager: " + (settingsManager.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
+                tmp_Debug_b[3].text = "SyncManager: " + (syncManager.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
+                tmp_Debug_b[4].text = "TextFileConverter: " + (textFileConverter.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
+                tmp_Debug_b[5].text = "NotesGenerator: " + (notesGenerator.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
+                tmp_Debug_b[6].text = "NotesJudger: " + (notesJudger.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
+                tmp_Debug_b[7].text = "NotesObj_0: " + (notesObj_0.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
+                tmp_Debug_b[8].text = "NotesObj_1: " + (notesObj_1.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
                 debugWindow.SetActive(true);
+                debugWindow_b.SetActive(true);
             }
             else
             {
                 debugWindow.SetActive(false);
+                debugWindow_b.SetActive(false);
             }
         }
     }

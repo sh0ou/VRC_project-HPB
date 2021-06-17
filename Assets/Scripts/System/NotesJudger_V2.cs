@@ -167,7 +167,7 @@ namespace HPB
         /// </summary>
         public int Judge(int laneIndex)
         {
-            Debug.Log("[<color=yellow>NotesJudger_V2</color>]開始:Judge");
+            //Debug.Log("[<color=yellow>NotesJudger_V2</color>]開始:Judge");
             // すでに全てのノートが判定済みであれば、None にします。
             //Debug.Log("[<color=yellow>NotesJudger_V2</color>]レーン" + laneIndex);
             //Debug.Log("[<color=yellow>NotesJudger_V2</color>]判定済みノーツ:" + judgedNotesCountPerLaneList[laneIndex]);
@@ -210,7 +210,7 @@ namespace HPB
                 totalJudgedNotes++;
                 RequestSerialization();
             }
-            Debug.Log("[<color=yellow>NotesJudger_V2</color>]完了:Judge");
+            //Debug.Log("[<color=yellow>NotesJudger_V2</color>]完了:Judge");
             return judgeResult;
         }
 

@@ -189,22 +189,22 @@ namespace HPB
             switch (notesLane)
             {
                 case 0:
-                    vec2 = new Vector2(-0.65f, f + 1.5f);
+                    vec2 = new Vector2(-0.45f, f + 1f);
                     break;
                 case 5:
-                    vec2 = new Vector2(0.65f, f + 1.5f);
+                    vec2 = new Vector2(0.45f, f + 1f);
                     break;
                 case 1:
-                    vec2 = new Vector2(-0.75f, f - 0.05f);
+                    vec2 = new Vector2(-0.45f, f - 0.05f);
                     break;
                 case 2:
-                    vec2 = new Vector2(-0.25f, f - 0.05f);
+                    vec2 = new Vector2(-0.15f, f - 0.05f);
                     break;
                 case 3:
-                    vec2 = new Vector2(0.25f, f - 0.05f);
+                    vec2 = new Vector2(0.15f, f - 0.05f);
                     break;
                 case 4:
-                    vec2 = new Vector2(0.75f, f - 0.05f);
+                    vec2 = new Vector2(0.45f, f - 0.05f);
                     break;
             }
             if (vec2.x == 9999)
