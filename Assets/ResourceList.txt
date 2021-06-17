@@ -1,0 +1,7 @@
+NoBackupAssets/
+TextMesh Pro/
+
+Udon/
+VRChat Examples/
+VRCSDK/
+UdonSharp/
