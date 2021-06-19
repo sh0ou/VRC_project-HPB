@@ -10,19 +10,27 @@ namespace HPB
     /// </summary>
     public class ChangePlayer : UdonSharpBehaviour
     {
+        [SerializeField] SyncManager syncManager;
         [SerializeField] GameObject[] targetObjs = new GameObject[4];
-        public void Change()
+        public override void Interact()
         {
-            Debug.Log("[<color=yellow>SyncManager</color>]検知:Player変更");
-            //Networking.SetOwner(Networking.LocalPlayer, GameObject.Find("StickPos_L"));
-            Networking.SetOwner(Networking.LocalPlayer, targetObjs[0]);
-            //Networking.SetOwner(Networking.LocalPlayer, GameObject.Find("StickPos_R"));
-            Networking.SetOwner(Networking.LocalPlayer, targetObjs[1]);
-            //Networking.SetOwner(Networking.LocalPlayer, GameObject.Find("SyncManager"));
-            Networking.SetOwner(Networking.LocalPlayer, targetObjs[2]);
-            //Networking.SetOwner(Networking.LocalPlayer, GameObject.Find("NotesJudger"));
-            Networking.SetOwner(Networking.LocalPlayer, targetObjs[3]);
-            RequestSerialization();
+            if (!syncManager.isActivePlayer)
+            {
+                Debug.Log("[<color=yellow>SyncManager</color>]検知:Player変更");
+                //Networking.SetOwner(Networking.LocalPlayer, GameObject.Find("StickPos_L"));
+                Networking.SetOwner(Networking.LocalPlayer, targetObjs[0]);
+                //Networking.SetOwner(Networking.LocalPlayer, GameObject.Find("StickPos_R"));
+                Networking.SetOwner(Networking.LocalPlayer, targetObjs[1]);
+                //Networking.SetOwner(Networking.LocalPlayer, GameObject.Find("SyncManager"));
+                Networking.SetOwner(Networking.LocalPlayer, targetObjs[2]);
+                //Networking.SetOwner(Networking.LocalPlayer, GameObject.Find("NotesJudger"));
+                Networking.SetOwner(Networking.LocalPlayer, targetObjs[3]);
+                RequestSerialization();
+            }
         }
+        //public void Change()
+        //{
+
+        //}
     }
 }

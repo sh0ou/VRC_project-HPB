@@ -68,16 +68,19 @@ namespace HPB
 
         private void Update()
         {
+            //プレイ時間判定（楽曲時間がプレイ時間を超えると終了）
             if (settingsMng.gamePlay)
             {
                 playMng.playTime = soundMng.audioSources[0].time;
-                //楽曲時間がプレイ時間を超えると終了
+
                 if (playMng.playTime >= playMng.endTime)
                 {
+                    Debug.Log("楽曲終了");
                     EndMusic();
                 }
             }
-            if (settingsMng.keyboardFlag)
+            //キーボード処理
+            if (settingsMng.isActiveKeyBoard)
             {
                 if (Input.GetKeyDown(KeyCode.F))
                 {
@@ -104,10 +107,14 @@ namespace HPB
                     DrumAction(5);
                 }
             }
+            //無効化された場合、スクリプトの自動有効化
             if (syncMng.enabled == false)
             {
-                Debug.LogError("SyncManagerが停止しました。インスタンスを建て直してください。");
                 syncMng.enabled = true;
+            }
+            if (soundPlayer.enabled == false)
+            {
+                soundPlayer.enabled = true;
             }
         }
 
@@ -380,9 +387,13 @@ namespace HPB
         public void PlayMusic()
         {
             //Debug.Log("アクティブ:PlayMusic");
-            Debug.Log("[<color=yellow>GameManager</color>]サウンドTxtチェック:" + txtConverter.textDB[0][5]);
-            Debug.Log("[<color=yellow>GameManager</color>]サウンドチェック:" + soundMng.bgmLists[int.Parse(txtConverter.textDB[0][5])]);
+            //Debug.Log("[<color=yellow>GameManager</color>]サウンドTxtチェック:" + txtConverter.textDB[0][5]);
+            //Debug.Log("[<color=yellow>GameManager</color>]サウンドチェック:" + soundMng.bgmLists[int.Parse(txtConverter.textDB[0][5])]);
             soundMng.audioSources[0].clip = soundMng.bgmLists[int.Parse(txtConverter.textDB[0][5])];
+            if (!syncMng.isActivePlayer)
+            {
+                soundMng.audioSources[0].time = 0.4f;
+            }
             soundMng.audioSources[0].Play();
             playMng.endTime = float.Parse(txtConverter.textDB[0][4]);
             uiMng.StartBPMGuide(float.Parse(txtConverter.textDB[0][2]) / 60);
@@ -640,7 +651,7 @@ namespace HPB
                 //効果音再生
                 //int seListValue = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
                 //soundMng.audioSources[1].PlayOneShot(soundMng.seLists[seListValue + 10]);
-                syncMng.targetid_a = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
+                syncMng.targetSEid = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
                 RequestSerialization();
                 //syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayDrumSE");
                 soundPlayer.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayDrumSE");
@@ -692,7 +703,7 @@ namespace HPB
                 }
                 //int seListValue = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
                 //soundMng.audioSources[1].PlayOneShot(soundMng.seLists[seListValue + 10]);
-                syncMng.targetid_a = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
+                syncMng.targetSEid = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
                 RequestSerialization();
                 //syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayDrumSE");
                 soundPlayer.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayDrumSE");
@@ -737,7 +748,7 @@ namespace HPB
                 }
                 //int seListValue = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
                 //soundMng.audioSources[1].PlayOneShot(soundMng.seLists[seListValue + 10]);
-                syncMng.targetid_a = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
+                syncMng.targetSEid = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
                 RequestSerialization();
                 //syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayDrumSE");
                 soundPlayer.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayDrumSE");

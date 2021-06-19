@@ -34,6 +34,7 @@ namespace HPB
         [UdonSynced] public int targetTextid_a;//判定テキスト同期用変数1
         [UdonSynced] public int targetTextid_b;//判定テキスト同期用変数2
         [UdonSynced] public bool targetBool;//同期用汎用フラグ
+        [UdonSynced] public int targetSEid;//SE同期用変数
 
         void Start()
         {
@@ -50,12 +51,12 @@ namespace HPB
                 text_playerName.text = Networking.GetOwner(stickObj[0].gameObject).displayName;
                 text_playerMode.text = Networking.LocalPlayer.IsUserInVR() ? "VR Mode" : "Desktop Mode";
                 isActivePlayer = Networking.GetOwner(stickObj[0].gameObject) == Networking.LocalPlayer ? true : false;
-                if (settingsManager.gamePlay)
-                {
-                    stickObj[0].pickupable = Networking.GetOwner(stickObj[0].gameObject) == Networking.LocalPlayer ? true : false;
-                    stickObj[1].pickupable = Networking.GetOwner(stickObj[1].gameObject) == Networking.LocalPlayer ? true : false;
-                    RequestSerialization();
-                }
+                //if (settingsManager.gamePlay)
+                //{
+                //    stickObj[0].pickupable = Networking.GetOwner(stickObj[0].gameObject) == Networking.LocalPlayer ? true : false;
+                //    stickObj[1].pickupable = Networking.GetOwner(stickObj[1].gameObject) == Networking.LocalPlayer ? true : false;
+                //    RequestSerialization();
+                //}
             }
         }
 
@@ -85,13 +86,13 @@ namespace HPB
         /// <summary>
         /// 楽曲を途中停止し、リザルト画面に移行します
         /// </summary>
-        public void StopPlay()
-        {
-            if (isActivePlayer)
-            {
-                playManager.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "StopPlay");
-            }
-        }
+        //public void StopPlay()
+        //{
+        //    if (isActivePlayer)
+        //    {
+        //        playManager.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "StopPlay");
+        //    }
+        //}
 
         //public void Anim_Drums()
         //{

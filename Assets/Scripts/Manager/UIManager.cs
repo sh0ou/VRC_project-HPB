@@ -49,6 +49,9 @@ namespace HPB
         [SerializeField, Tooltip("パーティクルジェネレータ")]
         private ParticleGenerator particleGenerator;
 
+        [SerializeField, Tooltip("プレイヤー変更オブジェクト")]
+        private GameObject changePlayerObj;
+
         #endregion
         #region ウインドウ（アニメーションに使用）
         [SerializeField, Tooltip
@@ -133,6 +136,7 @@ namespace HPB
             optionUI[0].SetActive(true);
             optionUI[1].SetActive(false);
             notesLineUI.SetActive(false);
+            changePlayerObj.SetActive(false);
             windowAnims[0].gameObject.SetActive(true);
             windowAnims[1].gameObject.SetActive(false);
             windowAnims[2].gameObject.SetActive(false);
@@ -170,6 +174,14 @@ namespace HPB
                     new Vector3(adjObjs[1].x, (settingsMng.drumHeight * 0.1f), adjObjs[1].z);
                 adjustablePosObjs[2].transform.position =
                     new Vector3(adjObjs[2].x, (settingsMng.drumHeight * 0.1f) + 2f, adjObjs[2].z);
+            }
+            if (settingsMng.windowFlag != 1 || syncMng.isActivePlayer)
+            {
+                changePlayerObj.SetActive(false);
+            }
+            else
+            {
+                changePlayerObj.SetActive(true);
             }
         }
 

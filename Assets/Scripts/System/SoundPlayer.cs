@@ -15,7 +15,13 @@ namespace HPB
         /// </summary>
         public void PlayDrumSE()
         {
-            soundManager.audioSources[1].PlayOneShot(soundManager.seLists[syncManager.targetid_a + 10]);
+            Debug.Log("[<color=green>SoundPlayer</color>]PlayDrum:アクティブ");
+            if (soundManager.seLists[syncManager.targetSEid + 10] == null)
+            {
+                Debug.Log("[<color=red>SoundPlayer</color>]PlayDrum:範囲外です。処理を中断しました");
+                return;
+            }
+            soundManager.audioSources[1].PlayOneShot(soundManager.seLists[syncManager.targetSEid + 10]);
         }
     }
 }

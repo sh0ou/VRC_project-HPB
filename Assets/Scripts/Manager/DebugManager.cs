@@ -11,15 +11,21 @@ namespace HPB
     /// </summary>
     public class DebugManager : UdonSharpBehaviour
     {
-        GameManager gameManager;
-        PlayManager playManager;
-        SettingsManager settingsManager;
-        SyncManager syncManager;
-        TextFileConverter textFileConverter;
-        NotesGenerator notesGenerator;
-        NotesJudger_V2 notesJudger;
+        [SerializeField] GameManager gameManager;
+        [SerializeField] PlayManager playManager;
+        [SerializeField] SettingsManager settingsManager;
+        [SerializeField] SyncManager syncManager;
+        [SerializeField] TextFileConverter textFileConverter;
+        [SerializeField] NotesGenerator notesGenerator;
+        [SerializeField] NotesJudger_V2 notesJudger;
         [SerializeField] NotesObj notesObj_0;
         [SerializeField] NotesObj notesObj_1;
+
+        [SerializeField] Animation_Drum animation_Drum;
+        [SerializeField] Animation_Chain animation_Chain;
+        [SerializeField] GenerateJudgeText generateJudgeText;
+        [SerializeField] ChangePlayer changePlayer;
+        [SerializeField] SoundPlayer soundPlayer;
 
         [SerializeField] GameObject debugWindow;
         [SerializeField] GameObject debugWindow_b;
@@ -65,12 +71,12 @@ namespace HPB
                 tmp_Debug[18].text = "isActivePlayer: " + syncManager.isActivePlayer;
 
                 //Nullチェック
-                tmp_Debug_b[0].text = "GameManager: " + (gameManager.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
-                tmp_Debug_b[1].text = "PlayManager: " + (playManager.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
-                tmp_Debug_b[2].text = "SettingManager: " + (settingsManager.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
-                tmp_Debug_b[3].text = "SyncManager: " + (syncManager.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
-                tmp_Debug_b[4].text = "TextFileConverter: " + (textFileConverter.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
-                tmp_Debug_b[5].text = "NotesGenerator: " + (notesGenerator.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
+                tmp_Debug_b[0].text = "Animation_Drum: " + (animation_Drum.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
+                tmp_Debug_b[1].text = "Animation_Chain: " + (animation_Chain.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
+                tmp_Debug_b[2].text = "GenerateJudgeText: " + (generateJudgeText.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
+                tmp_Debug_b[3].text = "ChangePlayer: " + (changePlayer.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
+                tmp_Debug_b[4].text = "SoundPlayer: " + (soundPlayer.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
+                tmp_Debug_b[5].text = "SyncManager: " + (syncManager.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
                 tmp_Debug_b[6].text = "NotesJudger: " + (notesJudger.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
                 tmp_Debug_b[7].text = "NotesObj_0: " + (notesObj_0.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
                 tmp_Debug_b[8].text = "NotesObj_1: " + (notesObj_1.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");
