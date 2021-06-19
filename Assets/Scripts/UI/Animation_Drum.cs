@@ -11,6 +11,7 @@ namespace HPB
         [SerializeField] Animator[] animator;
         public void PlayAnim()
         {
+            Debug.Log("[<color=green>Animation_Drum</color>]PlayAnim:アクティブ");
             switch (syncManager.targetid_a)
             {
                 case 0:

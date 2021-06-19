@@ -152,7 +152,7 @@ namespace HPB
                 var laneIndex = int.Parse(textFileConverter.textDB[3][globalNoteIndex]);
                 var time = float.Parse(textFileConverter.textDB[1][globalNoteIndex]);
 
-                noteTimeList[laneIndex][noteCountList[laneIndex]] = time;
+                noteTimeList[laneIndex][noteCountList[laneIndex]] = time + (settingsMng.timingAdjust * 0.01f);
                 noteCountList[laneIndex]++;
 
             }

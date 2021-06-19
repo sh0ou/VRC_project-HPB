@@ -22,6 +22,9 @@ namespace HPB
         [SerializeField, Tooltip("リズムゲーム進行フラグ")]
         public bool gamePlay;
 
+        [SerializeField, Tooltip("キーボード有効化フラグ")]
+        public bool isActiveKeyBoard;
+
         #endregion
         #region オプション変数
         [SerializeField, Tooltip("BGM音量")]
@@ -36,19 +39,23 @@ namespace HPB
         [SerializeField, Tooltip("ドラムの高さ")]
         public int drumHeight;
 
+        [SerializeField, Tooltip("判定調整値\n（x0.01）")]
+        public int timingAdjust;
+
         [SerializeField, Tooltip("エフェクト表示フラグ")]
         public bool effectFlag;
 
         [SerializeField, Tooltip("デバッグモードフラグ")]
         public bool debugFlag;
 
-        public bool keyboardFlag;
-
         #endregion
         #region UIオブジェクト
         [SerializeField, Tooltip
         ("UIオンオフ用Obj\n0=オン時\n1=オフ時")]
         private GameObject[] opUIObj;
+
+        [SerializeField, Tooltip("注意書きウインドウ")]
+        private GameObject cautionWindowObj;
 
         [SerializeField, Tooltip
             ("各設定スライダーUI\n0=BGM\n1=SE\n2=スピード\n3=判定調整値")]
@@ -65,15 +72,16 @@ namespace HPB
         #endregion
         void Start()
         {
+            isActiveKeyBoard = false;
             //初期値設定
             bgmVol = 5;
             seVol = 5;
             notesSpeed = 1;
             drumHeight = 5;
+            timingAdjust = 0;
             gamePlay = false;
             effectFlag = true;
             debugFlag = false;
-            keyboardFlag = Networking.LocalPlayer.IsUserInVR() ? false : true;
             SetUIActive(true);
         }
         private void Update()
@@ -91,6 +99,7 @@ namespace HPB
             seVol = (int)opSliders[1].value;
             notesSpeed = (int)opSliders[2].value;
             drumHeight = (int)opSliders[3].value;
+            timingAdjust = (int)opSliders[4].value;
             soundMng.audioSources[0].volume = bgmVol;
             soundMng.audioSources[1].volume = seVol;
             //スライダーの値を表示
@@ -98,6 +107,7 @@ namespace HPB
             opValueText[1].text = seVol.ToString();
             opValueText[2].text = notesSpeed.ToString();
             opValueText[3].text = drumHeight.ToString();
+            opValueText[4].text = (timingAdjust * 10).ToString() + "ms";
             //トグルを反映
             effectFlag = opToggles[0].isOn;
             debugFlag = opToggles[1].isOn;
@@ -120,6 +130,15 @@ namespace HPB
                 opUIObj[0].SetActive(false);
                 opUIObj[1].SetActive(true);
             }
+        }
+
+        /// <summary>
+        /// 注意書きウインドウを閉じて、キーボードを有効化させます
+        /// </summary>
+        public void CloseCaution()
+        {
+            cautionWindowObj.SetActive(false);
+            isActiveKeyBoard = true;
         }
     }
 }

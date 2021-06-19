@@ -72,13 +72,17 @@ namespace HPB
 
         public void StopPlay()
         {
-            score_now = 0;
-            chain = 0;
-            judgedValue = new int[4] { 0, 0, 0, 0 };
-            fcFlag = false;
-            ahFlag = false;
-            RequestSerialization();
-            gameManager.EndMusic();
+            if (syncManager.isActivePlayer)
+            {
+                Debug.Log("[<color=green>PlayManager</color>]StopPlay:アクティブ");
+                score_now = 0;
+                chain = 0;
+                judgedValue = new int[4] { 0, 0, 0, 0 };
+                fcFlag = false;
+                ahFlag = false;
+                RequestSerialization();
+                gameManager.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "EndMusic");
+            }
         }
     }
 }
