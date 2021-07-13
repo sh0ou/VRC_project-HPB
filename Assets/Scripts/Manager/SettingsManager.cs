@@ -42,7 +42,7 @@ namespace HPB
         [SerializeField, Tooltip("判定調整値\n（x0.01）")]
         public int timingAdjust;
 
-        [SerializeField, Tooltip("エフェクト表示フラグ")]
+        [SerializeField, Tooltip("楽曲エフェクト表示フラグ")]
         public bool effectFlag;
 
         [SerializeField, Tooltip("デバッグモードフラグ")]
@@ -138,7 +138,10 @@ namespace HPB
         public void CloseCaution()
         {
             cautionWindowObj.SetActive(false);
-            isActiveKeyBoard = true;
+            if (!Networking.LocalPlayer.IsUserInVR())
+            {
+                isActiveKeyBoard = true;
+            }
         }
     }
 }

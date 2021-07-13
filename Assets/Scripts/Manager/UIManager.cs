@@ -32,7 +32,7 @@ namespace HPB
         //オプションUIは調整しない（値変更中に動いてしまうので）
 
         [SerializeField, Tooltip
-            ("ドラムガイドUI\n0=左UI_選曲\n1=左UI_レベル\n2=右UI=選曲\n3=右UI_レベル")]
+            ("ドラムガイドUI\n0-2 左UI(選曲,レベル,プレイ)\n3-5=右UI(選曲,レベル,プレイ)")]
         private GameObject[] guideUI;
 
         [SerializeField, Tooltip
@@ -215,6 +215,8 @@ namespace HPB
             guideUI[1].SetActive(false);
             guideUI[2].SetActive(false);
             guideUI[3].SetActive(false);
+            guideUI[4].SetActive(false);
+            guideUI[5].SetActive(false);
         }
 
         /// <summary>
@@ -255,8 +257,10 @@ namespace HPB
             windowAnims[1].Play("open_select_1");
             guideUI[0].SetActive(true);
             guideUI[1].SetActive(false);
-            guideUI[2].SetActive(true);
-            guideUI[3].SetActive(false);
+            guideUI[2].SetActive(false);
+            guideUI[3].SetActive(true);
+            guideUI[4].SetActive(false);
+            guideUI[5].SetActive(false);
         }
 
         /// <summary>
@@ -270,7 +274,9 @@ namespace HPB
             guideUI[0].SetActive(false);
             guideUI[1].SetActive(true);
             guideUI[2].SetActive(false);
-            guideUI[3].SetActive(true);
+            guideUI[3].SetActive(false);
+            guideUI[4].SetActive(true);
+            guideUI[5].SetActive(false);
             gameMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUIData");
         }
 
@@ -280,6 +286,20 @@ namespace HPB
             windowAnims[3].gameObject.SetActive(true);
             windowAnims[3].Play("open_play_1");
             windowAnims[4].gameObject.SetActive(true);
+            guideUI[0].SetActive(false);
+            guideUI[1].SetActive(false);
+            if (settingsMng.isActiveKeyBoard)
+            {
+                guideUI[2].SetActive(true);
+                guideUI[5].SetActive(true);
+            }
+            else
+            {
+                guideUI[2].SetActive(false);
+                guideUI[5].SetActive(false);
+            }
+            guideUI[3].SetActive(false);
+            guideUI[4].SetActive(false);
             //gameMng.SetUIData();
             gameMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUIData");
             windowAnims[4].Play("open_play_2");
@@ -289,22 +309,28 @@ namespace HPB
         {
             Debug.Log("アクティブ:Open_result");
             windowAnims[5].gameObject.SetActive(true);
+            guideUI[0].SetActive(false);
+            guideUI[1].SetActive(false);
+            guideUI[2].SetActive(false);
+            guideUI[3].SetActive(false);
+            guideUI[4].SetActive(false);
+            guideUI[5].SetActive(false);
             if (playMng.ahFlag)
             {
-                if (settingsMng.effectFlag)
-                {
-                    syncMng.targetParticleID = 90;
-                    particleGenerator.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "GenerateParticle");
-                }
+                //if (settingsMng.effectFlag)
+                //{
+                syncMng.targetParticleID = 90;
+                particleGenerator.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "GenerateParticle");
+                //}
                 UIActive_chain(0);
             }
             else if (playMng.fcFlag)
             {
-                if (settingsMng.effectFlag)
-                {
-                    syncMng.targetParticleID = 90;
-                    particleGenerator.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "GenerateParticle");
-                }
+                //if (settingsMng.effectFlag)
+                //{
+                syncMng.targetParticleID = 90;
+                particleGenerator.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "GenerateParticle");
+                //}
                 UIActive_chain(1);
             }
             else

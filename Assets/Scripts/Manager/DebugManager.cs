@@ -26,6 +26,7 @@ namespace HPB
         [SerializeField] GenerateJudgeText generateJudgeText;
         [SerializeField] ChangePlayer changePlayer;
         [SerializeField] SoundPlayer soundPlayer;
+        [SerializeField] MusicAnimator musicAnimator;
 
         [SerializeField] GameObject debugWindow;
         [SerializeField] GameObject debugWindow_b;
@@ -34,14 +35,13 @@ namespace HPB
 
         void Start()
         {
-            gameManager = GetComponent<GameManager>();
-            playManager = GetComponent<PlayManager>();
-            settingsManager = GetComponent<SettingsManager>();
-            syncManager = GetComponent<SyncManager>();
-            textFileConverter = GameObject.Find("TextFileConverter").GetComponent<TextFileConverter>();
-            notesGenerator = GameObject.Find("NotesGenerator").GetComponent<NotesGenerator>();
-            notesJudger = GameObject.Find("NotesJudger").GetComponent<NotesJudger_V2>();
-
+            //gameManager = GetComponent<GameManager>();
+            //playManager = GetComponent<PlayManager>();
+            //settingsManager = GetComponent<SettingsManager>();
+            //syncManager = GetComponent<SyncManager>();
+            //textFileConverter = GameObject.Find("TextFileConverter").GetComponent<TextFileConverter>();
+            //notesGenerator = GameObject.Find("NotesGenerator").GetComponent<NotesGenerator>();
+            //notesJudger = GameObject.Find("NotesJudger").GetComponent<NotesJudger_V2>();
         }
 
         void Update()
@@ -69,6 +69,11 @@ namespace HPB
                 tmp_Debug[17].text = "totalJudgedNotes: " + notesJudger.totalJudgedNotes;
                 //Local変数の表示
                 tmp_Debug[18].text = "isActivePlayer: " + syncManager.isActivePlayer;
+                tmp_Debug[19].text = "gameplay: " + settingsManager.gamePlay;
+                //tmp_Debug[20].text = "musicAnimTime: " + musicAnimator.animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+                //tmp_Debug[20].text = "musicAnimTime: " + musicAnimator.animator.GetCurrentAnimatorStateInfo(0).
+                //tmp_Debug[20].text = "playtime: " + playManager.playTime;
+                //tmp_Debug[21].text = "endTime: " + playManager.endTime;
 
                 //Nullチェック
                 tmp_Debug_b[0].text = "Animation_Drum: " + (animation_Drum.enabled ? "<color=green>OK</color>" : "<color=red>null<color=green>");

@@ -28,6 +28,7 @@ namespace HPB
             float posx = 0;
             float posy = 0;
             float posz = 0;
+            //Debug.Log("[<color=yellow>ParticleGenerator</color>]生成： " + syncManager.targetParticleID);
             switch (syncManager.targetParticleID)
             {
                 //ノーツ
