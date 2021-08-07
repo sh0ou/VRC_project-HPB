@@ -1,72 +1,201 @@
 fileFormatVersion: 2
 guid: 90f617a35ca396242b609248ee134e67
 ScriptedImporter:
-  fileIDToRecycleName:
-    100000: HPBLogo_test3_GO/HPBLogo_test3_GO
-    100002: HPBLogo_test3_GO/HPBLogo_test3_GO/8Onpu
-    100004: HPBLogo_test3_GO/HPBLogo_test3_GO/a
-    100006: HPBLogo_test3_GO/HPBLogo_test3_GO/Beats
-    100008: HPBLogo_test3_GO/HPBLogo_test3_GO/e
-    100010: HPBLogo_test3_GO/HPBLogo_test3_GO/H
-    100012: HPBLogo_test3_GO/HPBLogo_test3_GO/i
-    100014: HPBLogo_test3_GO/HPBLogo_test3_GO/musicLane
-    100016: HPBLogo_test3_GO/HPBLogo_test3_GO/MusicLineAcc
-    100018: HPBLogo_test3_GO/HPBLogo_test3_GO/n
-    100020: HPBLogo_test3_GO/HPBLogo_test3_GO/p
-    100022: 'HPBLogo_test3_GO/HPBLogo_test3_GO/p #1'
-    100024: HPBLogo_test3_GO/HPBLogo_test3_GO/s
-    100026: 'HPBLogo_test3_GO/HPBLogo_test3_GO/s #1'
-    100028: HPBLogo_test3_GO/HPBLogo_test3_GO/TextAcc_down
-    100030: HPBLogo_test3_GO/HPBLogo_test3_GO/TextAcc_up
-    400000: HPBLogo_test3_GO/HPBLogo_test3_GO/Transform
-    400002: HPBLogo_test3_GO/HPBLogo_test3_GO/8Onpu/Transform
-    400004: HPBLogo_test3_GO/HPBLogo_test3_GO/a/Transform
-    400006: HPBLogo_test3_GO/HPBLogo_test3_GO/Beats/Transform
-    400008: HPBLogo_test3_GO/HPBLogo_test3_GO/e/Transform
-    400010: HPBLogo_test3_GO/HPBLogo_test3_GO/H/Transform
-    400012: HPBLogo_test3_GO/HPBLogo_test3_GO/i/Transform
-    400014: HPBLogo_test3_GO/HPBLogo_test3_GO/musicLane/Transform
-    400016: HPBLogo_test3_GO/HPBLogo_test3_GO/MusicLineAcc/Transform
-    400018: HPBLogo_test3_GO/HPBLogo_test3_GO/n/Transform
-    400020: HPBLogo_test3_GO/HPBLogo_test3_GO/p/Transform
-    400022: 'HPBLogo_test3_GO/HPBLogo_test3_GO/p #1/Transform'
-    400024: HPBLogo_test3_GO/HPBLogo_test3_GO/s/Transform
-    400026: 'HPBLogo_test3_GO/HPBLogo_test3_GO/s #1/Transform'
-    400028: HPBLogo_test3_GO/HPBLogo_test3_GO/TextAcc_down/Transform
-    400030: HPBLogo_test3_GO/HPBLogo_test3_GO/TextAcc_up/Transform
-    2800000: HPBLogo_test3
-    21200000: HPBLogo_test3_GO/HPBLogo_test3_GO/8Onpu/SpriteRenderer
-    21200002: HPBLogo_test3_GO/HPBLogo_test3_GO/a/SpriteRenderer
-    21200004: HPBLogo_test3_GO/HPBLogo_test3_GO/Beats/SpriteRenderer
-    21200006: HPBLogo_test3_GO/HPBLogo_test3_GO/e/SpriteRenderer
-    21200008: HPBLogo_test3_GO/HPBLogo_test3_GO/H/SpriteRenderer
-    21200010: HPBLogo_test3_GO/HPBLogo_test3_GO/i/SpriteRenderer
-    21200012: HPBLogo_test3_GO/HPBLogo_test3_GO/musicLane/SpriteRenderer
-    21200014: HPBLogo_test3_GO/HPBLogo_test3_GO/MusicLineAcc/SpriteRenderer
-    21200016: HPBLogo_test3_GO/HPBLogo_test3_GO/n/SpriteRenderer
-    21200018: HPBLogo_test3_GO/HPBLogo_test3_GO/p/SpriteRenderer
-    21200020: 'HPBLogo_test3_GO/HPBLogo_test3_GO/p #1/SpriteRenderer'
-    21200022: HPBLogo_test3_GO/HPBLogo_test3_GO/s/SpriteRenderer
-    21200024: 'HPBLogo_test3_GO/HPBLogo_test3_GO/s #1/SpriteRenderer'
-    21200026: HPBLogo_test3_GO/HPBLogo_test3_GO/TextAcc_down/SpriteRenderer
-    21200028: HPBLogo_test3_GO/HPBLogo_test3_GO/TextAcc_up/SpriteRenderer
-    21300000: f42e338af6bd810418bcb5d1a0f36b17
-    21300002: 446e90b5cef05414b838ae8d4ada0122
-    21300004: 9b5158d33718d5143ad3157e509dbd58
-    21300006: 5e2ea0a1827d0414c9cfcb3db6df9055
-    21300008: e2d0f15e2c2e4b642bacc38ab13dd22e
-    21300010: a2f1bf85774dee346a9a19f0bad2da0e
-    21300012: 49afe6a9e7b58a04eb551b323a7a1afb
-    21300014: 5083bc3ff72fa304eb3c9f7a95f8945d
-    21300016: eb327262d678e0648ab28138ab575c23
-    21300018: 9b1ac6d1a7582f14da7cc04b91998a9c
-    21300020: 69d6adf86eed9a9459e2b037c2e0b9d7
-    21300022: 9b652fb49aceb744aaf0bdf4d1ab9eeb
-    21300024: be60f796a898e404aa377378ddca82e6
-    21300026: bf34256bf91be184bacf44bb06fc23a6
-    21300028: 89f1c993e10ee4545bdb872f9936e9f2
-    100100000: HPBLogo_test3_GO
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO
+  - first:
+      1: 100002
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/8Onpu
+  - first:
+      1: 100004
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/a
+  - first:
+      1: 100006
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/Beats
+  - first:
+      1: 100008
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/e
+  - first:
+      1: 100010
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/H
+  - first:
+      1: 100012
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/i
+  - first:
+      1: 100014
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/musicLane
+  - first:
+      1: 100016
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/MusicLineAcc
+  - first:
+      1: 100018
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/n
+  - first:
+      1: 100020
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/p
+  - first:
+      1: 100022
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/p #1
+  - first:
+      1: 100024
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/s
+  - first:
+      1: 100026
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/s #1
+  - first:
+      1: 100028
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/TextAcc_down
+  - first:
+      1: 100030
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/TextAcc_up
+  - first:
+      4: 400000
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/Transform
+  - first:
+      4: 400002
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/8Onpu/Transform
+  - first:
+      4: 400004
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/a/Transform
+  - first:
+      4: 400006
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/Beats/Transform
+  - first:
+      4: 400008
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/e/Transform
+  - first:
+      4: 400010
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/H/Transform
+  - first:
+      4: 400012
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/i/Transform
+  - first:
+      4: 400014
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/musicLane/Transform
+  - first:
+      4: 400016
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/MusicLineAcc/Transform
+  - first:
+      4: 400018
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/n/Transform
+  - first:
+      4: 400020
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/p/Transform
+  - first:
+      4: 400022
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/p #1/Transform
+  - first:
+      4: 400024
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/s/Transform
+  - first:
+      4: 400026
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/s #1/Transform
+  - first:
+      4: 400028
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/TextAcc_down/Transform
+  - first:
+      4: 400030
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/TextAcc_up/Transform
+  - first:
+      28: 2800000
+    second: HPBLogo_test3
+  - first:
+      212: 21200000
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/8Onpu/SpriteRenderer
+  - first:
+      212: 21200002
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/a/SpriteRenderer
+  - first:
+      212: 21200004
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/Beats/SpriteRenderer
+  - first:
+      212: 21200006
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/e/SpriteRenderer
+  - first:
+      212: 21200008
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/H/SpriteRenderer
+  - first:
+      212: 21200010
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/i/SpriteRenderer
+  - first:
+      212: 21200012
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/musicLane/SpriteRenderer
+  - first:
+      212: 21200014
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/MusicLineAcc/SpriteRenderer
+  - first:
+      212: 21200016
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/n/SpriteRenderer
+  - first:
+      212: 21200018
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/p/SpriteRenderer
+  - first:
+      212: 21200020
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/p #1/SpriteRenderer
+  - first:
+      212: 21200022
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/s/SpriteRenderer
+  - first:
+      212: 21200024
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/s #1/SpriteRenderer
+  - first:
+      212: 21200026
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/TextAcc_down/SpriteRenderer
+  - first:
+      212: 21200028
+    second: HPBLogo_test3_GO/HPBLogo_test3_GO/TextAcc_up/SpriteRenderer
+  - first:
+      213: 21300000
+    second: f42e338af6bd810418bcb5d1a0f36b17
+  - first:
+      213: 21300002
+    second: 446e90b5cef05414b838ae8d4ada0122
+  - first:
+      213: 21300004
+    second: 9b5158d33718d5143ad3157e509dbd58
+  - first:
+      213: 21300006
+    second: 5e2ea0a1827d0414c9cfcb3db6df9055
+  - first:
+      213: 21300008
+    second: e2d0f15e2c2e4b642bacc38ab13dd22e
+  - first:
+      213: 21300010
+    second: a2f1bf85774dee346a9a19f0bad2da0e
+  - first:
+      213: 21300012
+    second: 49afe6a9e7b58a04eb551b323a7a1afb
+  - first:
+      213: 21300014
+    second: 5083bc3ff72fa304eb3c9f7a95f8945d
+  - first:
+      213: 21300016
+    second: eb327262d678e0648ab28138ab575c23
+  - first:
+      213: 21300018
+    second: 9b1ac6d1a7582f14da7cc04b91998a9c
+  - first:
+      213: 21300020
+    second: 69d6adf86eed9a9459e2b037c2e0b9d7
+  - first:
+      213: 21300022
+    second: 9b652fb49aceb744aaf0bdf4d1ab9eeb
+  - first:
+      213: 21300024
+    second: be60f796a898e404aa377378ddca82e6
+  - first:
+      213: 21300026
+    second: bf34256bf91be184bacf44bb06fc23a6
+  - first:
+      213: 21300028
+    second: 89f1c993e10ee4545bdb872f9936e9f2
+  - first:
+      1001: 100100000
+    second: HPBLogo_test3_GO
   externalObjects: {}
+  serializedVersion: 2
   userData: 
   assetBundleName: 
   assetBundleVariant: 
@@ -124,6 +253,7 @@ ScriptedImporter:
     maxTextureSizeSet: 0
     compressionQualitySet: 0
     textureFormatSet: 0
+    applyGammaDecoding: 0
   spriteImportData:
   - name: 
     originalName: 
@@ -137,6 +267,7 @@ ScriptedImporter:
       width: 0
       height: 0
     spriteID: 
+    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -148,27 +279,6 @@ ScriptedImporter:
     uvTransform: {x: 0, y: 0}
   mosaicSpriteImportData: []
   rigSpriteImportData:
-  - name: 8Onpu
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 4
-      width: 768
-      height: 931
-    spriteID: f42e338af6bd810418bcb5d1a0f36b17
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    parentGroupIndex: -1
-    uvTransform: {x: -1239, y: -98}
   - name: TextAcc_up
     originalName: 
     pivot: {x: 0.5, y: 0.5}
@@ -181,6 +291,7 @@ ScriptedImporter:
       width: 1376
       height: 387
     spriteID: 446e90b5cef05414b838ae8d4ada0122
+    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -202,6 +313,7 @@ ScriptedImporter:
       width: 756
       height: 213
     spriteID: 9b5158d33718d5143ad3157e509dbd58
+    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -223,6 +335,7 @@ ScriptedImporter:
       width: 159
       height: 194
     spriteID: 5e2ea0a1827d0414c9cfcb3db6df9055
+    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -244,6 +357,7 @@ ScriptedImporter:
       width: 149
       height: 148
     spriteID: e2d0f15e2c2e4b642bacc38ab13dd22e
+    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -265,6 +379,7 @@ ScriptedImporter:
       width: 136
       height: 193
     spriteID: a2f1bf85774dee346a9a19f0bad2da0e
+    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -274,7 +389,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 1181, y: -561}
-  - name: 'p #1'
+  - name: p #1
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -286,6 +401,7 @@ ScriptedImporter:
       width: 136
       height: 193
     spriteID: 49afe6a9e7b58a04eb551b323a7a1afb
+    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -307,6 +423,7 @@ ScriptedImporter:
       width: 64
       height: 328
     spriteID: 5083bc3ff72fa304eb3c9f7a95f8945d
+    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -328,6 +445,7 @@ ScriptedImporter:
       width: 132
       height: 147
     spriteID: eb327262d678e0648ab28138ab575c23
+    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -349,6 +467,7 @@ ScriptedImporter:
       width: 127
       height: 147
     spriteID: 9b1ac6d1a7582f14da7cc04b91998a9c
+    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -370,6 +489,7 @@ ScriptedImporter:
       width: 116
       height: 152
     spriteID: 69d6adf86eed9a9459e2b037c2e0b9d7
+    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -379,7 +499,7 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: 194, y: 334}
-  - name: 's #1'
+  - name: s #1
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -391,6 +511,7 @@ ScriptedImporter:
       width: 116
       height: 152
     spriteID: 9b652fb49aceb744aaf0bdf4d1ab9eeb
+    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -412,6 +533,7 @@ ScriptedImporter:
       width: 742
       height: 199
     spriteID: be60f796a898e404aa377378ddca82e6
+    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -433,6 +555,7 @@ ScriptedImporter:
       width: 1298
       height: 191
     spriteID: bf34256bf91be184bacf44bb06fc23a6
+    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -454,6 +577,7 @@ ScriptedImporter:
       width: 1294
       height: 187
     spriteID: 89f1c993e10ee4545bdb872f9936e9f2
+    internalID: 0
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -463,6 +587,28 @@ ScriptedImporter:
     tessellationDetail: 0
     parentGroupIndex: -1
     uvTransform: {x: -142, y: 1445}
+  - name: 8Onpu
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 768
+      height: 931
+    spriteID: ee06bf988ed8d7a49a45b63a17bcc22a
+    internalID: 0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    parentGroupIndex: -1
+    uvTransform: {x: -1239, y: -98}
   platformSettings: []
   mosaicLayers: 1
   documentPivot: {x: 0, y: 0}
@@ -471,6 +617,10 @@ ScriptedImporter:
   importedTextureWidth: 2048
   importedTextureHeight: 2048
   documentSize: {x: 2048, y: 1152}
+  paperDollMode: 0
+  keepDupilcateSpriteName: 0
+  spriteCategoryList:
+    categories: []
   textureActualWidth: 2048
   textureActualHeight: 2048
   spritePackingTag: 
@@ -482,8 +632,8 @@ ScriptedImporter:
     spriteName: 8Onpu
     isGroup: 0
     parentIndex: -1
-    spriteID: f42e338af6bd810418bcb5d1a0f36b17
-    layerID: 425915464
+    spriteID: ee06bf988ed8d7a49a45b63a17bcc22a
+    layerID: 0
     mosaicPosition: {x: 4, y: 4}
   - name: TextAcc_up
     spriteName: TextAcc_up
@@ -520,8 +670,8 @@ ScriptedImporter:
     spriteID: a2f1bf85774dee346a9a19f0bad2da0e
     layerID: 372029390
     mosaicPosition: {x: 1711, y: 4}
-  - name: 'p #1'
-    spriteName: 'p #1'
+  - name: p #1
+    spriteName: p #1
     isGroup: 0
     parentIndex: -1
     spriteID: 49afe6a9e7b58a04eb551b323a7a1afb
@@ -555,8 +705,8 @@ ScriptedImporter:
     spriteID: 69d6adf86eed9a9459e2b037c2e0b9d7
     layerID: 372029391
     mosaicPosition: {x: 1460, y: 943}
-  - name: 's #1'
-    spriteName: 's #1'
+  - name: s #1
+    spriteName: s #1
     isGroup: 0
     parentIndex: -1
     spriteID: 9b652fb49aceb744aaf0bdf4d1ab9eeb
@@ -587,7 +737,9 @@ ScriptedImporter:
     bones: []
     parts: []
     dimension: {x: 0, y: 0}
-  boneGOs: []
+    characterGroups: []
   generateGOHierarchy: 0
   textureAssetName: HPBLogo_test3
   prefabAssetName: HPBLogo_test3_GO
+  spriteLibAssetName: HPBLogo_test3 Sprite Lib
+  secondarySpriteTextures: []

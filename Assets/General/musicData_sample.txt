@@ -1,5 +1,6 @@
 MusicTitle
 ArtistName
-123
-5
-9.024
+123 //BPM
+5 //Level
+9.024 //Time
+0 //MusicNo

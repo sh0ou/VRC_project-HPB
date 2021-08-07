@@ -182,7 +182,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/8Onpu
+    path: HPBLogo/MusicLineAcc
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -210,7 +210,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/TextAcc_down
+    path: HPBLogo/8Onpu
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -238,7 +238,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/TextAcc_up
+    path: HPBLogo/TextAcc_up
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -266,7 +266,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/MusicLineAcc
+    path: HPBLogo/TextAcc_down
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -294,7 +294,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/H
+    path: HPBLogo/H
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -322,7 +322,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/a
+    path: HPBLogo/a
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -350,7 +350,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/p
+    path: HPBLogo/p
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -378,7 +378,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: 'HPBLogo_test3/p #1'
+    path: HPBLogo/p_1
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -406,7 +406,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/i
+    path: HPBLogo/i
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -434,7 +434,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/n
+    path: HPBLogo/n
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -462,7 +462,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/e
+    path: HPBLogo/e
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -490,7 +490,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/s
+    path: HPBLogo/s
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -518,7 +518,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: 'HPBLogo_test3/s #1'
+    path: HPBLogo/s_1
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -546,7 +546,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/musicLane
+    path: HPBLogo/Beats
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -574,7 +574,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/Beats
+    path: HPBLogo/musicLane
     classID: 212
     script: {fileID: 0}
   m_PPtrCurves: []
@@ -607,105 +607,105 @@ AnimationClip:
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 2049739370
+      path: 1368567670
       attribute: 304273561
       script: {fileID: 0}
       typeID: 212
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 2168737497
+      path: 334287923
       attribute: 304273561
       script: {fileID: 0}
       typeID: 212
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 3961230819
+      path: 3613001318
       attribute: 304273561
       script: {fileID: 0}
       typeID: 212
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 2120235719
+      path: 2931219304
       attribute: 304273561
       script: {fileID: 0}
       typeID: 212
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 3034455802
+      path: 3915954884
       attribute: 304273561
       script: {fileID: 0}
       typeID: 212
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 4134307478
+      path: 2883199656
       attribute: 304273561
       script: {fileID: 0}
       typeID: 212
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 2631706212
+      path: 3244950106
       attribute: 304273561
       script: {fileID: 0}
       typeID: 212
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 278728281
+      path: 2206090950
       attribute: 304273561
       script: {fileID: 0}
       typeID: 212
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 4172746404
+      path: 2768349850
       attribute: 304273561
       script: {fileID: 0}
       typeID: 212
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 1725143815
+      path: 996491065
       attribute: 304273561
       script: {fileID: 0}
       typeID: 212
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 4043391631
+      path: 2897733297
       attribute: 304273561
       script: {fileID: 0}
       typeID: 212
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 97908702
+      path: 1482904544
       attribute: 304273561
       script: {fileID: 0}
       typeID: 212
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 36217271
+      path: 2167994527
       attribute: 304273561
       script: {fileID: 0}
       typeID: 212
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 2941630270
+      path: 3914482699
       attribute: 304273561
       script: {fileID: 0}
       typeID: 212
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 2157058642
+      path: 2162620958
       attribute: 304273561
       script: {fileID: 0}
       typeID: 212
@@ -912,7 +912,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/8Onpu
+    path: HPBLogo/MusicLineAcc
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -940,7 +940,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/TextAcc_down
+    path: HPBLogo/8Onpu
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -968,7 +968,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/TextAcc_up
+    path: HPBLogo/TextAcc_up
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -996,7 +996,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/MusicLineAcc
+    path: HPBLogo/TextAcc_down
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -1024,7 +1024,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/H
+    path: HPBLogo/H
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -1052,7 +1052,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/a
+    path: HPBLogo/a
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -1080,7 +1080,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/p
+    path: HPBLogo/p
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -1108,7 +1108,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: 'HPBLogo_test3/p #1'
+    path: HPBLogo/p_1
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -1136,7 +1136,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/i
+    path: HPBLogo/i
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -1164,7 +1164,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/n
+    path: HPBLogo/n
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -1192,7 +1192,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/e
+    path: HPBLogo/e
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -1220,7 +1220,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/s
+    path: HPBLogo/s
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -1248,7 +1248,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: 'HPBLogo_test3/s #1'
+    path: HPBLogo/s_1
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -1276,7 +1276,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/musicLane
+    path: HPBLogo/Beats
     classID: 212
     script: {fileID: 0}
   - curve:
@@ -1304,7 +1304,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Color.a
-    path: HPBLogo_test3/Beats
+    path: HPBLogo/musicLane
     classID: 212
     script: {fileID: 0}
   m_EulerEditorCurves: []

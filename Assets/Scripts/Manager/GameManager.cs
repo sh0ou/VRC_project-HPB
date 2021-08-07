@@ -51,6 +51,9 @@ namespace HPB
         [SerializeField, Tooltip("サウンドプレイヤー")]
         private SoundPlayer soundPlayer;
 
+        [SerializeField, Tooltip("楽曲アニメーター")]
+        private MusicAnimator musicAnimator;
+
         [SerializeField, Tooltip("ドラム処理フラグ（falseだと判定が無視される）")]
         private bool drumActive;
 
@@ -138,38 +141,38 @@ namespace HPB
             if (drumActive)
             {
                 //エフェクト処理
-                if (settingsMng.effectFlag)
+                //if (settingsMng.effectFlag)
+                //{
+                switch (i)
                 {
-                    switch (i)
-                    {
-                        case 0:
-                            uiMng.Anim_Simbal(i);
-                            syncMng.targetParticleID = 10;
-                            particleGenerator.GenerateParticle();
-                            break;
-                        case 5:
-                            uiMng.Anim_Simbal(i);
-                            syncMng.targetParticleID = 15;
-                            particleGenerator.GenerateParticle();
-                            break;
-                        case 1:
-                            syncMng.targetParticleID = 11;
-                            particleGenerator.GenerateParticle();
-                            break;
-                        case 2:
-                            syncMng.targetParticleID = 12;
-                            particleGenerator.GenerateParticle();
-                            break;
-                        case 3:
-                            syncMng.targetParticleID = 13;
-                            particleGenerator.GenerateParticle();
-                            break;
-                        case 4:
-                            syncMng.targetParticleID = 14;
-                            particleGenerator.GenerateParticle();
-                            break;
-                    }
+                    case 0:
+                        uiMng.Anim_Simbal(i);
+                        syncMng.targetParticleID = 10;
+                        particleGenerator.GenerateParticle();
+                        break;
+                    case 5:
+                        uiMng.Anim_Simbal(i);
+                        syncMng.targetParticleID = 15;
+                        particleGenerator.GenerateParticle();
+                        break;
+                    case 1:
+                        syncMng.targetParticleID = 11;
+                        particleGenerator.GenerateParticle();
+                        break;
+                    case 2:
+                        syncMng.targetParticleID = 12;
+                        particleGenerator.GenerateParticle();
+                        break;
+                    case 3:
+                        syncMng.targetParticleID = 13;
+                        particleGenerator.GenerateParticle();
+                        break;
+                    case 4:
+                        syncMng.targetParticleID = 14;
+                        particleGenerator.GenerateParticle();
+                        break;
                 }
+                //}
                 if (syncMng.isActivePlayer)
                 {
                     switch (settingsMng.windowFlag)
@@ -390,10 +393,21 @@ namespace HPB
             //Debug.Log("[<color=yellow>GameManager</color>]サウンドTxtチェック:" + txtConverter.textDB[0][5]);
             //Debug.Log("[<color=yellow>GameManager</color>]サウンドチェック:" + soundMng.bgmLists[int.Parse(txtConverter.textDB[0][5])]);
             soundMng.audioSources[0].clip = soundMng.bgmLists[int.Parse(txtConverter.textDB[0][5])];
+
+            //エフェクト設定
             if (!syncMng.isActivePlayer)
             {
                 soundMng.audioSources[0].time = 0.4f;
+
             }
+            if (settingsMng.effectFlag)
+            {
+                syncMng.targetid_a = selectMusicNum;
+                RequestSerialization();
+                musicAnimator.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayMusicAnim");
+            }
+
+            //再生処理
             soundMng.audioSources[0].Play();
             playMng.endTime = float.Parse(txtConverter.textDB[0][4]);
             uiMng.StartBPMGuide(float.Parse(txtConverter.textDB[0][2]) / 60);
@@ -641,13 +655,13 @@ namespace HPB
                     //uiMng.Anim_SimbalAcc(i, 0);
                 }
                 //エフェクト生成
-                if (settingsMng.effectFlag)
-                {
-                    syncMng.targetParticleID = i;
-                    RequestSerialization();
-                    //particleGenerator.GenerateParticle(i);
-                    particleGenerator.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "GenerateParticle");
-                }
+                //if (settingsMng.effectFlag)
+                //{
+                syncMng.targetParticleID = i;
+                RequestSerialization();
+                //particleGenerator.GenerateParticle(i);
+                particleGenerator.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "GenerateParticle");
+                //}
                 //効果音再生
                 //int seListValue = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
                 //soundMng.audioSources[1].PlayOneShot(soundMng.seLists[seListValue + 10]);
@@ -694,13 +708,13 @@ namespace HPB
                     //uiMng.Anim_SimbalAcc(i, 1);
                 }
 
-                if (settingsMng.effectFlag)
-                {
-                    syncMng.targetParticleID = i;
-                    RequestSerialization();
-                    //particleGenerator.GenerateParticle(i);
-                    particleGenerator.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "GenerateParticle");
-                }
+                //if (settingsMng.effectFlag)
+                //{
+                syncMng.targetParticleID = i;
+                RequestSerialization();
+                //particleGenerator.GenerateParticle(i);
+                particleGenerator.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "GenerateParticle");
+                //}
                 //int seListValue = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
                 //soundMng.audioSources[1].PlayOneShot(soundMng.seLists[seListValue + 10]);
                 syncMng.targetSEid = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);
@@ -831,6 +845,7 @@ namespace HPB
             int missNotes = playMng.notesValue - notesJudger.totalJudgedNotes;
             playMng.judgedValue[3] += missNotes;
             Update_UIData();
+            musicAnimator.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "StopAnim");
             uiMng.StopBPMGuide();
             uiMng.Close_play();
         }

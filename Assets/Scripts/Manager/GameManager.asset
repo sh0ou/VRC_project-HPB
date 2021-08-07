@@ -38,6 +38,7 @@ MonoBehaviour:
     - {fileID: 11500000, guid: 949d5917e6af7b84c94ef4e44e2d01b1, type: 3}
     - {fileID: 11500000, guid: c2edaef2803abc242b29b31ffe7aa694, type: 3}
     - {fileID: 11500000, guid: c0b448684f6a98f45966b07d28b042ff, type: 3}
+    - {fileID: 11500000, guid: 733809b989d15474d8c5beed42a805fa, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -56,7 +57,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 16
+      Data: 17
     - Name: 
       Entry: 7
       Data: 
@@ -1076,7 +1077,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: drumActive
+      Data: musicAnimator
     - Name: $v
       Entry: 7
       Data: 80|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
@@ -1086,6 +1087,84 @@ MonoBehaviour:
     - Name: internalType
       Entry: 7
       Data: 82|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: HPB.MusicAnimator, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: declarationType
+      Entry: 3
+      Data: 1
+    - Name: syncMode
+      Entry: 3
+      Data: 0
+    - Name: symbolResolvedTypeName
+      Entry: 1
+      Data: VRCUdonUdonBehaviour
+    - Name: symbolOriginalName
+      Entry: 1
+      Data: musicAnimator
+    - Name: symbolUniqueName
+      Entry: 1
+      Data: musicAnimator
+    - Name: symbolDefaultValue
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: fieldAttributes
+      Entry: 7
+      Data: 83|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 84|UnityEngine.SerializeField, UnityEngine.CoreModule
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 85|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
+    - Name: tooltip
+      Entry: 1
+      Data: "\u697D\u66F2\u30A2\u30CB\u30E1\u30FC\u30BF\u30FC"
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: userBehaviourSource
+      Entry: 10
+      Data: 13
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: drumActive
+    - Name: $v
+      Entry: 7
+      Data: 86|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
+    - Name: fieldSymbol
+      Entry: 7
+      Data: 87|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
+    - Name: internalType
+      Entry: 7
+      Data: 88|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: System.Boolean, mscorlib
@@ -1115,19 +1194,19 @@ MonoBehaviour:
       Data: 
     - Name: fieldAttributes
       Entry: 7
-      Data: 83|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
+      Data: 89|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 2
     - Name: 
       Entry: 7
-      Data: 84|UnityEngine.SerializeField, UnityEngine.CoreModule
+      Data: 90|UnityEngine.SerializeField, UnityEngine.CoreModule
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 85|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
+      Data: 91|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
       Data: "\u30C9\u30E9\u30E0\u51E6\u7406\u30D5\u30E9\u30B0\uFF08false\u3060\u3068\u5224\u5B9A\u304C\u7121\u8996\u3055\u308C\u308B\uFF09"
@@ -1157,13 +1236,13 @@ MonoBehaviour:
       Data: selectMusicNum
     - Name: $v
       Entry: 7
-      Data: 86|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
+      Data: 92|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: fieldSymbol
       Entry: 7
-      Data: 87|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
+      Data: 93|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
     - Name: internalType
       Entry: 7
-      Data: 88|System.RuntimeType, mscorlib
+      Data: 94|System.RuntimeType, mscorlib
     - Name: 
       Entry: 1
       Data: System.Int32, mscorlib
@@ -1193,19 +1272,19 @@ MonoBehaviour:
       Data: 
     - Name: fieldAttributes
       Entry: 7
-      Data: 89|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
+      Data: 95|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 3
     - Name: 
       Entry: 7
-      Data: 90|UnityEngine.SerializeField, UnityEngine.CoreModule
+      Data: 96|UnityEngine.SerializeField, UnityEngine.CoreModule
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 91|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
+      Data: 97|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
       Data: "\u9078\u629E\u4E2D\u306E\u66F2\u756A\u53F7"
@@ -1214,7 +1293,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 92|UdonSharp.UdonSyncedAttribute, UdonSharp.Runtime
+      Data: 98|UdonSharp.UdonSyncedAttribute, UdonSharp.Runtime
     - Name: 
       Entry: 8
       Data: 
@@ -1241,13 +1320,13 @@ MonoBehaviour:
       Data: selectLevelNum
     - Name: $v
       Entry: 7
-      Data: 93|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
+      Data: 99|UdonSharp.Compiler.FieldDefinition, UdonSharp.Editor
     - Name: fieldSymbol
       Entry: 7
-      Data: 94|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
+      Data: 100|UdonSharp.Compiler.SymbolDefinition, UdonSharp.Editor
     - Name: internalType
       Entry: 9
-      Data: 88
+      Data: 94
     - Name: declarationType
       Entry: 3
       Data: 1
@@ -1271,19 +1350,20 @@ MonoBehaviour:
       Data: 
     - Name: fieldAttributes
       Entry: 7
-      Data: 95|System.Collections.Generic.List`1[[System.Attribute, mscorlib]], mscorlib
+      Data: 101|System.Collections.Generic.List`1[[System.Attribute, mscorlib]],
+        mscorlib
     - Name: 
       Entry: 12
       Data: 3
     - Name: 
       Entry: 7
-      Data: 96|UnityEngine.SerializeField, UnityEngine.CoreModule
+      Data: 102|UnityEngine.SerializeField, UnityEngine.CoreModule
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 97|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
+      Data: 103|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
       Data: "\u9078\u629E\u4E2D\u306E\u66F2\u30EC\u30D9\u30EB"
@@ -1292,7 +1372,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 98|UdonSharp.UdonSyncedAttribute, UdonSharp.Runtime
+      Data: 104|UdonSharp.UdonSyncedAttribute, UdonSharp.Runtime
     - Name: 
       Entry: 8
       Data: 
