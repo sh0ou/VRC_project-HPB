@@ -74,7 +74,7 @@ namespace HPB
         {
             isActiveKeyBoard = false;
             //初期値設定
-            bgmVol = 5;
+            bgmVol = 3;
             seVol = 5;
             notesSpeed = 1;
             drumHeight = 5;
@@ -100,8 +100,8 @@ namespace HPB
             notesSpeed = (int)opSliders[2].value;
             drumHeight = (int)opSliders[3].value;
             timingAdjust = (int)opSliders[4].value;
-            soundMng.audioSources[0].volume = bgmVol;
-            soundMng.audioSources[1].volume = seVol;
+            soundMng.audioSources[0].volume = bgmVol * 0.1f;
+            soundMng.audioSources[1].volume = seVol * 0.1f;
             //スライダーの値を表示
             opValueText[0].text = bgmVol.ToString();
             opValueText[1].text = seVol.ToString();
