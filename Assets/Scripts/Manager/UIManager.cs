@@ -32,8 +32,16 @@ namespace HPB
         //オプションUIは調整しない（値変更中に動いてしまうので）
 
         [SerializeField, Tooltip
-            ("ドラムガイドUI\n0-2 左UI(選曲,レベル,プレイ)\n3-5=右UI(選曲,レベル,プレイ)")]
+            ("ドラムガイドUI画像\n0-2 左UI(選曲,レベル,プレイ)\n3-5=右UI(選曲,レベル,プレイ)")]
         private GameObject[] guideUI;
+
+        [SerializeField, Tooltip
+            ("ドラムガイドUI画像\n0-2 左UI(選曲,レベル,プレイ)\n3-5=右UI(選曲,レベル,プレイ)")]
+        private Image[] guideUIImage;
+
+        [SerializeField, Tooltip
+            ("ドラムガイドUI画像\n")]
+        private Sprite[] guideUITexture;
 
         [SerializeField, Tooltip
             ("ドラムアニメーション用\n0=左sim\n1-4=ドラム\n5=右sim\n6,7=simアクセサリ")]
@@ -167,13 +175,30 @@ namespace HPB
                     adjustablePosObjs[0].transform.position,
                     adjustablePosObjs[1].transform.position,
                     adjustablePosObjs[2].transform.position,
+                    adjustablePosObjs[3].transform.position,
+                    adjustablePosObjs[4].transform.position,
+                    adjustablePosObjs[5].transform.position,
+                    adjustablePosObjs[6].transform.position,
+                    adjustablePosObjs[7].transform.position,
                 };
                 adjustablePosObjs[0].transform.position =
                     new Vector3(adjObjs[0].x, (settingsMng.drumHeight * 0.1f), adjObjs[0].z);
                 adjustablePosObjs[1].transform.position =
-                    new Vector3(adjObjs[1].x, (settingsMng.drumHeight * 0.1f), adjObjs[1].z);
+                    new Vector3(adjObjs[1].x, (settingsMng.drumHeight * 0.1f) + 2f, adjObjs[1].z);
+
+                //各ドラムの幅調整
                 adjustablePosObjs[2].transform.position =
-                    new Vector3(adjObjs[2].x, (settingsMng.drumHeight * 0.1f) + 2f, adjObjs[2].z);
+                    new Vector3(((settingsMng.drumWidth * 0.1f) * -0.23f), (settingsMng.drumHeight * 0.1f), adjObjs[2].z);
+                adjustablePosObjs[3].transform.position =
+                    new Vector3(((settingsMng.drumWidth * 0.1f) * -0.08f), (settingsMng.drumHeight * 0.1f), adjObjs[3].z);
+                adjustablePosObjs[4].transform.position =
+                    new Vector3(((settingsMng.drumWidth * 0.1f) * 0.08f), (settingsMng.drumHeight * 0.1f), adjObjs[4].z);
+                adjustablePosObjs[5].transform.position =
+                    new Vector3(((settingsMng.drumWidth * 0.1f) * 0.23f), (settingsMng.drumHeight * 0.1f), adjObjs[5].z);
+                adjustablePosObjs[6].transform.position =
+                    new Vector3(((settingsMng.drumWidth * 0.1f) * -0.3f), (settingsMng.drumHeight * 0.1f) + 0.25f, adjObjs[6].z);
+                adjustablePosObjs[7].transform.position =
+                    new Vector3(((settingsMng.drumWidth * 0.1f) * 0.3f), (settingsMng.drumHeight * 0.1f) + 0.25f, adjObjs[7].z);
             }
             if (settingsMng.windowFlag != 1 || syncMng.isActivePlayer)
             {
@@ -255,12 +280,27 @@ namespace HPB
             Debug.Log("アクティブ:Open_select1");
             windowAnims[1].gameObject.SetActive(true);
             windowAnims[1].Play("open_select_1");
+
+            guideUIImage[0].sprite = guideUITexture[7];
+            guideUIImage[1].sprite = guideUITexture[7];
+            guideUIImage[2].sprite = guideUITexture[8];
+            guideUIImage[3].sprite = guideUITexture[8];
+            guideUIImage[4].sprite = guideUITexture[11];
+            guideUIImage[5].sprite = guideUITexture[11];
+
+            guideUIImage[0].color = new Color(1, 1, 1, 1);
+            guideUIImage[1].color = new Color(1, 1, 1, 1);
+            guideUIImage[2].color = new Color(1, 1, 1, 1);
+            guideUIImage[3].color = new Color(1, 1, 1, 1);
+            guideUIImage[4].color = new Color(1, 1, 0, 1);
+            guideUIImage[5].color = new Color(1, 1, 0, 1);
+
             guideUI[0].SetActive(true);
-            guideUI[1].SetActive(false);
-            guideUI[2].SetActive(false);
+            guideUI[1].SetActive(true);
+            guideUI[2].SetActive(true);
             guideUI[3].SetActive(true);
-            guideUI[4].SetActive(false);
-            guideUI[5].SetActive(false);
+            guideUI[4].SetActive(true);
+            guideUI[5].SetActive(true);
         }
 
         /// <summary>
@@ -271,12 +311,27 @@ namespace HPB
             Debug.Log("アクティブ:Open_select2");
             windowAnims[2].gameObject.SetActive(true);
             windowAnims[2].Play("open_select_2");
-            guideUI[0].SetActive(false);
+
+            guideUIImage[0].sprite = guideUITexture[6];
+            guideUIImage[1].sprite = guideUITexture[9];
+            guideUIImage[2].sprite = guideUITexture[10];
+            guideUIImage[3].sprite = guideUITexture[6];
+            guideUIImage[4].sprite = guideUITexture[11];
+            guideUIImage[5].sprite = guideUITexture[11];
+
+            guideUIImage[0].color = new Color(1, 1, 1, 1);
+            guideUIImage[1].color = new Color(0.6f, 1, 1, 1);
+            guideUIImage[2].color = new Color(1, 0.6f, 0.6f, 1);
+            guideUIImage[3].color = new Color(1, 1, 1, 1);
+            guideUIImage[4].color = new Color(1, 1, 0, 1);
+            guideUIImage[5].color = new Color(1, 1, 0, 1);
+
+            guideUI[0].SetActive(true);
             guideUI[1].SetActive(true);
-            guideUI[2].SetActive(false);
-            guideUI[3].SetActive(false);
+            guideUI[2].SetActive(true);
+            guideUI[3].SetActive(true);
             guideUI[4].SetActive(true);
-            guideUI[5].SetActive(false);
+            guideUI[5].SetActive(true);
             gameMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUIData");
         }
 
@@ -286,20 +341,42 @@ namespace HPB
             windowAnims[3].gameObject.SetActive(true);
             windowAnims[3].Play("open_play_1");
             windowAnims[4].gameObject.SetActive(true);
-            guideUI[0].SetActive(false);
-            guideUI[1].SetActive(false);
+            //guideUI[0].SetActive(false);
+            //guideUI[1].SetActive(false);
             if (settingsMng.isActiveKeyBoard)
             {
+                guideUIImage[0].sprite = guideUITexture[1];
+                guideUIImage[1].sprite = guideUITexture[2];
+                guideUIImage[2].sprite = guideUITexture[3];
+                guideUIImage[3].sprite = guideUITexture[4];
+                guideUIImage[4].sprite = guideUITexture[0];
+                guideUIImage[5].sprite = guideUITexture[5];
+
+                guideUIImage[0].color = new Color(0.2f, 1, 0.2f, 1);
+                guideUIImage[1].color = new Color(0.2f, 1, 0.2f, 1);
+                guideUIImage[2].color = new Color(0.2f, 1, 0.2f, 1);
+                guideUIImage[3].color = new Color(0.2f, 1, 0.2f, 1);
+                guideUIImage[4].color = new Color(1, 0.6f, 0, 1);
+                guideUIImage[5].color = new Color(1, 0.6f, 0, 1);
+
+                guideUI[0].SetActive(true);
+                guideUI[1].SetActive(true);
                 guideUI[2].SetActive(true);
+                guideUI[3].SetActive(true);
+                guideUI[4].SetActive(true);
                 guideUI[5].SetActive(true);
             }
             else
             {
+                guideUI[0].SetActive(false);
+                guideUI[1].SetActive(false);
                 guideUI[2].SetActive(false);
+                guideUI[3].SetActive(false);
+                guideUI[4].SetActive(false);
                 guideUI[5].SetActive(false);
             }
-            guideUI[3].SetActive(false);
-            guideUI[4].SetActive(false);
+            //guideUI[3].SetActive(false);
+            //guideUI[4].SetActive(false);
             //gameMng.SetUIData();
             gameMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUIData");
             windowAnims[4].Play("open_play_2");

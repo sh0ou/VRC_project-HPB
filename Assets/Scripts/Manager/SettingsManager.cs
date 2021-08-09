@@ -39,6 +39,9 @@ namespace HPB
         [SerializeField, Tooltip("ドラムの高さ")]
         public int drumHeight;
 
+        [SerializeField, Tooltip("ドラムの幅")]
+        public int drumWidth;
+
         [SerializeField, Tooltip("判定調整値\n（x0.01）")]
         public int timingAdjust;
 
@@ -62,7 +65,7 @@ namespace HPB
         private Slider[] opSliders = new Slider[4];
 
         [SerializeField, Tooltip
-            ("値更新用TMP\n0=bgm\n1=se\n2=speed\n3=Adjust")]
+            ("値更新用TMP\n0=bgm\n1=se\n2=speed\n3=height\n4=width\n5=Adjust")]
         private TextMeshProUGUI[] opValueText;
 
         [SerializeField, Tooltip
@@ -78,6 +81,7 @@ namespace HPB
             seVol = 5;
             notesSpeed = 1;
             drumHeight = 5;
+            drumWidth = 10;
             timingAdjust = 0;
             gamePlay = false;
             effectFlag = true;
@@ -99,7 +103,8 @@ namespace HPB
             seVol = (int)opSliders[1].value;
             notesSpeed = (int)opSliders[2].value;
             drumHeight = (int)opSliders[3].value;
-            timingAdjust = (int)opSliders[4].value;
+            drumWidth = (int)opSliders[4].value;
+            timingAdjust = (int)opSliders[5].value;
             soundMng.audioSources[0].volume = bgmVol * 0.1f;
             soundMng.audioSources[1].volume = seVol * 0.1f;
             //スライダーの値を表示
@@ -107,7 +112,8 @@ namespace HPB
             opValueText[1].text = seVol.ToString();
             opValueText[2].text = notesSpeed.ToString();
             opValueText[3].text = drumHeight.ToString();
-            opValueText[4].text = (timingAdjust * 10).ToString() + "ms";
+            opValueText[4].text = drumWidth.ToString();
+            opValueText[5].text = (timingAdjust * 10).ToString() + "ms";
             //トグルを反映
             effectFlag = opToggles[0].isOn;
             debugFlag = opToggles[1].isOn;

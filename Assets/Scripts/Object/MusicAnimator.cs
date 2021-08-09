@@ -39,10 +39,10 @@ namespace HPB
 
         public void PlayMusicAnim()
         {
-            playingAnimID = syncManager.targetid_a;
-            if (gameManager.GetMusicNum() == 0 && gameManager.GetLevelNum() != 1)
+            //playingAnimID = syncManager.targetid_a;
+            if (gameManager.GetMusicNum() == 0 && gameManager.GetLevelNum() != 0)
             {
-                return;
+                animator.Play("Idle");
             }
             if (syncManager.isActivePlayer)
             {
@@ -50,8 +50,9 @@ namespace HPB
             }
             else
             {
-                animator.Play(("Music_" + syncManager.targetid_a), 0, 0.4f);
+                animator.Play(("Music_" + syncManager.targetid_a), 0, 0.003f);
             }
+            //Debug.Log("[MusicAnimator]NumCheck:" + gameManager.GetMusicNum() + "/" + gameManager.GetLevelNum());
         }
 
         public void StopAnim()
