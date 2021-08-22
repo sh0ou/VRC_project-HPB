@@ -42,9 +42,10 @@ namespace HPB
             //playingAnimID = syncManager.targetid_a;
             if (gameManager.GetMusicNum() == 0 && gameManager.GetLevelNum() != 0)
             {
+                Debug.Log("Idleモーションを再生");
                 animator.Play("Idle");
             }
-            if (syncManager.isActivePlayer)
+            else if (syncManager.isActivePlayer)
             {
                 animator.Play(("Music_" + syncManager.targetid_a), 0, 0);
             }
