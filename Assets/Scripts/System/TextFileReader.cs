@@ -12,6 +12,7 @@ namespace HPB
     {
         [SerializeField, Tooltip("テキストアセット")]
         private TextAsset[] textfiles;
+        [SerializeField] private PagingViewer pagingViewer;
 
         [TextArea] public string[] textStorages;
 
@@ -23,6 +24,9 @@ namespace HPB
                 //Debug.Log("[<color=yellow>TextFileReader</color>]textconvert..." + i);
                 ConvertFileToString(i);
             }
+            //Debug.Log("[<color=yellow>TextFileReader</color>]Check:" + textStorages[0]);
+            //Debug.Log("[<color=green>TextFileReader</color>]Convert OK");
+            pagingViewer.Initialize();
         }
 
         /// <summary>
