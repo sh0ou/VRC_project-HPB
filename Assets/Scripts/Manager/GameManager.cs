@@ -651,7 +651,7 @@ namespace HPB
                     syncMng.targetlane = i;
                     syncMng.targetid_a = 0;
                     RequestSerialization();
-                    syncMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_SimbalAcc");
+                    animation_Drum.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayAnim");
                     //uiMng.Anim_SimbalAcc(i, 0);
                 }
                 //エフェクト生成
@@ -704,7 +704,7 @@ namespace HPB
                     syncMng.targetlane = i;
                     syncMng.targetid_a = 1;
                     RequestSerialization();
-                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_SimbalAcc");
+                    animation_Drum.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayAnim");
                     //uiMng.Anim_SimbalAcc(i, 1);
                 }
 
@@ -757,7 +757,7 @@ namespace HPB
                     syncMng.targetlane = i;
                     syncMng.targetid_a = 2;
                     RequestSerialization();
-                    SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_SimbalAcc");
+                    animation_Drum.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayAnim");
                     //uiMng.Anim_SimbalAcc(i, 2);
                 }
                 //int seListValue = int.Parse(txtConverter.textDB[4][notesJudger.totalJudgedNotes - 1]);

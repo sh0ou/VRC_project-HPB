@@ -48,7 +48,7 @@ namespace HPB
                     if (playMng.playTime > notesJudger.noteTimeList[notesReferenceNo[0]][notesReferenceNo[1]] +
                         notesJudger.noteJudgeTimeSpanList[3])
                     {
-                        Debug.Log("[<color=yellow>NotesObj</color>]Miss判定:" + gameObject.name);
+                        //Debug.Log("[<color=yellow>NotesObj</color>]Miss判定:" + gameObject.name);
                         notesJudger.Judge_miss(notesReferenceNo[0], notesReferenceNo[1]);
                     }
                     //判定済みの場合は消去
@@ -67,7 +67,7 @@ namespace HPB
                             else
                             {
                                 notesGenerator.notesObjInstance[notesReferenceNo[2] + 10].GetComponent<MeshRenderer>().enabled = true;
-                                Debug.Log("[<color=yellow>NotesObj</color>]完了:Mesh消去処理");
+                                //Debug.Log("[<color=yellow>NotesObj</color>]完了:Mesh消去処理");
                             }
                             //Debug.Log("ReferenceCheck : " + notesGenerator.notesObjInstance[notesReferenceNo[2] + 10].name);
                         }
