@@ -12,7 +12,7 @@ namespace HPB
         [SerializeField] SyncManager syncManager;
         public void PlayAnim()
         {
-            Debug.Log("[<color=green>Animation_Chain</color>]PlayAnim:アクティブ");
+            //Debug.Log("[<color=green>Animation_Chain</color>]PlayAnim:アクティブ");
             if (syncManager.targetBool)
             {
                 chainUIObj.SetActive(true);

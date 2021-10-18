@@ -39,19 +39,21 @@ namespace HPB
 
         public void PlayMusicAnim()
         {
-            playingAnimID = syncManager.targetid_a;
-            if (gameManager.GetMusicNum() == 0 && gameManager.GetLevelNum() != 1)
+            //playingAnimID = syncManager.targetid_a;
+            if (gameManager.GetMusicNum() == 0 && gameManager.GetLevelNum() != 0)
             {
-                return;
+                Debug.Log("Idleモーションを再生");
+                animator.Play("Idle");
             }
-            if (syncManager.isActivePlayer)
+            else if (syncManager.isActivePlayer)
             {
                 animator.Play(("Music_" + syncManager.targetid_a), 0, 0);
             }
             else
             {
-                animator.Play(("Music_" + syncManager.targetid_a), 0, 0.4f);
+                animator.Play(("Music_" + syncManager.targetid_a), 0, 0.003f);
             }
+            //Debug.Log("[MusicAnimator]NumCheck:" + gameManager.GetMusicNum() + "/" + gameManager.GetLevelNum());
         }
 
         public void StopAnim()

@@ -15,7 +15,7 @@ namespace HPB
         /// </summary>
         public void PlayDrumSE()
         {
-            Debug.Log("[<color=green>SoundPlayer</color>]PlayDrum:アクティブ");
+            //Debug.Log("[<color=green>SoundPlayer</color>]PlayDrum:アクティブ");
             if (soundManager.seLists[syncManager.targetSEid + 10] == null)
             {
                 Debug.Log("[<color=red>SoundPlayer</color>]PlayDrum:範囲外です。処理を中断しました");

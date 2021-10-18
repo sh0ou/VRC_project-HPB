@@ -49,7 +49,19 @@ namespace HPB
             if (!isDebugMode)
             {
                 text_playerName.text = Networking.GetOwner(stickObj[0].gameObject).displayName;
-                text_playerMode.text = Networking.LocalPlayer.IsUserInVR() ? "VR Mode" : "Desktop Mode";
+                if (Networking.GetOwner(stickObj[0].gameObject).IsUserInVR())
+                {
+                    text_playerMode.text = "VR Mode";
+                    stickObj[0].GetComponent<BoxCollider>().enabled = true;
+                    stickObj[1].GetComponent<BoxCollider>().enabled = true;
+                }
+                else
+                {
+                    text_playerMode.text = "Desktop Mode";
+                    stickObj[0].GetComponent<BoxCollider>().enabled = false;
+                    stickObj[1].GetComponent<BoxCollider>().enabled = false;
+                }
+                //text_playerMode.text = Networking.GetOwner(stickObj[0].gameObject).IsUserInVR() ? "VR Mode" : "Desktop Mode";
                 isActivePlayer = Networking.GetOwner(stickObj[0].gameObject) == Networking.LocalPlayer ? true : false;
                 //if (settingsManager.gamePlay)
                 //{
@@ -60,15 +72,15 @@ namespace HPB
             }
         }
 
-        public override void OnPreSerialization()
-        {
-            Debug.Log("[<color=blue>SyncManager</color>]値を送信しました");
-        }
+        //public override void OnPreSerialization()
+        //{
+        //    Debug.Log("[<color=blue>SyncManager</color>]値を送信しました");
+        //}
 
-        public override void OnDeserialization()
-        {
-            Debug.Log("[<color=green>SyncManager</color>]値を受信しました");
-        }
+        //public override void OnDeserialization()
+        //{
+        //    Debug.Log("[<color=green>SyncManager</color>]値を受信しました");
+        //}
 
         /// <summary>
         /// Playerを変更します
