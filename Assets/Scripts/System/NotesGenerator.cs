@@ -189,10 +189,10 @@ namespace HPB
             switch (notesLane)
             {
                 case 0:
-                    vec2 = new Vector2(-0.45f, f + 1f);
+                    vec2 = settingsMng.isSplitSimbalLane ? new Vector2(-1, f + 0.5f) : new Vector2(-0.45f, f + 1f);
                     break;
                 case 5:
-                    vec2 = new Vector2(0.45f, f + 1f);
+                    vec2 = settingsMng.isSplitSimbalLane ? new Vector2(1, f + 0.5f) : new Vector2(0.45f, f + 1f);
                     break;
                 case 1:
                     vec2 = new Vector2(-0.45f, f - 0.05f);

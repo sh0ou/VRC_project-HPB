@@ -123,6 +123,7 @@ namespace HPB
             // 先に各ノート毎のノート数だけ得るために全体を読み込みます。
             for (var globalNoteIndex = 0; globalNoteIndex < totalPlacedNotes; globalNoteIndex++)
             {
+                //Debug.Log("ノーツをカウント中..." + globalNoteIndex);
                 var laneIndex = int.Parse(textFileConverter.textDB[3][globalNoteIndex]);
                 totalNotesPerLaneList[laneIndex]++;
             }
@@ -199,15 +200,29 @@ namespace HPB
             // 何かしらの判定が起きた場合は各種カウンターの値を増やします。
             if (judgeResult != NoteJudge[0])
             {
+                //Debug.Log("[<color=yellow>NotesJudger_V2</color>]現在位置:" + currentTime + "/判定位置:" + noteTime + "/遅延情報:" + (currentTime - noteTime));
                 syncManager.targetlane = laneIndex;
                 syncManager.targetid_a = judgedNotesCount;
                 syncManager.targetid_b = judgeResult;
+                if (distance < -noteJudgeTimeSpanList[1])
+                {
+                    syncManager.targetTextid_fast = -1;
+                }
+                else if (distance > noteJudgeTimeSpanList[1])
+                {
+                    syncManager.targetTextid_fast = 1;
+                }
+                else
+                {
+                    syncManager.targetTextid_fast = 0;
+                }
                 //noteJudgeResultsList[laneIndex][judgedNotesCount] = judgeResult;
                 RequestSerialization();
                 SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetResultsList");
                 judgedNotesCountPerLaneList[laneIndex]++;
                 judgesCountList[judgeResult]++;
                 totalJudgedNotes++;
+                //Debug.Log("TotalJudgeNotes:" + totalJudgedNotes);
                 RequestSerialization();
             }
             //Debug.Log("[<color=yellow>NotesJudger_V2</color>]完了:Judge");

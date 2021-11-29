@@ -16,6 +16,9 @@ namespace HPB
         [SerializeField, Tooltip("サウンドマネージャ")]
         private SoundManager soundMng;
 
+        [SerializeField]
+        private UIManager uiManager;
+
         [UdonSynced, SerializeField, Tooltip("表示されている画面番号\n0=タイトル\n1=選曲\n2=レベル選択\n3=プレイ\n4=リザルト")]
         public int windowFlag;
 
@@ -27,26 +30,48 @@ namespace HPB
 
         #endregion
         #region オプション変数
-        [SerializeField, Tooltip("BGM音量")]
-        private int bgmVol;
-
-        [SerializeField, Tooltip("効果音音量")]
-        private int seVol;
-
-        [SerializeField, Tooltip("ノーツスピード")]
-        public int notesSpeed;
-
+        //ドラム
         [SerializeField, Tooltip("ドラムの高さ")]
         public int drumHeight;
 
         [SerializeField, Tooltip("ドラムの幅")]
         public int drumWidth;
 
+        [SerializeField, Tooltip("ドラムの大きさ")]
+        public int drumSize;
+
+        [SerializeField, Tooltip("ドラムの判定エリア")]
+        public int drumJudgeArea;
+
+        [SerializeField, Tooltip("ノーツスピード")]
+        public int notesSpeed;
+
         [SerializeField, Tooltip("判定調整値\n（x0.01）")]
         public int timingAdjust;
 
-        [SerializeField, Tooltip("楽曲エフェクト表示フラグ")]
-        public bool effectFlag;
+        //グラフィック
+
+        [SerializeField, Tooltip("パーティクルアニメーション")]
+        public bool isParticleAnimation;
+
+        [SerializeField, Tooltip("判定エフェクト")]
+        public bool isHitEffect;
+
+        [SerializeField, Tooltip("シンバルレーンを分割")]
+        public bool isSplitSimbalLane;
+
+        //サウンド
+
+        [SerializeField, Tooltip("BGM音量")]
+        private int bgmVol;
+
+        [SerializeField, Tooltip("効果音音量")]
+        private int seVol;
+
+        //デバッグ
+
+        //[SerializeField, Tooltip("楽曲エフェクト表示フラグ")]
+        //public bool effectFlag;
 
         [SerializeField, Tooltip("デバッグモードフラグ")]
         public bool debugFlag;
@@ -61,36 +86,85 @@ namespace HPB
         private GameObject cautionWindowObj;
 
         [SerializeField, Tooltip
-            ("各設定スライダーUI\n0=BGM\n1=SE\n2=スピード\n3=判定調整値")]
-        private Slider[] opSliders = new Slider[4];
+            ("各設定スライダーUI\n0=height\n1=width\n2=size\n3=area\n4=speed\n5=adjust\n6=BGM\n7=SE")]
+        private Slider[] opSliders = new Slider[12];
 
         [SerializeField, Tooltip
-            ("値更新用TMP\n0=bgm\n1=se\n2=speed\n3=height\n4=width\n5=Adjust")]
+            ("値更新用TMP\n0=height\n1=width\n2=size\n3=area\n4=speed\n5=adjust\n6=BGM\n7=SE")]
         private TextMeshProUGUI[] opValueText;
 
         [SerializeField, Tooltip
-            ("各設定トグルUI\n0=エフェクト\n1=デバッグ")]
+            ("各設定トグルUI\n0=PA\n1=Drum Effect\n2=Split Lane\n3=Debug")]
         private Toggle[] opToggles = new Toggle[2];
 
         #endregion
         void Start()
         {
             isActiveKeyBoard = false;
-            //初期値設定
-            bgmVol = 3;
-            seVol = 5;
-            notesSpeed = 1;
-            drumHeight = 5;
-            drumWidth = 10;
-            timingAdjust = 0;
-            gamePlay = false;
-            effectFlag = true;
-            debugFlag = false;
+            ResetOption();
             SetUIActive(true);
+            gamePlay = false;
         }
-        private void Update()
+
+        /// <summary>
+        /// オプションの値を初期化します
+        /// </summary>
+        public void ResetOption()
         {
-            SetOptionValue();
+            Debug.Log("値をリセットします");
+
+            //初期値設定、スライダーに値を反映
+            drumHeight = 10;
+            opSliders[0].value = drumHeight;
+
+            drumWidth = 12;
+            opSliders[1].value = drumWidth;
+
+            drumSize = 10;
+            opSliders[2].value = drumSize;
+
+            drumJudgeArea = 20;
+            opSliders[3].value = drumJudgeArea;
+
+            notesSpeed = 1;
+            opSliders[4].value = notesSpeed;
+
+            timingAdjust = 0;
+            opSliders[5].value = timingAdjust;
+
+
+            isParticleAnimation = true;
+            opToggles[0].isOn = isParticleAnimation;
+
+            isHitEffect = true;
+            opToggles[1].isOn = isHitEffect;
+
+            isSplitSimbalLane = true;
+            opToggles[2].isOn = isSplitSimbalLane;
+
+
+            bgmVol = 5;
+            opSliders[6].value = bgmVol;
+
+            seVol = 5;
+            opSliders[7].value = seVol;
+
+            debugFlag = false;
+            opToggles[3].isOn = debugFlag;
+
+            uiManager.ObjectAdjust();
+
+            //値を表示
+            opValueText[0].text = drumHeight.ToString();
+            opValueText[1].text = drumWidth.ToString();
+            opValueText[2].text = drumSize.ToString();
+            opValueText[3].text = drumJudgeArea.ToString();
+            opValueText[4].text = notesSpeed.ToString();
+            opValueText[5].text = (timingAdjust * 10).ToString() + "ms";
+            opValueText[6].text = bgmVol.ToString();
+            opValueText[7].text = seVol.ToString();
+            soundMng.audioSources[0].volume = bgmVol * 0.1f;
+            soundMng.audioSources[1].volume = seVol * 0.1f;
         }
 
         /// <summary>
@@ -98,25 +172,38 @@ namespace HPB
         /// </summary>
         public void SetOptionValue()
         {
-            //スライダーの値を反映
-            bgmVol = (int)opSliders[0].value;
-            seVol = (int)opSliders[1].value;
-            notesSpeed = (int)opSliders[2].value;
-            drumHeight = (int)opSliders[3].value;
-            drumWidth = (int)opSliders[4].value;
+            //オプションの値を反映
+            //ドラム
+            drumHeight = (int)opSliders[0].value;
+            drumWidth = (int)opSliders[1].value;
+            drumSize = (int)opSliders[2].value;
+            drumJudgeArea = (int)opSliders[3].value;
+            notesSpeed = (int)opSliders[4].value;
             timingAdjust = (int)opSliders[5].value;
+            //エフェクト
+            isParticleAnimation = opToggles[0].isOn;
+            isHitEffect = opToggles[1].isOn;
+            isSplitSimbalLane = opToggles[2].isOn;
+            //サウンド
+            bgmVol = (int)opSliders[6].value;
+            seVol = (int)opSliders[7].value;
+            //デバッグ
+            debugFlag = opToggles[3].isOn;
+
+            uiManager.ObjectAdjust();
+
+            //オプションの値を表示
+            opValueText[0].text = drumHeight.ToString();
+            opValueText[1].text = drumWidth.ToString();
+            opValueText[2].text = drumSize.ToString();
+            opValueText[3].text = drumJudgeArea.ToString();
+            opValueText[4].text = notesSpeed.ToString();
+            opValueText[5].text = (timingAdjust * 10).ToString() + "ms";
+            opValueText[6].text = bgmVol.ToString();
+            opValueText[7].text = seVol.ToString();
             soundMng.audioSources[0].volume = bgmVol * 0.1f;
             soundMng.audioSources[1].volume = seVol * 0.1f;
-            //スライダーの値を表示
-            opValueText[0].text = bgmVol.ToString();
-            opValueText[1].text = seVol.ToString();
-            opValueText[2].text = notesSpeed.ToString();
-            opValueText[3].text = drumHeight.ToString();
-            opValueText[4].text = drumWidth.ToString();
-            opValueText[5].text = (timingAdjust * 10).ToString() + "ms";
-            //トグルを反映
-            effectFlag = opToggles[0].isOn;
-            debugFlag = opToggles[1].isOn;
+
         }
 
         /// <summary>
