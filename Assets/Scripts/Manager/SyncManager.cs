@@ -33,6 +33,7 @@ namespace HPB
         [UdonSynced] public int targetParticleID;//パーティクル同期用変数
         [UdonSynced] public int targetTextid_a;//判定テキスト同期用変数1
         [UdonSynced] public int targetTextid_b;//判定テキスト同期用変数2
+        [UdonSynced] public int targetTextid_fast;//判定位置テキスト同期用変数
         [UdonSynced] public bool targetBool;//同期用汎用フラグ
         [UdonSynced] public int targetSEid;//SE同期用変数
 

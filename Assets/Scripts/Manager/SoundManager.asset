@@ -175,7 +175,7 @@ MonoBehaviour:
       Data: 12|UnityEngine.TooltipAttribute, UnityEngine.CoreModule
     - Name: tooltip
       Entry: 1
-      Data: "\u52B9\u679C\u97F3\u30EA\u30B9\u30C8\n0=\u7121\u97F3\n1=\u6C7A\u5B9A\u97F3\n2=\u30AD\u30E3\u30F3\u30BB\u30EB\u97F3\n3-10=\u7A7A\u304D\n11...=\u697D\u66F2\u30A8\u30D5\u30A7\u30AF\u30C8"
+      Data: "\u52B9\u679C\u97F3\u30EA\u30B9\u30C8\n0=\u7121\u97F3\n1=\u9078\u629E\u97F3\n2=\u6C7A\u5B9A\u97F3\n3-10=\u7A7A\u304D\n11...=\u697D\u66F2\u30A8\u30D5\u30A7\u30AF\u30C8"
     - Name: 
       Entry: 8
       Data: 

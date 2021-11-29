@@ -141,7 +141,7 @@ namespace HPB
             if (drumActive)
             {
                 //エフェクト処理
-                //if (settingsMng.effectFlag)
+                //if (settingsMng.isHitEffect)
                 //{
                 switch (i)
                 {
@@ -191,6 +191,7 @@ namespace HPB
                             }
                             settingsMng.windowFlag = 1;
                             RequestSerialization();
+                            soundMng.audioSources[1].PlayOneShot(soundMng.seLists[2]);
                             //uiMng.Close_title();
                             uiMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Close_title");
                             break;
@@ -205,6 +206,7 @@ namespace HPB
                                 RequestSerialization();
                                 //SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_Drums");
                                 animation_Drum.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayAnim");
+                                soundMng.audioSources[1].PlayOneShot(soundMng.seLists[1]);
                                 //uiMng.Anim_Drums(i, 0);
                                 //selectMusicNum = selectMusicNum == 0 ? txtConverter.SendMusicLength() : selectMusicNum--;
                                 SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.Owner, "ChangeMusicNo");
@@ -220,6 +222,7 @@ namespace HPB
                                 RequestSerialization();
                                 //SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_Drums");
                                 animation_Drum.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayAnim");
+                                soundMng.audioSources[1].PlayOneShot(soundMng.seLists[1]);
                                 //uiMng.Anim_Drums(i, 0);
                                 //selectMusicNum = selectMusicNum == txtConverter.SendMusicLength() ? 0 : selectMusicNum++;
                                 SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.Owner, "ChangeMusicNo");
@@ -233,6 +236,7 @@ namespace HPB
                                 settingsMng.windowFlag = 2;
                                 selectLevelNum = 0;
                                 RequestSerialization();
+                                soundMng.audioSources[1].PlayOneShot(soundMng.seLists[2]);
                                 //uiMng.Close_select1();
                                 uiMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Close_select1");
                             }
@@ -250,6 +254,7 @@ namespace HPB
                                 RequestSerialization();
                                 //SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_Drums");
                                 animation_Drum.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayAnim");
+                                soundMng.audioSources[1].PlayOneShot(soundMng.seLists[1]);
                                 //uiMng.Anim_Drums(i, 0);
                                 //uiMng.Close_select2_return();
                                 uiMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Close_select2_return");
@@ -262,6 +267,7 @@ namespace HPB
                                 syncMng.targetid_a = 0;
                                 RequestSerialization();
                                 //SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_Drums");
+                                soundMng.audioSources[1].PlayOneShot(soundMng.seLists[1]);
                                 animation_Drum.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayAnim");
                                 //uiMng.Anim_Drums(i, 0);
                                 switch (selectLevelNum)
@@ -296,6 +302,7 @@ namespace HPB
                                 RequestSerialization();
                                 //SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Anim_Drums");
                                 animation_Drum.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayAnim");
+                                soundMng.audioSources[1].PlayOneShot(soundMng.seLists[1]);
                                 //uiMng.Anim_Drums(i, 0);
                                 switch (selectLevelNum)
                                 {
@@ -329,6 +336,7 @@ namespace HPB
                                 settingsMng.windowFlag = 3;
                                 //uiMng.Close_select2();
                                 RequestSerialization();
+                                soundMng.audioSources[1].PlayOneShot(soundMng.seLists[2]);
                                 uiMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Close_select2");
                             }
                             break;
@@ -351,6 +359,7 @@ namespace HPB
                             }
                             settingsMng.windowFlag = 1;
                             RequestSerialization();
+                            soundMng.audioSources[1].PlayOneShot(soundMng.seLists[1]);
                             //uiMng.Close_result();
                             uiMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "Close_result");
                             break;
@@ -398,14 +407,13 @@ namespace HPB
             if (!syncMng.isActivePlayer)
             {
                 soundMng.audioSources[0].time = 0.4f;
-
             }
-            if (settingsMng.effectFlag)
-            {
-                syncMng.targetid_a = selectMusicNum;
-                RequestSerialization();
-                musicAnimator.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayMusicAnim");
-            }
+            //if (settingsMng.isParticleAnimation)
+            //{
+            syncMng.targetid_a = selectMusicNum;
+            RequestSerialization();
+            musicAnimator.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "PlayMusicAnim");
+            //}
 
             //再生処理
             soundMng.audioSources[0].Play();
@@ -536,7 +544,7 @@ namespace HPB
         private void SetUI_score()
         {
             //rankS
-            if (playMng.score_now >= 95000)
+            if (playMng.score_now >= 97000)
             {
                 uiMng.UIActive_rank(0);
             }
@@ -546,12 +554,12 @@ namespace HPB
                 uiMng.UIActive_rank(1);
             }
             //rankB
-            else if (playMng.score_now >= 80000)
+            else if (playMng.score_now >= 70000)
             {
                 uiMng.UIActive_rank(2);
             }
             //rankC
-            else if (playMng.score_now >= 70000)
+            else if (playMng.score_now >= 50000)
             {
                 uiMng.UIActive_rank(3);
             }
@@ -655,7 +663,7 @@ namespace HPB
                     //uiMng.Anim_SimbalAcc(i, 0);
                 }
                 //エフェクト生成
-                //if (settingsMng.effectFlag)
+                //if (settingsMng.isHitEffect)
                 //{
                 syncMng.targetParticleID = i;
                 RequestSerialization();

@@ -18,6 +18,7 @@ namespace HPB
             this.transform.localScale = new Vector3(1, 1, 1);
             //判定に応じて出現位置を変更
             float posx = 0;
+            float posy = 0;
             switch (judgeValue)
             {
                 case 1:
@@ -33,7 +34,13 @@ namespace HPB
                     posx = 75;
                     break;
             }
-            this.transform.localPosition = new Vector3(posx, 0, 0);
+            if (this.gameObject.name.Contains("JudgeTextsp_"))
+            {
+                //Debug.Log("fast&slowオブジェクトを生成");
+                posy = -15;
+            }
+            this.transform.localPosition = new Vector3(posx, posy, 0);
+            //Debug.Log("生成位置:" + this.transform.localPosition);
         }
         public void AnimEnd()
         {

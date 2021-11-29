@@ -15,6 +15,7 @@ namespace HPB
         [SerializeField] AudioSource audioSource;
         [SerializeField] PlayManager playManager;
         [SerializeField] GameManager gameManager;
+        [SerializeField] SettingsManager settingsManager;
 
         [SerializeField] int playingAnimID;
         [SerializeField] float animtimeleft;
@@ -39,21 +40,25 @@ namespace HPB
 
         public void PlayMusicAnim()
         {
-            //playingAnimID = syncManager.targetid_a;
-            if (gameManager.GetMusicNum() == 0 && gameManager.GetLevelNum() != 0)
+            if (settingsManager.isParticleAnimation)
             {
-                Debug.Log("Idleモーションを再生");
-                animator.Play("Idle");
+                //playingAnimID = syncManager.targetid_a;
+                //チュートリアル楽曲のAnimation例外分岐
+                Debug.Log("[MusicAnimator]syncManager.targetid_a: " + (syncManager.targetid_a + 1));
+                if (gameManager.GetMusicNum() == 0 && gameManager.GetLevelNum() == 0)
+                {
+                    animator.Play("Music_0");
+                }
+                else if (syncManager.isActivePlayer)
+                {
+                    animator.Play(("Music_" + (syncManager.targetid_a + 1)), 0, 0);
+                }
+                else
+                {
+                    animator.Play(("Music_" + (syncManager.targetid_a + 1)), 0, 0.003f);
+                }
+                //Debug.Log("[MusicAnimator]NumCheck:" + gameManager.GetMusicNum() + "/" + gameManager.GetLevelNum());
             }
-            else if (syncManager.isActivePlayer)
-            {
-                animator.Play(("Music_" + syncManager.targetid_a), 0, 0);
-            }
-            else
-            {
-                animator.Play(("Music_" + syncManager.targetid_a), 0, 0.003f);
-            }
-            //Debug.Log("[MusicAnimator]NumCheck:" + gameManager.GetMusicNum() + "/" + gameManager.GetLevelNum());
         }
 
         public void StopAnim()

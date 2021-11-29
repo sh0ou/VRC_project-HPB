@@ -27,9 +27,12 @@ namespace HPB
         private SyncManager syncMng;
 
         [SerializeField, Tooltip
-            ("位置調整できるオブジェクト\n0=ドラム\n1=レーン\n2=メインUI")]
+            ("位置調整できるオブジェクト\n0=ドラム\n1=表示UI\n2=左レーン\n3=右レーン\n3～メインUI")]
         private GameObject[] adjustablePosObjs;
         //オプションUIは調整しない（値変更中に動いてしまうので）
+
+        //位置調整可能オブジェクトのコライダー
+        [SerializeField] private GameObject[] adjustableObjsCol;
 
         [SerializeField, Tooltip
             ("ドラムガイドUI画像\n0-2 左UI(選曲,レベル,プレイ)\n3-5=右UI(選曲,レベル,プレイ)")]
@@ -116,6 +119,10 @@ namespace HPB
 
         [SerializeField, Tooltip("判定UIオブジェクト\n0=H判定\n1=G判定\n2=S判定")]
         public GameObject[] uiObj_judge;
+        [SerializeField, Tooltip("判定位置UIオブジェクト（fast）")]
+        public GameObject uiObj_judge_fast;
+        [SerializeField, Tooltip("判定位置UIオブジェクト（slow）")]
+        public GameObject uiObj_judge_slow;
 
         #endregion
         #region リザルト画面（値,色更新に使用）
@@ -151,6 +158,15 @@ namespace HPB
             windowAnims[3].gameObject.SetActive(false);
             windowAnims[4].gameObject.SetActive(false);
             windowAnims[5].gameObject.SetActive(false);
+
+            //Debug.Log("コライダー位置:" + adjustablePosObjs[4].transform.GetChild(1));
+            //adjustableObjsCol[4] = adjustablePosObjs[4].transform.GetChild(1).GetComponent<BoxCollider>();
+            //adjustableObjsCol[5] = adjustablePosObjs[5].transform.GetChild(1).GetComponent<BoxCollider>();
+            //adjustableObjsCol[6] = adjustablePosObjs[6].transform.GetChild(1).GetComponent<BoxCollider>();
+            //adjustableObjsCol[7] = adjustablePosObjs[7].transform.GetChild(1).GetComponent<BoxCollider>();
+            //adjustableObjsCol[8] = adjustablePosObjs[8].GetComponent<BoxCollider>();
+            //adjustableObjsCol[9] = adjustablePosObjs[9].GetComponent<BoxCollider>();
+
             for (int i = 1; i <= 7; i++)
             {
                 Debug.Log("DrumInitalize..." + i);
@@ -167,39 +183,7 @@ namespace HPB
 
         private void Update()
         {
-            //UI位置を更新
-            if (!settingsMng.gamePlay)
-            {
-                Vector3[] adjObjs = new Vector3[]
-                {
-                    adjustablePosObjs[0].transform.position,
-                    adjustablePosObjs[1].transform.position,
-                    adjustablePosObjs[2].transform.position,
-                    adjustablePosObjs[3].transform.position,
-                    adjustablePosObjs[4].transform.position,
-                    adjustablePosObjs[5].transform.position,
-                    adjustablePosObjs[6].transform.position,
-                    adjustablePosObjs[7].transform.position,
-                };
-                adjustablePosObjs[0].transform.position =
-                    new Vector3(adjObjs[0].x, (settingsMng.drumHeight * 0.1f), adjObjs[0].z);
-                adjustablePosObjs[1].transform.position =
-                    new Vector3(adjObjs[1].x, (settingsMng.drumHeight * 0.1f) + 2f, adjObjs[1].z);
 
-                //各ドラムの幅調整
-                adjustablePosObjs[2].transform.position =
-                    new Vector3(((settingsMng.drumWidth * 0.1f) * -0.23f), (settingsMng.drumHeight * 0.1f), adjObjs[2].z);
-                adjustablePosObjs[3].transform.position =
-                    new Vector3(((settingsMng.drumWidth * 0.1f) * -0.08f), (settingsMng.drumHeight * 0.1f), adjObjs[3].z);
-                adjustablePosObjs[4].transform.position =
-                    new Vector3(((settingsMng.drumWidth * 0.1f) * 0.08f), (settingsMng.drumHeight * 0.1f), adjObjs[4].z);
-                adjustablePosObjs[5].transform.position =
-                    new Vector3(((settingsMng.drumWidth * 0.1f) * 0.23f), (settingsMng.drumHeight * 0.1f), adjObjs[5].z);
-                adjustablePosObjs[6].transform.position =
-                    new Vector3(((settingsMng.drumWidth * 0.1f) * -0.3f), (settingsMng.drumHeight * 0.1f) + 0.25f, adjObjs[6].z);
-                adjustablePosObjs[7].transform.position =
-                    new Vector3(((settingsMng.drumWidth * 0.1f) * 0.3f), (settingsMng.drumHeight * 0.1f) + 0.25f, adjObjs[7].z);
-            }
             if (settingsMng.windowFlag != 1 || syncMng.isActivePlayer)
             {
                 changePlayerObj.SetActive(false);
@@ -208,6 +192,102 @@ namespace HPB
             {
                 changePlayerObj.SetActive(true);
             }
+        }
+
+        /// <summary>
+        /// オブジェクトの位置を調整します。
+        /// </summary>
+        public void ObjectAdjust()
+        {
+            //UI位置を更新
+            Vector3[] adjObjs = new Vector3[]
+            {
+                    adjustablePosObjs[0].transform.position,
+                    adjustablePosObjs[1].transform.position,
+                    adjustablePosObjs[2].transform.position,
+                    adjustablePosObjs[3].transform.position,
+                    adjustablePosObjs[4].transform.position,
+                    adjustablePosObjs[5].transform.position,
+                    adjustablePosObjs[6].transform.position,
+                    adjustablePosObjs[7].transform.position,
+                    adjustablePosObjs[8].transform.position,
+                    adjustablePosObjs[9].transform.position,
+            };
+            adjustablePosObjs[0].transform.position =
+                new Vector3(adjObjs[0].x, (settingsMng.drumHeight * 0.1f), 4);
+            adjustablePosObjs[1].transform.position =
+                new Vector3(adjObjs[1].x, (settingsMng.drumHeight * 0.1f) + 2f, 5);
+
+            //レーンの位置調整
+            if (settingsMng.isSplitSimbalLane)
+            {
+                //かえる
+                adjustablePosObjs[2].transform.position =
+                    new Vector3(-1, (settingsMng.drumHeight * 0.1f) + 0.5f, 53.5f);
+                adjustablePosObjs[3].transform.position =
+                    new Vector3(1, (settingsMng.drumHeight * 0.1f) + 0.5f, 53.5f);
+                //1/0.5/49.5
+                //1/1/53.5
+            }
+            else
+            {
+                adjustablePosObjs[2].transform.position =
+                    new Vector3(-0.45f, (settingsMng.drumHeight * 0.1f) + 1f, 53.5f);
+                adjustablePosObjs[3].transform.position =
+                    new Vector3(0.45f, (settingsMng.drumHeight * 0.1f) + 1f, 53.5f);
+                //0.45/1.5/53.5
+            }
+
+            //レーンの位置調整
+
+            //各ドラムの幅調整
+            adjustablePosObjs[4].transform.position =
+                new Vector3(((settingsMng.drumWidth * 0.1f) * -0.23f), (settingsMng.drumHeight * 0.1f), 2.45f + (-settingsMng.drumSize * 0.018f + 0.018f));
+            adjustablePosObjs[5].transform.position =
+                new Vector3(((settingsMng.drumWidth * 0.1f) * -0.08f), (settingsMng.drumHeight * 0.1f), 2.5f + (-settingsMng.drumSize * 0.013f + 0.013f));
+            adjustablePosObjs[6].transform.position =
+                new Vector3(((settingsMng.drumWidth * 0.1f) * 0.08f), (settingsMng.drumHeight * 0.1f), 2.5f + (-settingsMng.drumSize * 0.013f + 0.013f));
+            adjustablePosObjs[7].transform.position =
+                new Vector3(((settingsMng.drumWidth * 0.1f) * 0.23f), (settingsMng.drumHeight * 0.1f), 2.45f + (-settingsMng.drumSize * 0.018f + 0.018f));
+            adjustablePosObjs[8].transform.position =
+                new Vector3(((settingsMng.drumWidth * 0.1f) * -0.3f), (settingsMng.drumHeight * 0.1f) + 0.18f, 2.55f);
+            adjustablePosObjs[9].transform.position =
+                new Vector3(((settingsMng.drumWidth * 0.1f) * 0.3f), (settingsMng.drumHeight * 0.1f) + 0.18f, 2.55f); //2.7
+
+            //各ドラム,コライダーの大きさを調整
+
+            adjustablePosObjs[4].transform.localScale =
+                new Vector3((settingsMng.drumSize * 0.007f), (settingsMng.drumSize * 0.01f), (settingsMng.drumSize * 0.007f));
+            adjustableObjsCol[0].transform.localScale =
+                new Vector3(2, (settingsMng.drumJudgeArea * 0.1f), 2);
+
+            adjustablePosObjs[5].transform.localScale =
+                new Vector3((settingsMng.drumSize * 0.007f), (settingsMng.drumSize * 0.01f), (settingsMng.drumSize * 0.007f));
+            adjustableObjsCol[1].transform.localScale =
+                new Vector3(2, (settingsMng.drumJudgeArea * 0.1f), 2);
+
+            adjustablePosObjs[6].transform.localScale =
+                new Vector3((settingsMng.drumSize * 0.007f), (settingsMng.drumSize * 0.01f), (settingsMng.drumSize * 0.007f));
+            adjustableObjsCol[2].transform.localScale =
+                new Vector3(2, (settingsMng.drumJudgeArea * 0.1f), 2);
+
+            adjustablePosObjs[7].transform.localScale =
+                new Vector3((settingsMng.drumSize * 0.007f), (settingsMng.drumSize * 0.01f), (settingsMng.drumSize * 0.007f));
+            adjustableObjsCol[3].transform.localScale =
+                new Vector3(2, (settingsMng.drumJudgeArea * 0.1f), 2);
+            //0.07/0.1/0.07
+
+            adjustablePosObjs[8].transform.localScale =
+                new Vector3((settingsMng.drumSize * 0.02f), (settingsMng.drumSize * 0.02f), (settingsMng.drumSize * 0.02f));
+            adjustableObjsCol[4].transform.localScale =
+                new Vector3(1.8f, (settingsMng.drumJudgeArea * 0.1f), 1);
+
+            adjustablePosObjs[9].transform.localScale =
+                new Vector3((settingsMng.drumSize * 0.02f), (settingsMng.drumSize * 0.02f), (settingsMng.drumSize * 0.02f));
+            adjustableObjsCol[5].transform.localScale =
+                new Vector3(1.8f, (settingsMng.drumJudgeArea * 0.1f), 1);
+            //0.2
+
         }
 
         #region アニメーション処理関数
@@ -615,10 +695,16 @@ namespace HPB
         public void StartBPMGuide(float bpm)
         {
             //Debug.Log("BPMガイド開始");
-            bpmGuideUI[0].speed = bpm;
-            bpmGuideUI[1].speed = bpm;
-            bpmGuideUI[0].Play("bpmGuide", 0, 0);
-            bpmGuideUI[1].Play("bpmGuide", 0, 0);
+            for (int i = 0; i < bpmGuideUI.Length; i++)
+            {
+                bpmGuideUI[i].speed = bpm;
+                bpmGuideUI[i].Play("bpmGuide", 0, 0);
+            }
+
+            //bpmGuideUI[0].speed = bpm;
+            //bpmGuideUI[1].speed = bpm;
+            //bpmGuideUI[0].Play("bpmGuide", 0, 0);
+            //bpmGuideUI[1].Play("bpmGuide", 0, 0);
         }
 
         public void StopBPMGuide()
