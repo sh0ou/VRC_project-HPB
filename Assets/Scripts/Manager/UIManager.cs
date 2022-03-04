@@ -316,12 +316,7 @@ namespace HPB
         {
             Debug.Log("アクティブ:Close_select2");
             windowAnims[2].Play("close_select_2");
-            guideUI[0].SetActive(false);
-            guideUI[1].SetActive(false);
-            guideUI[2].SetActive(false);
-            guideUI[3].SetActive(false);
-            guideUI[4].SetActive(false);
-            guideUI[5].SetActive(false);
+            SetGuideUIActive(false);
         }
 
         /// <summary>
@@ -375,12 +370,14 @@ namespace HPB
             guideUIImage[4].color = new Color(1, 1, 0, 1);
             guideUIImage[5].color = new Color(1, 1, 0, 1);
 
-            guideUI[0].SetActive(true);
-            guideUI[1].SetActive(true);
-            guideUI[2].SetActive(true);
-            guideUI[3].SetActive(true);
-            guideUI[4].SetActive(true);
-            guideUI[5].SetActive(true);
+            if (settingsMng.isShowDrumGuideUI)
+            {
+                SetGuideUIActive(true);
+            }
+            else
+            {
+                SetGuideUIActive(false);
+            }
         }
 
         /// <summary>
@@ -406,12 +403,14 @@ namespace HPB
             guideUIImage[4].color = new Color(1, 1, 0, 1);
             guideUIImage[5].color = new Color(1, 1, 0, 1);
 
-            guideUI[0].SetActive(true);
-            guideUI[1].SetActive(true);
-            guideUI[2].SetActive(true);
-            guideUI[3].SetActive(true);
-            guideUI[4].SetActive(true);
-            guideUI[5].SetActive(true);
+            if (settingsMng.isShowDrumGuideUI)
+            {
+                SetGuideUIActive(true);
+            }
+            else
+            {
+                SetGuideUIActive(false);
+            }
             gameMng.SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All, "SetUIData");
         }
 
@@ -438,22 +437,18 @@ namespace HPB
                 guideUIImage[3].color = new Color(0.2f, 1, 0.2f, 1);
                 guideUIImage[4].color = new Color(1, 0.6f, 0, 1);
                 guideUIImage[5].color = new Color(1, 0.6f, 0, 1);
-
-                guideUI[0].SetActive(true);
-                guideUI[1].SetActive(true);
-                guideUI[2].SetActive(true);
-                guideUI[3].SetActive(true);
-                guideUI[4].SetActive(true);
-                guideUI[5].SetActive(true);
+                if (settingsMng.isShowDrumGuideUI)
+                {
+                    SetGuideUIActive(true);
+                }
+                else
+                {
+                    SetGuideUIActive(false);
+                }
             }
             else
             {
-                guideUI[0].SetActive(false);
-                guideUI[1].SetActive(false);
-                guideUI[2].SetActive(false);
-                guideUI[3].SetActive(false);
-                guideUI[4].SetActive(false);
-                guideUI[5].SetActive(false);
+                SetGuideUIActive(false);
             }
             //guideUI[3].SetActive(false);
             //guideUI[4].SetActive(false);
@@ -466,12 +461,7 @@ namespace HPB
         {
             Debug.Log("アクティブ:Open_result");
             windowAnims[5].gameObject.SetActive(true);
-            guideUI[0].SetActive(false);
-            guideUI[1].SetActive(false);
-            guideUI[2].SetActive(false);
-            guideUI[3].SetActive(false);
-            guideUI[4].SetActive(false);
-            guideUI[5].SetActive(false);
+            SetGuideUIActive(false);
             if (playMng.ahFlag)
             {
                 //if (settingsMng.effectFlag)
@@ -825,6 +815,16 @@ namespace HPB
                     Debug.LogError("[<color=red>UIManager</color>]アニメ後処理値が不正です");
                     break;
             }
+        }
+
+        public void SetGuideUIActive(bool isOn)
+        {
+            guideUI[0].SetActive(isOn);
+            guideUI[1].SetActive(isOn);
+            guideUI[2].SetActive(isOn);
+            guideUI[3].SetActive(isOn);
+            guideUI[4].SetActive(isOn);
+            guideUI[5].SetActive(isOn);
         }
     }
 }
