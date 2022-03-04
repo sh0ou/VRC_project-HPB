@@ -60,6 +60,9 @@ namespace HPB
         [SerializeField, Tooltip("シンバルレーンを分割")]
         public bool isSplitSimbalLane;
 
+        [SerializeField, Tooltip("操作ガイドを表示")]
+        public bool isShowDrumGuideUI;
+
         //サウンド
 
         [SerializeField, Tooltip("BGM音量")]
@@ -142,6 +145,9 @@ namespace HPB
             isSplitSimbalLane = true;
             opToggles[2].isOn = isSplitSimbalLane;
 
+            isShowDrumGuideUI = true;
+            opToggles[3].isOn = isShowDrumGuideUI;
+
 
             bgmVol = 5;
             opSliders[6].value = bgmVol;
@@ -149,8 +155,9 @@ namespace HPB
             seVol = 5;
             opSliders[7].value = seVol;
 
+
             debugFlag = false;
-            opToggles[3].isOn = debugFlag;
+            opToggles[4].isOn = debugFlag;
 
             uiManager.ObjectAdjust();
 
@@ -184,11 +191,12 @@ namespace HPB
             isParticleAnimation = opToggles[0].isOn;
             isHitEffect = opToggles[1].isOn;
             isSplitSimbalLane = opToggles[2].isOn;
+            isShowDrumGuideUI = opToggles[3].isOn;
             //サウンド
             bgmVol = (int)opSliders[6].value;
             seVol = (int)opSliders[7].value;
             //デバッグ
-            debugFlag = opToggles[3].isOn;
+            debugFlag = opToggles[4].isOn;
 
             uiManager.ObjectAdjust();
 
